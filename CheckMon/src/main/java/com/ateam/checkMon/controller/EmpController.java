@@ -19,9 +19,9 @@ public class EmpController {
 	@Autowired
 	private EmpDAO empDao;
 
-	@RequestMapping("/emp.do")
+	@RequestMapping("/empHome.do")
 	public String goEmp() {
-		return "emp/emp";
+		return "emp/home";
 	}
 	
 	@RequestMapping("/empAdd.do")
