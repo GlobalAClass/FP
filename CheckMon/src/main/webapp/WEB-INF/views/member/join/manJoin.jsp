@@ -187,12 +187,13 @@ function checkPwd(){
 
 //매장정보 등록했는지 유효성 검사
 function checkStore(){
-	s_name = document.manJoin.storename.value;
-	if(s_name=''){
+	res = document.manJoin.mlatitude.value;
+	
+	if(res==null || res==''){
 		alert('매장을 검색 후 입력해주세요.');
-		return false;
+	}else{
+		setStoreName();
 	}
-	return true;
 }
 
 //Submit 전에 유효성 검사 및 생년월일 / 전화번호 조합
@@ -366,7 +367,7 @@ function checked(){
 								<input type="hidden" name="storeaddr" value="">
 								<input type="hidden" name="mlatitude" value="">
 								<input type="hidden" name="mlongitude" value="">
-								<input class="btn btn-success" type="button" data-dismiss="modal" value="매장 등록하기" onclick="checkStore(); setStoreName()">
+								<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
 							</div>
 					</div>
 			    </div>
@@ -636,6 +637,7 @@ function removeAllChildNods(el) {
 //매장 등록 후 매장 이름을 뿌려줌
 function setStoreName(){
 	document.getElementById('s_name').value=document.getElementsByName('storename')[0].value;
+	$('#myModal').modal('hide');
 }
 </script>
 </html>
