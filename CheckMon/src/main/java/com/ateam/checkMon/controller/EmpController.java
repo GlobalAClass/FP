@@ -6,83 +6,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.ateam.checkMon.emp.model.EmpDAO;
-import com.ateam.checkMon.emp.model.EmpDAOImple;
-import com.ateam.checkMon.emp.model.EmpDTO;
-
-import java.util.*;
+import com.ateam.checkMon.member.model.*;
 
 @Controller
 public class EmpController {
 	
 	@Autowired
-	private EmpDAO empDao;
-
+	private EmpDAO empdao;
+	
+	//±Ù¹«ÀÚ È¸¿ø°¡ÀÔ ÆäÀÌÁö ÀÌµ¿
 	@RequestMapping("/empHome.do")
-	public String goEmp() {
-		return "emp/home";
+	public String goEmpJoin() {
+		return "member/join/empJoin";
 	}
 	
-	@RequestMapping("/empAdd.do")
-	public ModelAndView empAdd(EmpDTO dto) {
-		int result = empDao.empAdd(dto);
-		String msg=result>0?"ì‚¬ì›ë“±ë¡ ì„±ê³µ!":"ì‚¬ì›ë“±ë¡ ì‹¤íŒ¨!";
+	//±Ù¹«ÀÚ È¸¿ø°¡ÀÔ
+	@RequestMapping("/empJoin.do")
+	public ModelAndView addEmpJoin(EmpDTO dto) {
+		int result=empdao.addEmpJoin(dto);
+		String msg=result>0?"È¸¿ø°¡ÀÔÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.":"È¸¿ø °¡ÀÔ ½ÇÆĞ";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.setViewName("emp/empMsg");
+		mav.setViewName("member/join/memberJoinMsg");
 		return mav;
 	}
 	
-	@RequestMapping("/empDel.do")
-	public ModelAndView empDel(@RequestParam("name")String name) {
-		int result = empDao.empDel(name);
-		String msg=result>0?"ì‚¬ì›ì‚­ì œ ì„±ê³µ!":"ì‚¬ì›ì‚­ì œ ì‹¤íŒ¨!";
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", msg);
-		mav.setViewName("emp/empMsg");
-		return mav;
-	}
-	
-	@RequestMapping("/empList.do")
-	public ModelAndView empList() {
-		List<EmpDTO> list = empDao.empList();
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);
-		mav.setViewName("emp/empList");
-		return mav;
-	}
-	
-	@RequestMapping("/empSelect.do")
-	public ModelAndView empSelect(@RequestParam("name")String name) {
-		List<EmpDTO> list = empDao.empSelect(name);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);
-		mav.setViewName("emp/empList");
+	//±Ù¹«ÀÚ ¾ÆÀÌµğ Áßº¹ È®ÀÎ
+	@RequestMapping(value="/empIdCheck.do",method=RequestMethod.POST)
+	public ModelAndView empIdCheck(
+			@RequestParam(value="eemail",required=false)String eemail) {
+		String res=empdao.empIdCheck(eemail);
+		ModelAndView mav=new ModelAndView();
+		if(res==null) {
+			mav.setViewName("member/join/idCheckSucces");
+		}else {
+			mav.setViewName("member/join/idCheckFail");
+		}
 		return mav;
 	}
 	
 	
-	@RequestMapping(value="/empModify.do", method=RequestMethod.GET)
-	public ModelAndView empModifyForm(@RequestParam("idx")int idx) {
-		EmpDTO dto = empDao.empModifyForm(idx);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", dto);
-		mav.setViewName("emp/empModify");
-		return mav;
-	}
 	
-	@RequestMapping(value="/empModify.do", method=RequestMethod.POST)
-	public ModelAndView empModify(EmpDTO dto) {
-		int res = empDao.empModify(dto);
-		String msg = res>0?"ì‚¬ì› ìˆ˜ì • ì„±ê³µ!":"ì‚¬ì› ìˆ˜ì • ì‹¤íŒ¨!";
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", msg);
-		mav.setViewName("emp/empMsg");
-		return mav;
-	}
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkMonMember">
+	<insert id="addEmpJoinSQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
+		insert into 
+			Emp_TB
+		values(
+			Emp_TB_SEQ.nextval,
+			0,
+			#{eemail},
+			#{epwd},
+			#{ename},
+			#{etel},
+			#{ebirthDay},
+			null,
+			null,
+			null
+		)
+	</insert>
+	
+	<select id="empIdCheckSQL" parameterType="String" resultType="String">
+		select E_EMAIL from EMP_TB 
+		where E_EMAIL=#{eemail}
+	</select>
+	
+	<insert id="addManJoinSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
+		insert into
+			Man_TB
+		values(
+			Man_TB_SEQ.nextval,
+			#{memail},
+			#{mpwd},
+			#{mname},
+			#{mtel},
+			#{cornum},
+			#{storeIx}
+		)
+	</insert>
+	<insert id="addStoreManJoinSQL" parameterType="com.ateam.checkMon.member.model.StoreDTO">
+		insert into
+			Store_TB
+		values(
+			Store_TB_SEQ.nextval,
+			#{manIx},
+			#{storename},
+			#{storeaddr},
+			0,
+			0
+		)
+	</insert>
+	<select id="manIdCheckSQL" parameterType="String" resultType="String">
+		select M_EMAIL from Man_TB 
+		where M_EMAIL=#{memail}
+	</select>
+	
+</mapper>

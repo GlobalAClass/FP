@@ -32,7 +32,7 @@
 			<div class="card">
 				<h4 class="card-header">ChechMon 로그인 하기</h4>
 				<div class="card-body">
-					<form>
+					<form name="login" action="login.do">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
@@ -41,7 +41,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-open-o" aria-hidden="true"></i></span>
 										</div>
-										<input type="email" class="form-control" name="login_email" data-error="Input valid email" placeholder="example@gmail.com" required="">
+										<input type="email" class="form-control" name="login_email" data-error="Input valid email" placeholder="example@gmail.com" required="required">
 									</div>
 									<div class="help-block with-errors text-danger"></div>
 								</div>
@@ -56,7 +56,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text" id="basic-addon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 										</div>
-										<input type="password" id="inputPassword" data-minlength="6" name="login_password" class="form-control" data-error="Password to short" required="">
+										<input type="password" id="inputPassword" data-minlength="6" name="login_password" class="form-control" data-error="Password to short" required="required">
 									</div>
 									<div class="help-block with-errors text-danger"></div>
 								</div>
@@ -77,7 +77,9 @@
 						</div>
 					</form>
 					<div class="clear"></div><br>
-					<i class="fa fa-user fa-fw"></i> 처음 방문하셨나요? <a href="#">회원가입하기</a><br>
+					<i class="fa fa-user fa-fw"></i> 처음 방문하셨나요?<br>
+					<a href="empHome.do">근무자 회원가입</a><br>
+					<a href="manHome.do">관리자 회원가입</a>
 				</div>
 			</div>
 		</div>

@@ -43,7 +43,12 @@
 
 	
 	<!-- service -->
-	<bean id="empDao" class="com.ateam.checkMon.emp.model.EmpDAOImple">
+	<bean id="empDao" class="com.ateam.checkMon.member.model.EmpDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
+		</constructor-arg>
+	</bean>
+	<bean id="manDao" class="com.ateam.checkMon.member.model.ManDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>
