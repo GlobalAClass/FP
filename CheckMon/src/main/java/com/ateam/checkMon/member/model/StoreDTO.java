@@ -5,9 +5,6 @@ public class StoreDTO {
 	//매장 인덱스
 	private int storeIx;
 	
-	//관리자 인덱스
-	private int manIx;
-	
 	//매장 이름
 	private String storename;
 	
@@ -24,10 +21,9 @@ public class StoreDTO {
 		super();
 	}
 
-	public StoreDTO(int storeIx, int manIx, String storename, String storeaddr, String mlatitude, String mlongitude) {
+	public StoreDTO(int storeIx, String storename, String storeaddr, String mlatitude, String mlongitude) {
 		super();
 		this.storeIx = storeIx;
-		this.manIx = manIx;
 		this.storename = storename;
 		this.storeaddr = storeaddr;
 		this.mlatitude = mlatitude;
@@ -40,14 +36,6 @@ public class StoreDTO {
 
 	public void setStoreIx(int storeIx) {
 		this.storeIx = storeIx;
-	}
-
-	public int getManIx() {
-		return manIx;
-	}
-
-	public void setManIx(int manIx) {
-		this.manIx = manIx;
 	}
 
 	public String getStorename() {

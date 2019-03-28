@@ -5,7 +5,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CheckMon</title>
 <meta name="description"
 	content="Free Bootstrap 4 Admin Theme | Pike Admin">
@@ -25,6 +24,9 @@
 
 <!-- Custom CSS -->
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+<script>
+
+</script>
 </head>
 <body>
 	<div class="container h-200 justify-content-center">
@@ -78,8 +80,8 @@
 					</form>
 					<div class="clear"></div><br>
 					<i class="fa fa-user fa-fw"></i> 처음 방문하셨나요?<br>
-					<a href="empHome.do">근무자 회원가입</a><br>
-					<a href="manHome.do">관리자 회원가입</a>
+					<a href="goEmpJoin.do">근무자 회원가입</a><br>
+					<a href="goManJoin.do">관리자 회원가입</a>
 				</div>
 			</div>
 		</div>

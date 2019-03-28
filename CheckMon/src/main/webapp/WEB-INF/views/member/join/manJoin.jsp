@@ -48,7 +48,7 @@ function idcheck(){
 	document.manJoin.memail.value=memail;
 	if(checkEmail(memail)){ // 올바른 이메일 주소인지 여부 판단
 		var params='memail='+memail;
-		sendRequest('manIdCheck.do',params,showResult,'POST');
+		sendRequest('manIdCheck.do',params,showResult,'GET');
 	}else{
 		alert("올바른 이메일 주소를 입력해주세요.");
 	}
@@ -227,7 +227,7 @@ function checked(){
 		<td>
 		<div class="form-group">
 			<input type="password" class="form-control" name="mpwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
-			<input type="text" class="form-control" name=checkpwd disabled="disabled" style="width: 200px; border: none; background: none;">
+			<input type="text" class="form-control" name="checkpwd" disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
 	</tr>
@@ -255,9 +255,9 @@ function checked(){
 		<td>
 		<div class="form-group">
 			<input type="text" hidden="" name="cornum">
-			<input type="text" class="form-control" name="cornum1" required="required" maxlength="3" size="5" onkeyup="noSpace(this);" onchange="checkcornum(this);">-
-			<input type="text" class="form-control" name="cornum2" required="required" maxlength="2" size="5" onkeyup="noSpace(this);" onchange="checkcornum(this);">-
-			<input type="text" class="form-control" name="cornum3" required="required" maxlength="5" size="11" onkeyup="noSpace(this);" onchange="checkcornum(this);">
+			<input type="text" class="form-control" name="cornum1" required="required" maxlength="3" size="5" onchange="checkcornum(this);" onkeyup="noSpace(this);">-
+			<input type="text" class="form-control" name="cornum2" required="required" maxlength="2" size="5" onchange="checkcornum(this);" onkeyup="noSpace(this);">-
+			<input type="text" class="form-control" name="cornum3" required="required" maxlength="5" size="11" onchange="checkcornum(this);" onkeyup="noSpace(this);">
 		</div>
 		</td>
 	</tr>

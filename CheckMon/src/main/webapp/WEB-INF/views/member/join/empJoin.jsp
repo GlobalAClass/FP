@@ -220,7 +220,7 @@ function checked(){
 		<td>
 		<div class="form-group">
 			<input type="password" class="form-control" name="epwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
-			<input type="text" class="form-control" name=checkpwd disabled="disabled" style="width: 200px; border: none; background: none;">
+			<input type="text" class="form-control" name=checkpwd disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
 	</tr>

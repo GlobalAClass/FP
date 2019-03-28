@@ -14,24 +14,29 @@ public class EmpController {
 	@Autowired
 	private EmpDAO empdao;
 	
-	//±Ù¹«ÀÚ È¸¿ø°¡ÀÔ ÆäÀÌÁö ÀÌµ¿
+	//ê·¼ë¬´ìž í™ˆíŽ˜ì´ì§€ ì´ë™
 	@RequestMapping("/empHome.do")
-	public String goEmpJoin() {
-		return "member/join/empJoin";
+	public String goManHome() {
+		return "emp/home";
+	}
+	//
+	@RequestMapping("/goEmpJoin.do")
+	public String goManJoin() {
+		return "member/join/manJoin";
 	}
 	
-	//±Ù¹«ÀÚ È¸¿ø°¡ÀÔ
+	//ï¿½Ù¹ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping("/empJoin.do")
 	public ModelAndView addEmpJoin(EmpDTO dto) {
 		int result=empdao.addEmpJoin(dto);
-		String msg=result>0?"È¸¿ø°¡ÀÔÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.":"È¸¿ø °¡ÀÔ ½ÇÆÐ";
+		String msg=result>0?"È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.":"È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.setViewName("member/join/memberJoinMsg");
 		return mav;
 	}
 	
-	//±Ù¹«ÀÚ ¾ÆÀÌµð Áßº¹ È®ÀÎ
+	//ï¿½Ù¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½ È®ï¿½ï¿½
 	@RequestMapping(value="/empIdCheck.do",method=RequestMethod.POST)
 	public ModelAndView empIdCheck(
 			@RequestParam(value="eemail",required=false)String eemail) {

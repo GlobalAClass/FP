@@ -10,13 +10,24 @@ public class ManDAOImple implements ManDAO {
 		super();
 		this.sqlMap = sqlMap;
 	}
+	//매장 추가할 때, 사용될 IX 가져오기
+	public int getNextStoreIx() {
+		int res=sqlMap.selectOne("getNextStoreIxSQL");
+		return res;
+	}
 	
-	//관리자 회원가입 메소드
-	public int addManJoin(ManDTO mdto,StoreDTO sdto) {
-		int count=sqlMap.insert("addStoreManJoinSQL",sdto);
-		count = sqlMap.insert("addManJoinSQL",mdto);
+	//매장 추가 메소드
+	public int addStoreManJoin(StoreDTO sdto) {
+		int count = sqlMap.insert("addStoreManJoinSQL",sdto);
 		return count;
 	}
+	
+	//관리자 회원가입 메소드
+	public int addManJoin(ManDTO mdto) {
+		int count = sqlMap.insert("addManJoinSQL",mdto);
+		return count;
+	}
+	
 	//관리자 아이디 중복확인 메소드
 	public String manIdCheck(String memail) {
 		String res=sqlMap.selectOne("manIdCheckSQL",memail);
