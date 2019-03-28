@@ -19,24 +19,24 @@ public class EmpController {
 	public String goManHome() {
 		return "emp/home";
 	}
-	//
+	//근무자 회원가입 페이지 이동
 	@RequestMapping("/goEmpJoin.do")
 	public String goManJoin() {
 		return "member/join/manJoin";
 	}
 	
-	//�ٹ��� ȸ������
+	//근무자 회원 가입
 	@RequestMapping("/empJoin.do")
 	public ModelAndView addEmpJoin(EmpDTO dto) {
 		int result=empdao.addEmpJoin(dto);
-		String msg=result>0?"ȸ�������� �Ϸ� �Ǿ����ϴ�.":"ȸ�� ���� ����";
+		String msg=result>0?"회원가입이 완료 되었습니다.":"회원가입에 실패 하였습니다.";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.setViewName("member/join/memberJoinMsg");
 		return mav;
 	}
 	
-	//�ٹ��� ���̵� �ߺ� Ȯ��
+	//근무자 아이디 중복 체크
 	@RequestMapping(value="/empIdCheck.do",method=RequestMethod.POST)
 	public ModelAndView empIdCheck(
 			@RequestParam(value="eemail",required=false)String eemail) {

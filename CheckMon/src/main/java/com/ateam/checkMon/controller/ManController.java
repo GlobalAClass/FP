@@ -14,18 +14,18 @@ public class ManController {
 	@Autowired
 	private ManDAO mandao;
 	
-	//°ü¸®ÀÚ È¨ÆäÀÌÁö ÀÌµ¿
+	//ê´€ë¦¬ì í™ˆí˜ì´ì§€ ì´ë™
 	@RequestMapping("/manHome.do")
 	public String goManHome() {
 		return "man/home";
 	}
-	//°ü¸®ÀÚ È¸¿ø°¡ÀÔ ÆäÀÌÁö ÀÌµ¿
+	//ê´€ë¦¬ì íšŒì›ê°€ì… í˜ì´ì§€ ì´ë™
 	@RequestMapping("/goManJoin.do")
 	public String goManJoin() {
 		return "member/join/manJoin";
 	}
 		
-	//°ü¸®ÀÚ È¸¿ø°¡ÀÔ
+	//ê´€ë¦¬ì íšŒì›ê°€ì… storeIx ë°›ê¸°
 	@RequestMapping(value="/manJoin.do", method=RequestMethod.POST)
 	public ModelAndView addManJoin(StoreDTO sdto, ManDTO mdto) {
 		int s_ix = mandao.getNextStoreIx();
@@ -33,7 +33,7 @@ public class ManController {
 		int s_result=mandao.addStoreManJoin(sdto);
 		mdto.setStoreIx(s_ix);
 		int m_result=mandao.addManJoin(mdto);
-		String msg=s_result >0 && m_result >0 ?"È¸¿ø°¡ÀÔÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.":"È¸¿ø °¡ÀÔ ½ÇÆĞ";
+		String msg=s_result >0 && m_result >0 ?"íšŒì›ê°€ì…ì´ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.":"íšŒì›ê°€ì…ì— ì‹¤íŒ¨ í•˜ì˜€ìŠµë‹ˆë‹¤.";
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -43,7 +43,7 @@ public class ManController {
 		return mav;
 	}
 	
-	//°ü¸®ÀÚ ¾ÆÀÌµğ Áßº¹ È®ÀÎ
+	//ê´€ë¦¬ì ì•„ì´ë”” ì¤‘ë³µì²´í¬
 	@RequestMapping(value="/manIdCheck.do", method=RequestMethod.GET)
 	public ModelAndView manIdCheck(
 			@RequestParam(value="memail",required=false)String memail) {

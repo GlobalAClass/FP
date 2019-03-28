@@ -2,19 +2,19 @@ package com.ateam.checkMon.member.model;
 
 public class StoreDTO {
 	
-	//¸ÅÀå ÀÎµ¦½º
+	//ë§¤ì¥ì •ë³´ ì¸ë±ìŠ¤
 	private int storeIx;
 	
-	//¸ÅÀå ÀÌ¸§
+	//ë§¤ì¥ì´ë¦„
 	private String storename;
 	
-	//¸ÅÀå ÁÖ¼Ò
+	//ë§¤ì¥ì£¼ì†Œ
 	private String storeaddr;
 	
-	//¸ÅÀå À§µµ
+	//ìœ„ë„
 	private String mlatitude;
 	
-	//¸ÅÀå °æµµ
+	//ê²½ë„
 	private String mlongitude;
 
 	public StoreDTO() {

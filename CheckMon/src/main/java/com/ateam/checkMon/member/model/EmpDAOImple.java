@@ -10,12 +10,12 @@ public class EmpDAOImple implements EmpDAO {
 		super();
 		this.sqlMap = sqlMap;
 	}
-	//±Ù¹«ÀÚ È¸¿ø°¡ÀÔ ¸Ş¼Òµå
+	//ê·¼ë¬´ì íšŒì›ê°€ì…
 	public int addEmpJoin(EmpDTO dto) {
 		int count = sqlMap.insert("addEmpJoinSQL", dto);
 		return count;
 	}
-	//±Ù¹«ÀÚ ¾ÆÀÌµğ Áßº¹È®ÀÎ ¸Ş¼Òµå
+	//ê·¼ë¬´ì ì•„ì´ë”” ì²´í¬
 	public String empIdCheck(String eemail) {
 		String res=sqlMap.selectOne("empIdCheckSQL",eemail);
 		return res;

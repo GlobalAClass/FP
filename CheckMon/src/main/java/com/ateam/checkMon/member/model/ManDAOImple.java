@@ -10,25 +10,25 @@ public class ManDAOImple implements ManDAO {
 		super();
 		this.sqlMap = sqlMap;
 	}
-	//¸ÅÀå Ãß°¡ÇÒ ¶§, »ç¿ëµÉ IX °¡Á®¿À±â
+	//ê´€ë¦¬ì ë§¤ì¥ì •ë³´ ì¸ë±ìŠ¤
 	public int getNextStoreIx() {
 		int res=sqlMap.selectOne("getNextStoreIxSQL");
 		return res;
 	}
 	
-	//¸ÅÀå Ãß°¡ ¸Ş¼Òµå
+	//ê´€ë¦¬ì ë§¤ì¥ì •ë³´ ë“±ë¡
 	public int addStoreManJoin(StoreDTO sdto) {
 		int count = sqlMap.insert("addStoreManJoinSQL",sdto);
 		return count;
 	}
 	
-	//°ü¸®ÀÚ È¸¿ø°¡ÀÔ ¸Ş¼Òµå
+	//ê´€ë¦¬ì íšŒì›ê°€ì…
 	public int addManJoin(ManDTO mdto) {
 		int count = sqlMap.insert("addManJoinSQL",mdto);
 		return count;
 	}
 	
-	//°ü¸®ÀÚ ¾ÆÀÌµğ Áßº¹È®ÀÎ ¸Ş¼Òµå
+	//ê´€ë¦¬ì ì•„ì´ë”” ì²´í¬
 	public String manIdCheck(String memail) {
 		String res=sqlMap.selectOne("manIdCheckSQL",memail);
 		return res;

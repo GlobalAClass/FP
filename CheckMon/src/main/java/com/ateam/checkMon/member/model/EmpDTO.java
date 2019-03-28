@@ -2,34 +2,34 @@ package com.ateam.checkMon.member.model;
 
 public class EmpDTO {
 	
-	//±Ù¹«ÀÚ ÀÎµ¦½º
+	//ê·¼ë¬´ì ì¸ë±ìŠ¤
 	private int empIx;
 	
-	//°ü¸®ÀÚ ÀÎµ¦½º
+	//ê´€ë¦¬ì ì¸ë±ìŠ¤
 	private int manIx;
 	
-	//±Ù¹«ÀÚ ÀÌ¸ŞÀÏ
+	//ê·¼ë¬´ì ì•„ì´ë””(ì´ë©”ì¼)
 	private String eemail;
 	
-	//±Ù¹«ÀÚ ºñ¹Ğ¹øÈ£
+	//ê·¼ë¬´ì ë¹„ë°€ë²ˆí˜¸
 	private String epwd;
 	
-	//±Ù¹«ÀÚ ÀÌ¸§
+	//ê·¼ë¬´ì ì´ë¦„
 	private String ename;
 	
-	//±Ù¹«ÀÚ ÇÚµåÆù¹øÈ£
+	//ê·¼ë¬´ì í•¸ë“œí° ë²ˆí˜¸
 	private String etel;
 	
-	//±Ù¹«ÀÚ »ı³â¿ùÀÏ
+	//ê·¼ë¬´ì ìƒë…„ì›”ì¼
 	private String ebirthDay;
 	
-	//±Ù¹«ÀÚ Á÷Ã¥¸í
+	//ê·¼ë¬´ì ì§ì±…
 	private String eposition;
 	
-	//±Ù¹«ÀÚ ±×·ì¸í
+	//ê·¼ë¬´ì ê·¸ë£¹
 	private String egroup;
 	
-	//°ü¸®ÀÚ ±ÇÇÑ ¿©ºÎ
+	//ê·¼ë¬´ì ê´€ë¦¬ì ê¶Œí•œì—¬ë¶€
 	private String authorization;
 	
 	public EmpDTO() {
