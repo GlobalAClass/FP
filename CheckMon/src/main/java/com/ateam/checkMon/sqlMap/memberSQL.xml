@@ -47,9 +47,9 @@
 		values(
 			#{storeIx},
 			#{storename},
-			null,
-			null,
-			null
+			#{storeaddr},
+			#{mlatitude},
+			#{mlongitude}
 		)
 	</insert>
 	<select id="manIdCheckSQL" parameterType="String" resultType="String">
