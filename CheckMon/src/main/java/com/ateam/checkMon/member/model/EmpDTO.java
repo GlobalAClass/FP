@@ -3,124 +3,128 @@ package com.ateam.checkMon.member.model;
 public class EmpDTO {
 	
 	//근무자 인덱스
-	private int empIx;
+	private int emp_Ix;
 	
 	//관리자 인덱스
-	private int manIx;
+	private int man_Ix;
 	
 	//근무자 아이디(이메일)
-	private String eemail;
+	private String e_email;
 	
 	//근무자 비밀번호
-	private String epwd;
+	private String e_pwd;
 	
 	//근무자 이름
-	private String ename;
+	private String e_name;
 	
 	//근무자 핸드폰 번호
-	private String etel;
+	private String e_tel;
 	
 	//근무자 생년월일
-	private String ebirthDay;
+	private String e_birthDay;
 	
 	//근무자 직책
-	private String eposition;
+	private String e_position;
 	
 	//근무자 그룹
-	private String egroup;
+	private String e_group;
 	
 	//근무자 관리자 권한여부
 	private String authorization;
+	
+	//근무자 랜덤 비밀번호
+	private String e_rpwd;
 	
 	public EmpDTO() {
 		super();
 	}
 
-	public EmpDTO(int empIx, int manIx, String eemail, String epwd, String ename, String etel, String ebirthDay,
-			String eposition, String egroup, String authorization) {
+	public EmpDTO(int emp_Ix, int man_Ix, String e_email, String e_pwd, String e_name, String e_tel, String e_birthDay,
+			String e_position, String e_group, String authorization, String e_rpwd) {
 		super();
-		this.empIx = empIx;
-		this.manIx = manIx;
-		this.eemail = eemail;
-		this.epwd = epwd;
-		this.ename = ename;
-		this.etel = etel;
-		this.ebirthDay = ebirthDay;
-		this.eposition = eposition;
-		this.egroup = egroup;
+		this.emp_Ix = emp_Ix;
+		this.man_Ix = man_Ix;
+		this.e_email = e_email;
+		this.e_pwd = e_pwd;
+		this.e_name = e_name;
+		this.e_tel = e_tel;
+		this.e_birthDay = e_birthDay;
+		this.e_position = e_position;
+		this.e_group = e_group;
 		this.authorization = authorization;
+		this.e_rpwd = e_rpwd;
 	}
 
-	public int getEmpIx() {
-		return empIx;
+	public int getEmp_Ix() {
+		return emp_Ix;
 	}
 
-	public void setEmpIx(int empIx) {
-		this.empIx = empIx;
+	public void setEmp_Ix(int emp_Ix) {
+		this.emp_Ix = emp_Ix;
 	}
 
-	public int getManIx() {
-		return manIx;
+	public int getMan_Ix() {
+		return man_Ix;
 	}
 
-	public void setManIx(int manIx) {
-		this.manIx = manIx;
+	public void setMan_Ix(int man_Ix) {
+		this.man_Ix = man_Ix;
 	}
 
-	public String getEemail() {
-		return eemail;
+	public String getE_email() {
+		return e_email;
 	}
 
-	public void setEemail(String eemail) {
-		this.eemail = eemail;
+	public void setE_email(String e_email) {
+		this.e_email = e_email;
 	}
 
-	public String getEpwd() {
-		return epwd;
+	public String getE_pwd() {
+		return e_pwd;
 	}
 
-	public void setEpwd(String epwd) {
-		this.epwd = epwd;
+	public void setE_pwd(String e_pwd) {
+		this.e_pwd = e_pwd;
 	}
 
-	public String getEname() {
-		return ename;
+	public String getE_name() {
+		return e_name;
 	}
 
-	public void setEname(String ename) {
-		this.ename = ename;
+	public void setE_name(String e_name) {
+		this.e_name = e_name;
 	}
 
-	public String getEtel() {
-		return etel;
+	public String getE_tel() {
+		return e_tel;
 	}
 
-	public void setEtel(String etel) {
-		this.etel = etel;
+	public void setE_tel(String e_tel) {
+		this.e_tel = e_tel;
 	}
 
-	public String getEbirthDay() {
-		return ebirthDay;
+	public String getE_birthDay() {
+		return e_birthDay;
 	}
 
-	public void setEbirthDay(String ebirthDay) {
-		this.ebirthDay = ebirthDay;
+	public void setE_birthDay(String e_birthDay) {
+		this.e_birthDay = e_birthDay;
 	}
 
-	public String getEposition() {
-		return eposition;
+	public String getE_position() {
+		return e_position;
 	}
 
-	public void setEposition(String eposition) {
-		this.eposition = eposition;
+	public void setE_position(String e_position) {
+		this.e_position = e_position;
 	}
 
-	public String getEgroup() {
-		return egroup;
+	public String getE_group() {
+		return e_group;
 	}
 
-	public void setEgroup(String egroup) {
-		this.egroup = egroup;
+	public void setE_group(String e_group) {
+		this.e_group = e_group;
 	}
 
 	public String getAuthorization() {
@@ -130,6 +134,15 @@ public class EmpDTO {
 	public void setAuthorization(String authorization) {
 		this.authorization = authorization;
 	}
+
+	public String getE_rpwd() {
+		return e_rpwd;
+	}
+
+	public void setE_rpwd(String e_rpwd) {
+		this.e_rpwd = e_rpwd;
+	}
+
 	
 	
 	
