@@ -361,20 +361,18 @@ function checked(){
 									<h5 style="font-weight:bold;">매장 주소<input type="text" class="form-control-plaintext" name="storeaddr" readonly></h5>
 								</div>
 							</div>
-							<div class="modal-footer">
-							<!-- 클릭한 매장 정보 -->	
-								<input type="hidden" name="storename" value="">
-								<input type="hidden" name="storeaddr" value="">
-								<input type="hidden" name="mlatitude" value="">
-								<input type="hidden" name="mlongitude" value="">
-								<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
-							</div>
+						</div>
 					</div>
-			    </div>
+					<div class="modal-footer" align="center">
+					<!-- 클릭한 매장 정보 -->
+						<input type="text" name="mlatitude" value="">
+						<input type="text" name="mlongitude" value="">
+						<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
+					</div>
+					</div>
 			    </div>
 			  </div>
 			</div>
-		</div>
 		</td>
 	</tr>
 	<tr>
@@ -412,6 +410,9 @@ map.setDraggable(false);
 
 // 마우스 휠과 모바일 터치를 이용한 지도 확대, 축소를 막는다
 map.setZoomable(false);   
+
+// 마우스 클릭을 이용한 지도 확대를 막는다
+//map.setClickable(false);
 
 // 장소 검색 객체를 생성합니다
 var ps = new daum.maps.services.Places();  

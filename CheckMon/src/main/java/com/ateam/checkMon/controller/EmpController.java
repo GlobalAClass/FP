@@ -19,9 +19,16 @@ public class EmpController {
 	public String goEmpHome() {
 		return "emp/home";
 	}
+	
+	//근무자 회원가입 시 개인정보방침 페이지 이동
+	@RequestMapping("/goJoinAgreeEmp.do")
+	public String goJoinAgree() {
+		return "member/join/joinAgreeEmp";
+	}
+	
 	//근무자 회원가입 페이지 이동
 	@RequestMapping("/goEmpJoin.do")
-	public String goEmpJoin() {
+	public String goManJoin() {
 		return "member/join/empJoin";
 	}
 	

@@ -19,6 +19,13 @@ public class ManController {
 	public String goManHome() {
 		return "man/home";
 	}
+	
+	//관리자 회원가입 시 개인정보방침 페이지 이동
+	@RequestMapping("/goJoinAgreeMan.do")
+	public String goJoinAgree() {
+		return "member/join/joinAgreeMan";
+	}
+	
 	//관리자 회원가입 페이지 이동
 	@RequestMapping("/goManJoin.do")
 	public String goManJoin() {

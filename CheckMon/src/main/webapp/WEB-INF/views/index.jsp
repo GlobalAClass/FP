@@ -82,8 +82,8 @@
 					</form>
 					<div class="clear"></div><br>
 					<i class="fa fa-user fa-fw"></i> 처음 방문하셨나요?<br>
-					<a href="goEmpJoin.do">근무자 회원가입</a><br>
-					<a href="goManJoin.do">관리자 회원가입</a>
+					<a href="goJoinAgreeEmp.do">근무자 회원가입</a><br>
+					<a href="goJoinAgreeMan.do">관리자 회원가입</a>
 				</div>
 			</div>
 		</div>
