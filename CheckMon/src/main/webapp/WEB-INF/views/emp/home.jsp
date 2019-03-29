@@ -84,6 +84,10 @@ getLocation();
 									</div>
 						</div>
 						<!-- end row -->
+						
+						<div class="">
+							<button onclick="javascript:location.href='';">출근하기</button>
+						</div>
 
 						<div class="alert alert-danger" role="alert">
 						<h4 class="alert-heading">Info!</h4>

@@ -83,5 +83,8 @@
 		from man_tb
 		where m_email=#{memail}
 	</select>
-	
+	<select id="checkQRAndStorIxSQL" parameterType="map" resultType="int">
+		select 1 from man_tb m, emp_tb e 
+		where m.man_ix = e.man_ix and e.e_email=#{eemail} and store_ix = #{storeIx}
+	</select>
 </mapper>

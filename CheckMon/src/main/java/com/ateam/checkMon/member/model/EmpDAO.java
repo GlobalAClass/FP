@@ -8,4 +8,5 @@ public interface EmpDAO {
 	public String empIdCheck(String eemail);
 	public List<EmpDTO> empLogin(Map<String,String> map);
 	public String empName(String eeamil);
+	boolean checkQRAndStorIx(String eemail, String storeIx);
 }

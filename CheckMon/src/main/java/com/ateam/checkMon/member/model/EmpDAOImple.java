@@ -1,5 +1,6 @@
 package com.ateam.checkMon.member.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,4 +38,15 @@ public class EmpDAOImple implements EmpDAO {
 		String res=sqlMap.selectOne("empNameSQL",eemail);
 		return res;
 	}
+	
+	// 근무자 출근 - QR정보와 매장IX 일치 확인
+	public boolean checkQRAndStorIx(String eemail, String storeIx) {
+		Map<String, String> temp = new HashMap<String, String>();
+		temp.put("eemail", eemail);
+		temp.put("storeIx", storeIx);
+		
+		boolean res = sqlMap.selectOne("checkQRAndStorIxSQL", temp) == null ? false : true;
+		return res;
+	}
+
 }
