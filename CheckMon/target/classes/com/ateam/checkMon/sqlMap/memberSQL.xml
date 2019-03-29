@@ -38,9 +38,11 @@
 			#{storeIx}
 		)
 	</insert>
+	
 	<select id="getNextStoreIxSQL" resultType="int">
 		select store_tb_seq.nextval from dual
 	</select>
+	
 	<insert id="addStoreManJoinSQL" parameterType="com.ateam.checkMon.member.model.StoreDTO">
 		insert into
 			Store_TB
@@ -52,9 +54,34 @@
 			#{mlongitude}
 		)
 	</insert>
+	
 	<select id="manIdCheckSQL" parameterType="String" resultType="String">
 		select M_EMAIL from Man_TB 
 		where M_EMAIL=#{memail}
+	</select>
+	
+	<select id="empLoginSQL" parameterType="map" resultType="com.ateam.checkMon.member.model.EmpDTO">
+		select e_email,e_pwd
+		from emp_tb
+		where e_email=#{eemail}
+	</select>
+	
+	<select id="empNameSQL" parameterType="String" resultType="String">
+		select e_name
+		from emp_tb
+		where e_email=#{eemail}
+	</select>
+	
+	<select id="manLoginSQL" parameterType="map" resultType="com.ateam.checkMon.member.model.ManDTO">
+		select m_email,m_pwd
+		from man_tb
+		where m_email=#{memail}
+	</select>
+	
+	<select id="manNameSQL" parameterType="String" resultType="String">
+		select m_name
+		from man_tb
+		where m_email=#{memail}
 	</select>
 	
 </mapper>

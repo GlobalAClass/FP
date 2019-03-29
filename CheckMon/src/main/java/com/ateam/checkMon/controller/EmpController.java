@@ -16,17 +16,17 @@ public class EmpController {
 	
 	//근무자 홈페이지 이동
 	@RequestMapping("/empHome.do")
-	public String goManHome() {
+	public String goEmpHome() {
 		return "emp/home";
 	}
 	//근무자 회원가입 페이지 이동
 	@RequestMapping("/goEmpJoin.do")
-	public String goManJoin() {
-		return "member/join/manJoin";
+	public String goEmpJoin() {
+		return "member/join/empJoin";
 	}
 	
 	//근무자 회원 가입
-	@RequestMapping("/empJoin.do")
+	@RequestMapping(value="/empJoin.do",method=RequestMethod.POST)
 	public ModelAndView addEmpJoin(EmpDTO dto) {
 		int result=empdao.addEmpJoin(dto);
 		String msg=result>0?"회원가입이 완료 되었습니다.":"회원가입에 실패 하였습니다.";
@@ -37,12 +37,12 @@ public class EmpController {
 	}
 	
 	//근무자 아이디 중복 체크
-	@RequestMapping(value="/empIdCheck.do",method=RequestMethod.POST)
+	@RequestMapping(value="/empIdCheck.do",method=RequestMethod.GET)
 	public ModelAndView empIdCheck(
 			@RequestParam(value="eemail",required=false)String eemail) {
 		String res=empdao.empIdCheck(eemail);
 		ModelAndView mav=new ModelAndView();
-		if(res==null) {
+		if(res==null){
 			mav.setViewName("member/join/idCheckSucces");
 		}else {
 			mav.setViewName("member/join/idCheckFail");

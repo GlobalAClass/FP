@@ -26,10 +26,10 @@ prefix="c" %>
 	rel="stylesheet" type="text/css" />
 <script src="assets/js/jquery-1.10.2.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 <script>
 //올바른 이메일 주소인지 확인. = ^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$ 
-function checkEmail(str) {
+function empCheckEmail(str) {
     var email_pattern = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
     if(!email_pattern.exec(str)) { //exec는 정규표현식 패턴에 맞는 문자열 탐색
         return false;
@@ -39,20 +39,20 @@ function checkEmail(str) {
 }
 
 //아이디 중복 확인
-function idcheck(){
+function empIdcheck(){
 	// DB에 아이디 저장 을 위해 합침
 	var idemail=document.all.idemail.value;
 	var idemail2=document.all.idemail2.value;
 	var eemail=idemail+"@"+idemail2;
 	document.empJoin.eemail.value=eemail;
-	if(checkEmail(eemail)){ // 올바른 이메일 주소인지 여부 판단
+	if(empCheckEmail(eemail)){ // 올바른 이메일 주소인지 여부 판단
 		var params='eemail='+eemail;
-		sendRequest('empIdCheck.do',params,showResult,'POST');
+		sendRequest('empIdCheck.do',params,showResult,'GET');
 	}else{
 		alert("올바른 이메일 주소를 입력해주세요.");
 	}
-	
 }
+
 function showResult(){
 	if(XHR.readyState==4){
 		if(XHR.status==200){
@@ -60,8 +60,9 @@ function showResult(){
 			 var msg=document.all.msg;
 			 msg.innerHTML=data;
 		}
-	}	
+	}
 }
+
 function noSpace(obj) { // 공백 사용 못하게
     var str_space = /\s/;  // 공백체크
     if(str_space.exec(obj.value)) { //공백 체크
@@ -126,7 +127,7 @@ function checkPwd(){
 			document.empJoin.checkpwd.style.color = 'red';
 			return false;
 		}
-	} else{
+	}else{
 		document.empJoin.checkpwd.value = "비밀번호확인을 입력하세요.";
 		document.empJoin.checkpwd.style.color = 'red';
 		return false;
@@ -200,11 +201,10 @@ function checked(){
 				<option value="gmail.com">gmail.com</option>
 				<option value="직접입력">직접입력</option>
 		</select>&nbsp;
-		<input type="button" class="btn btn-primary" name="cid" value="중복확인" onclick="idcheck()">
-		</div>	
+		<input type="button" class="btn btn-primary" name="cid" value="중복확인" onclick="empIdcheck()">
+		</div>
 		</td>
 		<td id="msg"></td>
-		
 	</tr>
 	<tr>
 		<th>비밀번호</th>
@@ -220,7 +220,7 @@ function checked(){
 		<td>
 		<div class="form-group">
 			<input type="password" class="form-control" name="epwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
-			<input type="text" class="form-control" name=checkpwd disabled="disabled" style="width: 250px; border: none; background: none;">
+			<input type="text" class="form-control" name="checkpwd" disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
 	</tr>

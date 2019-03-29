@@ -2,37 +2,37 @@ package com.ateam.checkMon.member.model;
 
 public class ManStoreDTO {
 
-	//°ü¸®ÀÚ ÀÎµ¦½º
+	//ê´€ë¦¬ì ì¸ë±ìŠ¤
 	private int manIx;
 		
-	//°ü¸®ÀÚ ÀÌ¸ŞÀÏ
+	//ê´€ë¦¬ì ì•„ì´ë””(ì´ë©”ì¼)
 	private String memail;
 		
-	//°ü¸®ÀÚ ºñ¹Ğ¹øÈ£
+	//ê´€ë¦¬ì ë¹„ë°€ë²ˆí˜¸
 	private String mpwd;
 		
-	//°ü¸®ÀÚ ÀÌ¸§
+	//ê´€ë¦¬ì ì´ë¦„
 	private String mname;
 		
-	//°ü¸®ÀÚ ÇÚµåÆù¹øÈ£
+	//ê´€ë¦¬ì í•¸ë“œí°ë²ˆí˜¸
 	private String mtel;
 		
-	//»ç¾÷ÀÚ µî·Ï¹øÈ£
+	//ê´€ë¦¬ì ì‚¬ì—…ìë“±ë¡ë²ˆí˜¸
 	private String cornum;
 		
-	//¸ÅÀå ÀÎµ¦½º
+	//ë§¤ì¥ì •ë³´ ì¸ë±ìŠ¤
 	private int storeIx;
-	
-	//¸ÅÀå ÀÌ¸§
+		
+	//ë§¤ì¥ì´ë¦„
 	private String storename;
-	
-	//¸ÅÀå ÁÖ¼Ò
+		
+	//ë§¤ì¥ì£¼ì†Œ
 	private String storeaddr;
-	
-	//¸ÅÀå À§µµ
+		
+	//ìœ„ë„
 	private String mlatitude;
-	
-	//¸ÅÀå °æµµ
+		
+	//ê²½ë„
 	private String mlongitude;
 
 	public ManStoreDTO() {

@@ -34,9 +34,11 @@
 			<div class="card">
 				<h4 class="card-header">ChechMon 로그인 하기</h4>
 				<div class="card-body">
-					<form name="login" action="login.do">
+					<form name="login" action="login.do" method="post">
 						<div class="row">
 							<div class="col-md-12">
+								<input type="radio" name="member" value="emp" checked="checked">&nbsp;근무자 로그인&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" name="member" value="man">&nbsp;관리자 로그인
 								<div class="form-group">
 									<label>이메일</label>
 									<div class="input-group">
@@ -66,7 +68,7 @@
 						</div>
 						<div class="row">
 							<div class="checkbox checkbox-primary">
-								<input id="checkbox_remember" type="checkbox" name="remember">
+								<input id="checkbox_remember" type="checkbox" name="remember" value="on">
 								<label for="checkbox_remember">자동 로그인</label>
 							</div>
 						</div>

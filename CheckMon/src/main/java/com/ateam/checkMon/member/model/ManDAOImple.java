@@ -1,5 +1,8 @@
 package com.ateam.checkMon.member.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 public class ManDAOImple implements ManDAO {
@@ -31,6 +34,18 @@ public class ManDAOImple implements ManDAO {
 	//관리자 아이디 체크
 	public String manIdCheck(String memail) {
 		String res=sqlMap.selectOne("manIdCheckSQL",memail);
+		return res;
+	}
+	
+	//관리자 로그인
+	public List<ManDTO> manLogin(Map<String, String> map) {
+		List<ManDTO> list=sqlMap.selectList("manLoginSQL",map);
+		return list;
+	}
+	
+	//관리자 이름
+	public String manName(String meamil) {
+		String res=sqlMap.selectOne("manNameSQL",meamil);
 		return res;
 	}
 	

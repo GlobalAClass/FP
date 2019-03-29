@@ -34,9 +34,7 @@ public class ManController {
 		mdto.setStoreIx(s_ix);
 		int m_result=mandao.addManJoin(mdto);
 		String msg=s_result >0 && m_result >0 ?"회원가입이 완료 되었습니다.":"회원가입에 실패 하였습니다.";
-		
 		ModelAndView mav = new ModelAndView();
-		
 		mav.addObject("msg", msg);
 		mav.setViewName("member/join/memberJoinMsg");
 		
@@ -47,7 +45,6 @@ public class ManController {
 	@RequestMapping(value="/manIdCheck.do", method=RequestMethod.GET)
 	public ModelAndView manIdCheck(
 			@RequestParam(value="memail",required=false)String memail) {
-		
 		String res=mandao.manIdCheck(memail);
 		ModelAndView mav=new ModelAndView();
 		if(res==null) {
