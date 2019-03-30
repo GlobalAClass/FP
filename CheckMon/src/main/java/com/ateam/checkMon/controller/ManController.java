@@ -36,9 +36,9 @@ public class ManController {
 	@RequestMapping(value="/manJoin.do", method=RequestMethod.POST)
 	public ModelAndView addManJoin(StoreDTO sdto, ManDTO mdto) {
 		int s_ix = mandao.getNextStoreIx();
-		sdto.setStoreIx(s_ix);
+		sdto.setStore_ix(s_ix);
 		int s_result=mandao.addStoreManJoin(sdto);
-		mdto.setStoreIx(s_ix);
+		mdto.setStore_ix(s_ix);
 		int m_result=mandao.addManJoin(mdto);
 		String msg=s_result >0 && m_result >0 ?"회원가입이 완료 되었습니다.":"회원가입에 실패 하였습니다.";
 		ModelAndView mav = new ModelAndView();
@@ -51,8 +51,8 @@ public class ManController {
 	//관리자 아이디 중복체크
 	@RequestMapping(value="/manIdCheck.do", method=RequestMethod.GET)
 	public ModelAndView manIdCheck(
-			@RequestParam(value="memail",required=false)String memail) {
-		String res=mandao.manIdCheck(memail);
+			@RequestParam(value="m_email",required=false)String m_email) {
+		String res=mandao.manIdCheck(m_email);
 		ModelAndView mav=new ModelAndView();
 		if(res==null) {
 			mav.setViewName("member/join/idCheckSucces");
