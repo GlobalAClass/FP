@@ -17,17 +17,21 @@ public class StoreDTO {
 	//경도
 	private String m_longitude;
 	
+	//관리자 인덱스
+	private int man_ix;
+	
 	public StoreDTO() {
 		super();
 	}
 
-	public StoreDTO(int store_ix, String store_name, String store_addr, String m_latitude, String m_longitude) {
+	public StoreDTO(int store_ix, String store_name, String store_addr, String m_latitude, String m_longitude, int man_ix) {
 		super();
 		this.store_ix = store_ix;
 		this.store_name = store_name;
 		this.store_addr = store_addr;
 		this.m_latitude = m_latitude;
 		this.m_longitude = m_longitude;
+		this.man_ix = man_ix;
 	}
 
 	public int getStore_ix() {
@@ -68,6 +72,14 @@ public class StoreDTO {
 
 	public void setM_longitude(String m_longitude) {
 		this.m_longitude = m_longitude;
+	}
+
+	public int getMan_ix() {
+		return man_ix;
+	}
+
+	public void setMan_ix(int man_ix) {
+		this.man_ix = man_ix;
 	}
 	
 	

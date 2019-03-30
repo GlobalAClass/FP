@@ -14,8 +14,8 @@ public class ManDAOImple implements ManDAO {
 		this.sqlMap = sqlMap;
 	}
 	//관리자 매장정보 인덱스
-	public int getNextStoreIx() {
-		int res=sqlMap.selectOne("getNextStoreIxSQL");
+	public int getNextManIx() {
+		int res=sqlMap.selectOne("getNextManIxSQL");
 		return res;
 	}
 	

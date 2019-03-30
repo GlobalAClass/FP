@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface ManDAO {
 
-	public int getNextStoreIx();
+	public int getNextManIx();
 	public int addStoreManJoin(StoreDTO sdto);
 	public int addManJoin(ManDTO mdto);
 	public String manIdCheck(String m_email);

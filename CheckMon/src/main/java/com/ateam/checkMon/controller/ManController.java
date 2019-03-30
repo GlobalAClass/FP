@@ -35,11 +35,11 @@ public class ManController {
 	//관리자 회원가입 storeIx 받기
 	@RequestMapping(value="/manJoin.do", method=RequestMethod.POST)
 	public ModelAndView addManJoin(StoreDTO sdto, ManDTO mdto) {
-		int s_ix = mandao.getNextStoreIx();
-		sdto.setStore_ix(s_ix);
-		int s_result=mandao.addStoreManJoin(sdto);
-		mdto.setStore_ix(s_ix);
+		int m_ix = mandao.getNextManIx();
+		mdto.setMan_ix(m_ix);
 		int m_result=mandao.addManJoin(mdto);
+		sdto.setMan_ix(m_ix);
+		int s_result=mandao.addStoreManJoin(sdto);
 		String msg=s_result >0 && m_result >0 ?"회원가입이 완료 되었습니다.":"회원가입에 실패 하였습니다.";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);

@@ -30,19 +30,18 @@
 		insert into
 			Man_TB
 		values(
-			Man_TB_SEQ.nextval,
+			#{man_ix},
 			#{m_email},
 			#{m_pwd},
 			#{m_name},
 			#{m_tel},
 			#{corporate_number},
-			#{store_ix},
 			null
 		)
 	</insert>
 	
-	<select id="getNextStoreIxSQL" resultType="int">
-		select store_tb_seq.nextval from dual
+	<select id="getNextManIxSQL" resultType="int">
+		select man_tb_seq.nextval from dual
 	</select>
 	
 	<insert id="addStoreManJoinSQL" parameterType="com.ateam.checkMon.member.model.StoreDTO">
@@ -53,7 +52,8 @@
 			#{store_name},
 			#{store_addr},
 			#{m_latitude},
-			#{m_longitude}
+			#{m_longitude},
+			#{man_ix}
 		)
 	</insert>
 	
