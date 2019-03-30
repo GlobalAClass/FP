@@ -46,8 +46,8 @@ public class EmpController {
 	//근무자 아이디 중복 체크
 	@RequestMapping(value="/empIdCheck.do",method=RequestMethod.GET)
 	public ModelAndView empIdCheck(
-			@RequestParam(value="eemail",required=false)String eemail) {
-		String res=empdao.empIdCheck(eemail);
+			@RequestParam(value="e_email",required=false)String e_email) {
+		String res=empdao.empIdCheck(e_email);
 		ModelAndView mav=new ModelAndView();
 		if(res==null){
 			mav.setViewName("member/join/idCheckSucces");

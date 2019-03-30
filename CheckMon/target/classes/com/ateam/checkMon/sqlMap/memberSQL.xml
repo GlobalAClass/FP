@@ -9,11 +9,11 @@
 		values(
 			Emp_TB_SEQ.nextval,
 			0,
-			#{eemail},
-			#{epwd},
-			#{ename},
-			#{etel},
-			#{ebirthDay},
+			#{e_email},
+			#{e_pwd},
+			#{e_name},
+			#{e_tel},
+			#{e_birthDay},
 			null,
 			null,
 			null
@@ -22,7 +22,7 @@
 	
 	<select id="empIdCheckSQL" parameterType="String" resultType="String">
 		select E_EMAIL from EMP_TB 
-		where E_EMAIL=#{eemail}
+		where E_EMAIL=#{e_email}
 	</select>
 	
 	<insert id="addManJoinSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
@@ -30,12 +30,12 @@
 			Man_TB
 		values(
 			Man_TB_SEQ.nextval,
-			#{memail},
-			#{mpwd},
-			#{mname},
-			#{mtel},
-			#{cornum},
-			#{storeIx}
+			#{m_email},
+			#{m_pwd},
+			#{m_name},
+			#{m_tel},
+			#{corporate_number},
+			#{store_ix}
 		)
 	</insert>
 	
@@ -47,44 +47,46 @@
 		insert into
 			Store_TB
 		values(
-			#{storeIx},
-			#{storename},
-			#{storeaddr},
-			#{mlatitude},
-			#{mlongitude}
+			#{store_ix},
+			#{store_name},
+			#{store_addr},
+			#{m_latitude},
+			#{m_longitude}
 		)
 	</insert>
 	
 	<select id="manIdCheckSQL" parameterType="String" resultType="String">
 		select M_EMAIL from Man_TB 
-		where M_EMAIL=#{memail}
+		where M_EMAIL=#{m_email}
 	</select>
 	
 	<select id="empLoginSQL" parameterType="map" resultType="com.ateam.checkMon.member.model.EmpDTO">
 		select e_email,e_pwd
 		from emp_tb
-		where e_email=#{eemail}
+		where e_email=#{e_email}
+		and e_pwd=#{e_pwd}
 	</select>
 	
 	<select id="empNameSQL" parameterType="String" resultType="String">
 		select e_name
 		from emp_tb
-		where e_email=#{eemail}
+		where e_email=#{e_email}
 	</select>
 	
 	<select id="manLoginSQL" parameterType="map" resultType="com.ateam.checkMon.member.model.ManDTO">
 		select m_email,m_pwd
 		from man_tb
-		where m_email=#{memail}
+		where m_email=#{m_email}
+		and m_pwd=#{m_pwd}
 	</select>
 	
 	<select id="manNameSQL" parameterType="String" resultType="String">
 		select m_name
 		from man_tb
-		where m_email=#{memail}
+		where m_email=#{m_email}
 	</select>
 	<select id="checkQRAndStorIxSQL" parameterType="map" resultType="int">
 		select 1 from man_tb m, emp_tb e 
-		where m.man_ix = e.man_ix and e.e_email=#{eemail} and store_ix = #{storeIx}
+		where m.man_ix = e.man_ix and e.e_email=#{e_email} and store_ix = #{storeIx}
 	</select>
 </mapper>

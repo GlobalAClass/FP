@@ -43,10 +43,10 @@ function empIdcheck(){
 	// DB에 아이디 저장 을 위해 합침
 	var idemail=document.all.idemail.value;
 	var idemail2=document.all.idemail2.value;
-	var eemail=idemail+"@"+idemail2;
-	document.empJoin.eemail.value=eemail;
-	if(empCheckEmail(eemail)){ // 올바른 이메일 주소인지 여부 판단
-		var params='eemail='+eemail;
+	var e_email=idemail+"@"+idemail2;
+	document.empJoin.e_email.value=e_email;
+	if(empCheckEmail(e_email)){ // 올바른 이메일 주소인지 여부 판단
+		var params='e_email='+e_email;
 		sendRequest('empIdCheck.do',params,showResult,'GET');
 	}else{
 		alert("올바른 이메일 주소를 입력해주세요.");
@@ -74,10 +74,10 @@ function noSpace(obj) { // 공백 사용 못하게
 }
 
 function select(){
-	var email=document.empJoin.selectEmail.value;
+	var e_email=document.empJoin.selectEmail.value;
 	
-	if(email !="직접입력"){
-		document.empJoin.idemail2.value=email;
+	if(e_email !="직접입력"){
+		document.empJoin.idemail2.value=e_email;
 		document.empJoin.idemail2.readOnly="readonly";
 	}else{
 		document.empJoin.idemail2.readOnly=false;
@@ -113,14 +113,14 @@ function checktel(tel){
 }
 //비밀번호 일치 여부 출력
 function checkPwd(){
-	epwd1=document.empJoin.epwd1.value;
-	epwd2=document.empJoin.epwd2.value;
+	e_pwd1=document.empJoin.e_pwd1.value;
+	e_pwd2=document.empJoin.e_pwd2.value;
 	
-	if(typeof epwd2!="undefined"&&epwd2.length>0){
-		if(epwd1 == epwd2){
+	if(typeof e_pwd2!="undefined"&&e_pwd2.length>0){
+		if(e_pwd1 == e_pwd2){
 			document.empJoin.checkpwd.value = "비밀번호가 일치합니다.";
 			document.empJoin.checkpwd.style.color = 'green';
-			document.empJoin.epwd.value=epwd2;
+			document.empJoin.e_pwd.value=e_pwd2;
 			return true;
 		}else{
 			document.empJoin.checkpwd.value = "비밀번호가 일치하지 않습니다.";
@@ -137,26 +137,26 @@ function checkPwd(){
 //Submit 전에 유효성 검사 및 생년월일 / 전화번호 조합
 function checked(){
 	//생년월일 조합
-	empJoin.ebirthDay.value=empJoin.year.value+"-"+empJoin.month.value+"-"+empJoin.day.value;
+	empJoin.e_birthDay.value=empJoin.year.value+"-"+empJoin.month.value+"-"+empJoin.day.value;
 	//전화번호 조합
-	empJoin.etel.value=empJoin.seltel.value+"-"+empJoin.tel1.value+"-"+empJoin.tel2.value;
-	if(empJoin.eemail.value==""){
+	empJoin.e_tel.value=empJoin.seltel.value+"-"+empJoin.tel1.value+"-"+empJoin.tel2.value;
+	if(empJoin.e_email.value==""){
 		alert("아이디 중복을 확인해주세요.");
 		empJoin.cid.focus();
 		return false;
-	}else if(empJoin.epwd.value==""){
+	}else if(empJoin.e_pwd.value==""){
 		alert("비밀번호를 확인해주세요.");
 		empJoin.epwd.focus();
 		return false;
-	}else if(empJoin.ename.value==""){
+	}else if(empJoin.e_name.value==""){
 		alert("이름을 확인해주세요.");
 		empJoin.ename.focus();
 		return false;
-	}else if(empJoin.ebirthDay.value==""){
+	}else if(empJoin.e_birthDay.value==""){
 		alert("생년월일을 선택해주세요.");
 		empJoin.ebirthDay.focus();
 		return false;
-	}else if(empJoin.etel.value==""){
+	}else if(empJoin.e_tel.value==""){
 		alert("핸드폰번호를 입력해주세요.");
 		empJoin.etel.focus();
 		return false;
@@ -188,7 +188,7 @@ function checked(){
 		<th>이메일</th>
 		<td>
 		<div class="form-group">
-		<input type="text" hidden="" name="eemail">
+		<input type="text" hidden="" name="e_email">
 		<input type="text" class="form-control" size="12" name="idemail" onkeyup="noSpace(this);" onchange="noSpace(this);" placeholder="이메일 입력" required="required"> @
 		<input type="text" class="form-control" size="12" name="idemail2" onkeyup="noSpace(this);" onchange="noSpace(this);" required="required" readonly="readonly">&nbsp;
 		<select class="form-control" name="selectEmail" onchange="select()">
@@ -210,8 +210,8 @@ function checked(){
 		<th>비밀번호</th>
 		<td>
 		<div class="form-group">
-			<input type="text" class="form-control" hidden="" name="epwd" value="">
-			<input type="password" class="form-control" name="epwd1" placeholder="비밀번호 입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="text" class="form-control" hidden="" name="e_pwd" value="">
+			<input type="password" class="form-control" name="e_pwd1" placeholder="비밀번호 입력" required="required" onchange="noSpace(this);checkPwd()">
 		</div>
 		</td>
 	</tr>
@@ -219,21 +219,21 @@ function checked(){
 		<th>비밀번호 확인</th>
 		<td>
 		<div class="form-group">
-			<input type="password" class="form-control" name="epwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="password" class="form-control" name="e_pwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
 			<input type="text" class="form-control" name="checkpwd" disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
 	</tr>
 	<tr>
 		<th>이름</th>
-		<td><div class="form-group"><input type="text" class="form-control" name="ename" placeholder="실명을 입력해주세요" required="required" onkeyup="noSpace(this);" onchange="noSpace(this);"></div></td>
+		<td><div class="form-group"><input type="text" class="form-control" name="e_name" placeholder="실명을 입력해주세요" required="required" onkeyup="noSpace(this);" onchange="noSpace(this);"></div></td>
 	</tr>
 	<tr>
 		<th>생년월일</th>
 		<td>
 		<div class="form-group">
-			<input type="text" hidden="" name="ebirthDay">
-			<select class="form-control" name="year" required="required">
+			<input type="text" hidden="" name="e_birthDay">
+			<select class="form-control" 	name="year" required="required">
 				<option value="">년</option>
 				<c:forEach var="i" begin="1970" end="2019" step="1">
 					<option>${i}</option>
@@ -258,7 +258,7 @@ function checked(){
 		<th>핸드폰번호</th>
 		<td>
 		<div class="form-group">
-		<input type="text" hidden="" name="etel">
+		<input type="text" hidden="" name="e_tel">
 		<select class="form-control" name="seltel" required="required">
 				<option>010</option>
 				<option>011</option>

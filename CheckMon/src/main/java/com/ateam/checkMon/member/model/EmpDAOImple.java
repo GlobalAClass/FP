@@ -22,8 +22,8 @@ public class EmpDAOImple implements EmpDAO {
 	}
 	
 	//근무자 아이디 체크
-	public String empIdCheck(String eemail) {
-		String res=sqlMap.selectOne("empIdCheckSQL",eemail);
+	public String empIdCheck(String e_email) {
+		String res=sqlMap.selectOne("empIdCheckSQL",e_email);
 		return res;
 	}
 	
@@ -34,16 +34,16 @@ public class EmpDAOImple implements EmpDAO {
 	}
 	
 	//근무자 이름
-	public String empName(String eemail) {
-		String res=sqlMap.selectOne("empNameSQL",eemail);
+	public String empName(String e_email) {
+		String res=sqlMap.selectOne("empNameSQL",e_email);
 		return res;
 	}
 	
 	// 근무자 출근 - QR정보와 매장IX 일치 확인
-	public boolean checkQRAndStorIx(String eemail, String storeIx) {
+	public boolean checkQRAndStorIx(String e_email, String store_ix) {
 		Map<String, String> temp = new HashMap<String, String>();
-		temp.put("eemail", eemail);
-		temp.put("storeIx", storeIx);
+		temp.put("eemail", e_email);
+		temp.put("storeIx", store_ix);
 		
 		boolean res = sqlMap.selectOne("checkQRAndStorIxSQL", temp) == null ? false : true;
 		return res;

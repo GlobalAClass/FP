@@ -7,8 +7,8 @@ public interface ManDAO {
 	public int getNextStoreIx();
 	public int addStoreManJoin(StoreDTO sdto);
 	public int addManJoin(ManDTO mdto);
-	public String manIdCheck(String memail);
+	public String manIdCheck(String m_email);
 	public List<ManDTO> manLogin(Map<String,String> map);
-	public String manName(String meamil);
+	public String manName(String m_email);
 	
 }

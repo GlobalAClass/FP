@@ -32,8 +32,8 @@ public class ManDAOImple implements ManDAO {
 	}
 	
 	//관리자 아이디 체크
-	public String manIdCheck(String memail) {
-		String res=sqlMap.selectOne("manIdCheckSQL",memail);
+	public String manIdCheck(String m_email) {
+		String res=sqlMap.selectOne("manIdCheckSQL",m_email);
 		return res;
 	}
 	
@@ -44,8 +44,8 @@ public class ManDAOImple implements ManDAO {
 	}
 	
 	//관리자 이름
-	public String manName(String meamil) {
-		String res=sqlMap.selectOne("manNameSQL",meamil);
+	public String manName(String m_email) {
+		String res=sqlMap.selectOne("manNameSQL",m_email);
 		return res;
 	}
 	

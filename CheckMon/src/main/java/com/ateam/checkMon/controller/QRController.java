@@ -25,14 +25,14 @@ public class QRController {
 	//QR 인식 후 결과 처리.
 	@RequestMapping("/checkQRInfo.do")
 	public ModelAndView checkQRInfo(
-			@RequestParam(name="storeIx")String storeIx
+			@RequestParam(name="storeIx")String store_ix
 			//,HttpSession s
 			) {
 		
 		//System.out.println(storeIx);
 		//String uid = (String)s.getAttribute("uid");
 		String uid = "1@naver.com";
-		boolean QRcheck = dao.checkQRAndStorIx(uid, storeIx);
+		boolean QRcheck = dao.checkQRAndStorIx(uid, store_ix);
 		
 		
 		ModelAndView mav = new ModelAndView("member/checkCom/msgCom");

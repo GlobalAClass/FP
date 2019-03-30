@@ -88,10 +88,10 @@ function idcheck(){
 	// DB에 아이디 저장 을 위해 합침
 	var idemail=document.all.idemail.value;
 	var idemail2=document.all.idemail2.value;
-	var memail=idemail+"@"+idemail2;
-	document.manJoin.memail.value=memail;
-	if(checkEmail(memail)){ // 올바른 이메일 주소인지 여부 판단
-		var params='memail='+memail;
+	var m_email=idemail+"@"+idemail2;
+	document.manJoin.m_email.value=m_email;
+	if(checkEmail(m_email)){ // 올바른 이메일 주소인지 여부 판단
+		var params='m_email='+m_email;
 		sendRequest('manIdCheck.do',params,showResult,'GET');
 	}else{
 		alert("올바른 이메일 주소를 입력해주세요.");
@@ -118,10 +118,10 @@ function noSpace(obj) { // 공백 사용 못하게
 }
 
 function select(){
-	var email=document.manJoin.selectEmail.value;
+	var m_email=document.manJoin.selectEmail.value;
 	
-	if(email !="직접입력"){
-		document.manJoin.idemail2.value=email;
+	if(m_email !="직접입력"){
+		document.manJoin.idemail2.value=m_email;
 		document.manJoin.idemail2.readOnly="readonly";
 	}else{
 		document.manJoin.idemail2.readOnly=false;
@@ -167,14 +167,14 @@ function checkcornum(cornum){
 
 //비밀번호 일치 여부 출력
 function checkPwd(){
-	mpwd1=document.manJoin.mpwd1.value;
-	mpwd2=document.manJoin.mpwd2.value;
+	m_pwd1=document.manJoin.m_pwd1.value;
+	m_pwd2=document.manJoin.m_pwd2.value;
 	
-	if(typeof mpwd2!="undefined"&&mpwd2.length>0){
-		if(mpwd1 == mpwd2){
+	if(typeof m_pwd2!="undefined"&&m_pwd2.length>0){
+		if(m_pwd1 == m_pwd2){
 			document.manJoin.checkpwd.value = "비밀번호가 일치합니다.";
 			document.manJoin.checkpwd.style.color = 'green';
-			document.manJoin.mpwd.value=mpwd2;
+			document.manJoin.m_pwd.value=m_pwd2;
 		}else{
 			document.manJoin.checkpwd.value = "비밀번호가 일치하지 않습니다.";
 			document.manJoin.checkpwd.style.color = 'red';
@@ -187,7 +187,7 @@ function checkPwd(){
 
 //매장정보 등록했는지 유효성 검사
 function checkStore(){
-	res = document.manJoin.mlatitude.value;
+	res = document.manJoin.m_latitude.value;
 	
 	if(res==null || res==''){
 		alert('매장을 검색 후 입력해주세요.');
@@ -199,26 +199,26 @@ function checkStore(){
 //Submit 전에 유효성 검사 및 생년월일 / 전화번호 조합
 function checked(){
 	//전화번호 조합
-	manJoin.mtel.value=manJoin.seltel.value+"-"+manJoin.tel1.value+"-"+manJoin.tel2.value;
+	manJoin.m_tel.value=manJoin.seltel.value+"-"+manJoin.tel1.value+"-"+manJoin.tel2.value;
 	//사업자등록번호 조합
-	manJoin.cornum.value=manJoin.cornum1.value+"-"+manJoin.cornum2.value+"-"+manJoin.cornum3.value;
-	if(manJoin.memail.value==""){
+	manJoin.corporate_number.value=manJoin.cornum1.value+"-"+manJoin.cornum2.value+"-"+manJoin.cornum3.value;
+	if(manJoin.m_email.value==""){
 		alert("아이디 중복을 확인해주세요.");
 		manJoin.cid.focus();
 		return false;
-	}else if(manJoin.mpwd.value==""){
+	}else if(manJoin.m_pwd.value==""){
 		alert("비밀번호를 확인해주세요.");
 		manJoin.mpwd.focus();
 		return false;
-	}else if(manJoin.mname.value==""){
+	}else if(manJoin.m_name.value==""){
 		alert("이름을 확인해주세요.");
 		manJoin.mname.focus();
 		return false;
-	}else if(manJoin.mtel.value==""){
+	}else if(manJoin.m_tel.value==""){
 		alert("핸드폰번호를 입력해주세요.");
 		manJoin.mtel.focus();
 		return false;
-	}else if(manJoin.cornum.value==""){
+	}else if(manJoin.corporate_number.value==""){
 		alert("사업자 등록번호를 입력해주세요.");
 		manJoin.cornum.focus();
 		return false;
@@ -250,7 +250,7 @@ function checked(){
 		<th>이메일</th>
 		<td>
 		<div class="form-group">
-		<input type="text" hidden="" name="memail">
+		<input type="text" hidden="" name="m_email">
 		<input type="text" class="form-control" size="12" name="idemail" onkeyup="noSpace(this);" onchange="noSpace(this);" placeholder="이메일 입력" required="required"> @
 		<input type="text" class="form-control" size="12" name="idemail2" onkeyup="noSpace(this);" onchange="noSpace(this);" required="required" readonly="readonly">&nbsp;
 		<select class="form-control" name="selectEmail" onchange="select()">
@@ -272,8 +272,8 @@ function checked(){
 		<th>비밀번호</th>
 		<td>
 		<div class="form-group">
-			<input type="text" class="form-control" hidden="" name="mpwd" value="">
-			<input type="password" class="form-control" name="mpwd1" placeholder="비밀번호 입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="text" class="form-control" hidden="" name="m_pwd" value="">
+			<input type="password" class="form-control" name="m_pwd1" placeholder="비밀번호 입력" required="required" onchange="noSpace(this);checkPwd()">
 		</div>
 		</td>
 	</tr>
@@ -281,20 +281,20 @@ function checked(){
 		<th>비밀번호 확인</th>
 		<td>
 		<div class="form-group">
-			<input type="password" class="form-control" name="mpwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="password" class="form-control" name="m_pwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
 			<input type="text" class="form-control" name="checkpwd" disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
 	</tr>
 	<tr>
 		<th>이름</th>
-		<td><div class="form-group"><input type="text" class="form-control" name="mname" placeholder="실명을 입력해주세요" required="required" onkeyup="noSpace(this);" onchange="noSpace(this);"></div></td>
+		<td><div class="form-group"><input type="text" class="form-control" name="m_name" placeholder="실명을 입력해주세요" required="required" onkeyup="noSpace(this);" onchange="noSpace(this);"></div></td>
 	</tr>
 	<tr>
 		<th>핸드폰번호</th>
 		<td>
 		<div class="form-group">
-		<input type="text" hidden="" name="mtel">
+		<input type="text" hidden="" name="m_tel">
 		<select class="form-control" name="seltel" required="required">
 				<option>010</option>
 				<option>011</option>
@@ -309,7 +309,7 @@ function checked(){
 		<th>사업자 등록 번호</th>
 		<td>
 		<div class="form-group">
-			<input type="text" hidden="" name="cornum">
+			<input type="text" hidden="" name="corporate_number">
 			<input type="text" class="form-control" name="cornum1" required="required" maxlength="3" size="5" onchange="checkcornum(this);" onkeyup="noSpace(this);">-
 			<input type="text" class="form-control" name="cornum2" required="required" maxlength="2" size="5" onchange="checkcornum(this);" onkeyup="noSpace(this);">-
 			<input type="text" class="form-control" name="cornum3" required="required" maxlength="5" size="11" onchange="checkcornum(this);" onkeyup="noSpace(this);">
@@ -355,18 +355,18 @@ function checked(){
 							<!-- 지도에서 클릭한 정보 표시해주는 div -->
 							<div class="col-md-12 mb-6" style="padding:10px;" class="form-inline">
 								<div class="col-md-12 mb-6">
-									<h5 style="font-weight:bold;">매장명<input type="text" class="form-control-plaintext" name="storename" readonly></h5>
+									<h5 style="font-weight:bold;">매장명<input type="text" class="form-control-plaintext" name="store_name" readonly></h5>
 								</div>
 								<div class="col-md-12 mb-6">
-									<h5 style="font-weight:bold;">매장 주소<input type="text" class="form-control-plaintext" name="storeaddr" readonly></h5>
+									<h5 style="font-weight:bold;">매장 주소<input type="text" class="form-control-plaintext" name="store_addr" readonly></h5>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer" align="center">
 					<!-- 클릭한 매장 정보 -->
-						<input type="text" name="mlatitude" value="">
-						<input type="text" name="mlongitude" value="">
+						<input type="hidden" name="m_latitude" value="">
+						<input type="hidden" name="m_longitude" value="">
 						<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
 					</div>
 					</div>
@@ -506,18 +506,18 @@ function displayPlaces(places) {
         	// 마커에 click 이벤트를 등록하여
        		// 마커를 클릭하거나 리스트를 클릭하면 해당 되는 매장의 이름, 주소, 위도, 경도값을 알 수 있음
            daum.maps.event.addListener(marker, 'click', function() {
-        	   document.getElementsByName('storename')[0].value = title;
-        	   document.getElementsByName('storeaddr')[0].value = address;
-        	   document.getElementsByName('mlatitude')[0].value = latitude;
-        	   document.getElementsByName('mlongitude')[0].value = longitude;
+        	   document.getElementsByName('store_name')[0].value = title;
+        	   document.getElementsByName('store_addr')[0].value = address;
+        	   document.getElementsByName('m_latitude')[0].value = latitude;
+        	   document.getElementsByName('m_longitude')[0].value = longitude;
   
            });
            
            itemEl.onclick = function() {
-        	   document.getElementsByName('storename')[0].value = title;
-        	   document.getElementsByName('storeaddr')[0].value = address;
-        	   document.getElementsByName('mlatitude')[0].value = latitude;
-        	   document.getElementsByName('mlongitude')[0].value = longitude;
+        	   document.getElementsByName('store_name')[0].value = title;
+        	   document.getElementsByName('store_addr')[0].value = address;
+        	   document.getElementsByName('m_latitude')[0].value = latitude;
+        	   document.getElementsByName('m_longitude')[0].value = longitude;
            };
         	
         })(places[i].place_name, places[i].address_name, places[i].y, places[i].x);
@@ -637,7 +637,7 @@ function removeAllChildNods(el) {
  
 //매장 등록 후 매장 이름을 뿌려줌
 function setStoreName(){
-	document.getElementById('s_name').value=document.getElementsByName('storename')[0].value;
+	document.getElementById('s_name').value=document.getElementsByName('store_name')[0].value;
 	$('#myModal').modal('hide');
 }
 </script>
