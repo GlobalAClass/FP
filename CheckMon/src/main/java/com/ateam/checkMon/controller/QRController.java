@@ -40,4 +40,10 @@ public class QRController {
 		
 		return mav;
 	}
+
+	// QR생성 및 다운로드 페이지
+	@RequestMapping("/generateQR.do")
+	public String goQRGenerator() {
+		return "member/checkCom/generateQR";
+	}
 }

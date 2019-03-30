@@ -9,6 +9,11 @@
 <body>
 	<section class="container" id="demo-content">
 		<h1 class="title">QR코드를 인식해주세요.</h1>
+		수정해야 할 부분 : Session에서 근무자의 id 혹은 index를 이용하여 조회하는 거 구성하기.
+		1. form태그 안에 근무자 정보 받을 태그 쓰기
+		2. controller 수정
+		3. dao 수정
+		4. sql 수정.
 		<br>
 		<div>
 			<video id="video" width="300" height="200"
@@ -18,6 +23,7 @@
 	</section>
 
 	<form id="QRfm" action="checkQRInfo.do" method="post">
+		
 		<input type="hidden" id="input_result" name="storeIx">
 	</form>
 
