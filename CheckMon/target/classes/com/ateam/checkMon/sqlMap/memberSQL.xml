@@ -48,7 +48,7 @@
 		insert into
 			Store_TB
 		values(
-			#{store_ix},
+			store_tb_seq.nextval,
 			#{store_name},
 			#{store_addr},
 			#{m_latitude},
