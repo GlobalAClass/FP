@@ -8,7 +8,7 @@
 			Emp_TB
 		values(
 			Emp_TB_SEQ.nextval,
-			#{man_ix},
+			null,
 			#{e_email},
 			#{e_pwd},
 			#{e_name},
@@ -26,6 +26,18 @@
 		where E_EMAIL=#{e_email}
 	</select>
 	
+	<update id="addEmpPwdSQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
+		update emp_tb 
+		set e_rpwd=#{e_rpwd}
+		where e_email=#{e_email}
+	</update>
+	
+	<select id="empAutoLoginSQL" parameterType="String" resultType="String">
+		select e_rpwd 
+		from emp_tb 
+		where e_email=#{e_email}
+	</select>
+	
 	<insert id="addManJoinSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
 		insert into
 			Man_TB
@@ -39,6 +51,18 @@
 			null
 		)
 	</insert>
+	
+	<update id="addManPwdSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
+		update man_tb 
+		set m_rpwd=#{m_rpwd}
+		where m_email=#{m_email}
+	</update>
+	
+	<select id="manAutoLoginSQL" parameterType="String" resultType="String">
+		select m_rpwd 
+		from man_tb 
+		where m_email=#{m_email}
+	</select>
 	
 	<select id="getNextManIxSQL" resultType="int">
 		select man_tb_seq.nextval from dual

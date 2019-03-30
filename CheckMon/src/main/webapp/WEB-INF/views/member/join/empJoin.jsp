@@ -121,16 +121,13 @@ function checkPwd(){
 			document.empJoin.checkpwd.value = "비밀번호가 일치합니다.";
 			document.empJoin.checkpwd.style.color = 'green';
 			document.empJoin.e_pwd.value=e_pwd2;
-			return true;
 		}else{
 			document.empJoin.checkpwd.value = "비밀번호가 일치하지 않습니다.";
 			document.empJoin.checkpwd.style.color = 'red';
-			return false;
 		}
 	}else{
 		document.empJoin.checkpwd.value = "비밀번호확인을 입력하세요.";
 		document.empJoin.checkpwd.style.color = 'red';
-		return false;
 	}
 }
 
@@ -191,7 +188,7 @@ function checked(){
 		<input type="text" hidden="" name="e_email">
 		<input type="text" class="form-control" size="12" name="idemail" onkeyup="noSpace(this);" onchange="noSpace(this);" placeholder="이메일 입력" required="required"> @
 		<input type="text" class="form-control" size="12" name="idemail2" onkeyup="noSpace(this);" onchange="noSpace(this);" required="required" readonly="readonly">&nbsp;
-		<select class="form-control" name="selectEmail" onchange="select()">
+		<select class="form-control" name="selectEmail" onchange="select()" required="required">
 				<option value="">선택하세요</option>
 				<option value="naver.com">naver.com</option>
 				<option value="hanmail.net">hanmail.net</option>

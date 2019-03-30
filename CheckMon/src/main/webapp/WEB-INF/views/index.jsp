@@ -26,6 +26,13 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
 <script>
 
+//랜덤 비밀번호 설정을 위해 값을 hidden으로 넘김
+function addRandomPwd(){
+	var l_email=document.login.login_email.value;
+	document.login.e_email.value=l_email;
+	document.login.m_email.value=l_email;
+}
+
 </script>
 </head>
 <body>
@@ -37,6 +44,10 @@
 					<form name="login" action="login.do" method="post">
 						<div class="row">
 							<div class="col-md-12">
+								<input type="text" class="form-control" hidden="" name="e_rpwd" value="${temp}">
+								<input type="text" class="form-control" hidden="" name="m_rpwd" value="${temp}">
+								<input type="text" hidden="" name="e_email">
+								<input type="text" hidden="" name="m_email">
 								<input type="radio" name="member" value="emp" checked="checked">&nbsp;근무자 로그인&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="radio" name="member" value="man">&nbsp;관리자 로그인
 								<div class="form-group">
@@ -68,7 +79,7 @@
 						</div>
 						<div class="row">
 							<div class="checkbox checkbox-primary">
-								<input id="checkbox_remember" type="checkbox" name="remember" value="on">
+								<input id="checkbox_remember" type="checkbox" name="remember" value="on" onclick="addRandomPwd()">
 								<label for="checkbox_remember">자동 로그인</label>
 							</div>
 						</div>

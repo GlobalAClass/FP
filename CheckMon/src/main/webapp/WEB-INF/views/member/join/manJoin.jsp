@@ -253,7 +253,7 @@ function checked(){
 		<input type="text" hidden="" name="m_email">
 		<input type="text" class="form-control" size="12" name="idemail" onkeyup="noSpace(this);" onchange="noSpace(this);" placeholder="이메일 입력" required="required"> @
 		<input type="text" class="form-control" size="12" name="idemail2" onkeyup="noSpace(this);" onchange="noSpace(this);" required="required" readonly="readonly">&nbsp;
-		<select class="form-control" name="selectEmail" onchange="select()">
+		<select class="form-control" name="selectEmail" onchange="select()" required="required">
 				<option value="">선택하세요</option>
 				<option value="naver.com">naver.com</option>
 				<option value="hanmail.net">hanmail.net</option>

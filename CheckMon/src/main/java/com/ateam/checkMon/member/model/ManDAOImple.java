@@ -31,6 +31,18 @@ public class ManDAOImple implements ManDAO {
 		return count;
 	}
 	
+	//관리자 자동로그인 랜덤비밀번호 생성
+	public int addManPwd(ManDTO dto) {
+		int temp=sqlMap.update("addManPwdSQL",dto);
+		return temp;
+	}
+		
+	//관리자 자동로그인
+	public String manAutoLogin(String m_email) {
+		String temp=sqlMap.selectOne("manAutoLoginSQL",m_email);
+		return temp;
+	}
+	
 	//관리자 아이디 체크
 	public String manIdCheck(String m_email) {
 		String res=sqlMap.selectOne("manIdCheckSQL",m_email);

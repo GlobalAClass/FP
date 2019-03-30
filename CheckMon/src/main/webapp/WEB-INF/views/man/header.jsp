@@ -23,7 +23,7 @@
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
                                 <div class="dropdown-item noti-title">
-                                    <h5 class="text-overflow"><small>관리자 OOO님</small> </h5>
+                                    <h5 class="text-overflow"><small>관리자 ${m_name}님</small> </h5>
                                 </div>
 
                                 <!-- item-->
@@ -32,7 +32,7 @@
                                 </a>
 
                                 <!-- item-->
-                                <a href="#" class="dropdown-item notify-item">
+                                <a href="logout.do" class="dropdown-item notify-item">
                                     <i class="fa fa-power-off"></i> <span>로그아웃</span>
                                 </a>
 								

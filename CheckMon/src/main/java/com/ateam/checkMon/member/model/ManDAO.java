@@ -10,5 +10,6 @@ public interface ManDAO {
 	public String manIdCheck(String m_email);
 	public List<ManDTO> manLogin(Map<String,String> map);
 	public String manName(String m_email);
-	
+	public int addManPwd(ManDTO dto);
+	public String manAutoLogin(String m_email);
 }

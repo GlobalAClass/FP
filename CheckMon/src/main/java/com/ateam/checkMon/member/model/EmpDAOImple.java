@@ -21,6 +21,18 @@ public class EmpDAOImple implements EmpDAO {
 		return count;
 	}
 	
+	//근무자 자동로그인 랜덤비밀번호 생성
+	public int addEmpPwd(EmpDTO dto) {
+		int temp=sqlMap.update("addEmpPwdSQL",dto);
+		return temp;
+	}
+	
+	//근무자 자동로그인
+	public String empAutoLogin(String e_email) {
+		String temp=sqlMap.selectOne("empAutoLoginSQL",e_email);
+		return temp;
+	}
+	
 	//근무자 아이디 체크
 	public String empIdCheck(String e_email) {
 		String res=sqlMap.selectOne("empIdCheckSQL",e_email);
