@@ -8,12 +8,13 @@
 			Emp_TB
 		values(
 			Emp_TB_SEQ.nextval,
-			0,
+			#{man_ix},
 			#{e_email},
 			#{e_pwd},
 			#{e_name},
 			#{e_tel},
 			#{e_birthDay},
+			null,
 			null,
 			null,
 			null
@@ -35,7 +36,8 @@
 			#{m_name},
 			#{m_tel},
 			#{corporate_number},
-			#{store_ix}
+			#{store_ix},
+			null
 		)
 	</insert>
 	
@@ -88,5 +90,10 @@
 	<select id="checkQRAndStorIxSQL" parameterType="map" resultType="int">
 		select 1 from man_tb m, emp_tb e 
 		where m.man_ix = e.man_ix and e.e_email=#{e_email} and store_ix = #{storeIx}
+	</select>
+	<select id="getStoreListSQL" parameterType="String" resultType="com.ateam.checkMon.member.model.StoreDTO">
+		select *
+		from store_tb
+		where store_name like '%'||#{searchStore}||'%'
 	</select>
 </mapper>
