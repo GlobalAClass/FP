@@ -51,9 +51,9 @@ public class LoginController {
 			session.setAttribute("e_name",empname);
 			
 			//근무자 DB값과 입력값 비교
-			List<EmpDTO> elist=empdao.empLogin(e_map);
-			if(elist.size()==0) {
-				String msg="등록 되지 않은 ID 및 비밀번호 입니다.";		
+			EmpDTO elist=empdao.empLogin(e_map);
+			if(elist==null) {
+				String msg="등록 되지 않은 ID 및 비밀번호 입니다.";
 				mav.addObject("msg",msg);
 				mav.setViewName("member/join/loginFail");
 			}else {
@@ -93,8 +93,8 @@ public class LoginController {
 			session.setAttribute("m_name", manname);
 			
 			//관리자 DB값과 입력값 비교
-			List<ManDTO> mlist=mandao.manLogin(m_map);
-			if(mlist.size()==0) {
+			ManDTO mlist=mandao.manLogin(m_map);
+			if(mlist==null) {
 				String msg="등록 되지 않은 ID 및 비밀번호 입니다.";		
 				mav.addObject("msg",msg);
 				mav.setViewName("member/join/loginFail");
@@ -136,7 +136,7 @@ public class LoginController {
 			) {
 		
 		ModelAndView mav=new ModelAndView();
-		
+		//저장 쿠키값 초기화 
 		Cookie ck_epwd=new Cookie("e_rpwd",e_rpwd);
 		ck_epwd.setMaxAge(0);
 		resp.addCookie(ck_epwd);

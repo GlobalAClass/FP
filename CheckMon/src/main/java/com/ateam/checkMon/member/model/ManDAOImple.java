@@ -50,8 +50,8 @@ public class ManDAOImple implements ManDAO {
 	}
 	
 	//관리자 로그인
-	public List<ManDTO> manLogin(Map<String, String> map) {
-		List<ManDTO> list=sqlMap.selectList("manLoginSQL",map);
+	public ManDTO manLogin(Map<String, String> map) {
+		ManDTO list=sqlMap.selectOne("manLoginSQL",map);
 		return list;
 	}
 	

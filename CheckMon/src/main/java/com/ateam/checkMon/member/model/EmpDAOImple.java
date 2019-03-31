@@ -40,8 +40,8 @@ public class EmpDAOImple implements EmpDAO {
 	}
 	
 	//근무자 로그인
-	public List<EmpDTO> empLogin(Map<String, String> map) {
-		List<EmpDTO> list=sqlMap.selectList("empLoginSQL",map);
+	public EmpDTO empLogin(Map<String, String> map) {
+		EmpDTO list=sqlMap.selectOne("empLoginSQL",map);
 		return list;
 	}
 	
