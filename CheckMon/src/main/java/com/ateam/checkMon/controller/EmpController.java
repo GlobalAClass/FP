@@ -1,5 +1,7 @@
 package com.ateam.checkMon.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +59,17 @@ public class EmpController {
 		return mav;
 	}
 	
+	//근무자 근무지 선택 시 매장 정보 조회
+	@RequestMapping(value="/getStoreName.do", method=RequestMethod.POST)
+	public ModelAndView getStoreName(
+			@RequestParam(value="searchStore")String searchStore) {
+		List<StoreDTO> list = empdao.getStoreList(searchStore);
+		System.out.println("controller : "+list.toString());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list",list);
+		mav.setViewName("cmjson");
+		return mav;
+	}
 	
 	
 }

@@ -267,6 +267,52 @@ function checked(){
 		</td>
 	</tr>
 	<tr>
+		<th>매장 이름</th>
+		<td>
+		<div class="form-group">
+			<input type="text" class="form-control" id="s_name" required="required" size="50" placeholder="찾기 버튼을 눌러주세요." readonly="readonly">&nbsp;
+			<input type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" value="매장 찾기">
+			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			   		<div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">매장 찾기</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+			     	 </div>
+			     	 <div class="modal-body">
+			     		 <!-- 검색 진행하여 db에서 가져온 매장 목록 출력 -->
+			     			<div class="col-12">
+								<input class="form-control" type="text" size="70" id="searchStore" placeholder="매장명을 입력해주세요">
+								<input class="btn btn-primary" type="button" value="검색하기" onclick="showStore()">
+							</div>
+				      	<div class="row" style="margin-top:10px;">
+							 <div class="col-6">
+							    <div class="list-group" id="loc_list" role="tablist">
+							  
+							    </div>
+							  </div>
+							  <div class="col-6">
+							    <div class="tab-content" id="loc_content">
+							   
+							    </div>
+							  </div>
+						</div>
+					</div>
+					<div class="modal-footer" align="center">
+					<!-- 클릭한 매장 정보 -->
+						<input type="hidden" id="choose_store" name="man_ix" value="">
+						<input type="hidden" id="store_name" value="">
+						<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
+					</div>
+					</div>
+			    </div>
+			  </div>
+			</div>
+		</td>
+	</tr>
+	<tr>
 		<td colspan="3" align="center">
 			<input type="submit" class="btn btn-success" value="가입하기">
 			<a href="index.do"><input type="button" class="btn btn-secondary" value="취소"></a>
@@ -277,4 +323,116 @@ function checked(){
 	</div>
 </div>
 </body>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=481b44d52e7e30455d59a5d6206d3b65"></script>
+<script>
+
+//list 클릭 시 map 메소드 호출하여 해당 지도 위치 출력하기
+function map(latitude,longitude){
+	//지도 생성
+	
+	var size = document.getElementsByName('map').length;
+	
+	for(var i=0 ; i<size ; i++){
+	
+		var mapContainer = document.getElementsByName('map')[i], // 지도를 표시할 div
+		    mapOption = {
+		        center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+		        level: 3, // 지도의 확대 레벨
+		        mapTypeId : daum.maps.MapTypeId.ROADMAP // 지도종류
+		    }; 
+		
+		// 지도를 생성한다 
+		var map = new daum.maps.Map(mapContainer, mapOption); 
+		
+		// 마우스 드래그와 모바일 터치를 이용한 지도 이동을 막는다
+		map.setDraggable(false);		
+	
+		// 마우스 휠과 모바일 터치를 이용한 지도 확대, 축소를 막는다
+		map.setZoomable(false);  
+		
+		// 지도 재로딩
+		$('#myModal').on('shown.bs.modal', function (e) {
+			map.relayout();
+		})
+		
+		// 지도에 마커를 생성하고 표시한다
+		var marker = new daum.maps.Marker({
+		    position: new daum.maps.LatLng(latitude, longitude), // 마커의 좌표
+		    map: map // 마커를 표시할 지도 객체
+		});
+	}
+} 
+
+
+
+//매장 정보 불러오기 위한 AJax 구현
+function showStore(){
+	var searchStore = 'searchStore='+document.all.searchStore.value;
+	sendRequest('getStoreName.do',searchStore,showResultStore,'POST');
+}
+ 
+function showResultStore(){
+	if(XHR.readyState==4){
+		if(XHR.status==200){
+			
+			var data = eval('('+XHR.responseText+')');
+		    var storeList=data.list;
+		    
+		    //리스트가 위치한 곳
+		    var loc_list = document.all.loc_list;
+		    var text_list='';
+		    
+		    //리스트에 해당하는 내용이 위치한 곳
+		    var loc_content = document.all.loc_content;
+		    var text_content='';
+		    
+		    //리스트 출력 후 매장 등록 여부 문구 출력하는 곳
+		    var loc_comment = document.all.loc_comment;
+		    //매장 이름 임시 저장하는 곳
+		    var store_name = document.all.store_name;
+		    
+		      for(var i=0; i<storeList.length;i++){
+		         list=storeList[i];
+		         text_list += '<a class="list-group-item list-group-item-action" id="list-'+i+'-list" data-toggle="list" href="#list-'+i+'"' 
+		         			+'onclick="setTimeout(function(){map('+list.m_latitude+','+list.m_longitude+')},500);'
+		         			+'document.all.choose_store.value='+list.man_ix+';document.all.store_name.value=\''+list.store_name+'\';" role="tab">'+list.store_name+'</a>';
+		         text_content += '<div class="tab-pane fade" id="list-'+i+'" role="tabpane'+i+'" aria-labelledby="list-'+i+'-list">'
+		         				+'<div name="map" style="width:350px;height:350px;"></div>'
+		         				+'<h5>주소 : '+list.store_addr+'</h5>'
+		         				+'</div>';
+		      }
+		    
+		    loc_list.innerHTML = text_list;
+		    loc_content.innerHTML = text_content;
+
+		}
+	}
+}
+
+//매장정보 등록했는지 유효성 검사
+function checkStore(){
+	res = document.all.choose_store.value;
+	
+	if(res==null || res==''){
+		alert('매장을 검색 후 입력해주세요.');
+	}else{
+		setStoreName();
+	}
+}
+
+//매장 등록 후 매장 이름을 뿌려줌
+function setStoreName(){
+	document.getElementById('s_name').value=document.getElementById('store_name').value;
+	$('#myModal').modal('hide');
+}
+
+//모달에서 엔터키 눌럿을 때 검색으로 들어가도록 서정
+$('#myModal').on('keypress', function (event) { 
+    var keycode = (event.keyCode ? event.keyCode : event.which); 
+    if(keycode == '13'){ 
+    	showStore();
+    } 
+});
+
+</script>
 </html>

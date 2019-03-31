@@ -640,5 +640,13 @@ function setStoreName(){
 	document.getElementById('s_name').value=document.getElementsByName('store_name')[0].value;
 	$('#myModal').modal('hide');
 }
+
+//모달에서 엔터키 눌럿을 때 검색으로 들어가도록 서정
+$('#myModal').on('keypress', function (event) { 
+    var keycode = (event.keyCode ? event.keyCode : event.which); 
+    if(keycode == '13'){ 
+    	searchPlaces();
+    } 
+});
 </script>
 </html>

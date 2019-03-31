@@ -11,4 +11,5 @@ public interface EmpDAO {
 	boolean checkQRAndStorIx(String e_email, String storeIx);
 	public int addEmpPwd(EmpDTO dto);
 	public String empAutoLogin(String e_email);
+	public List<StoreDTO> getStoreList(String searchStore);
 }
