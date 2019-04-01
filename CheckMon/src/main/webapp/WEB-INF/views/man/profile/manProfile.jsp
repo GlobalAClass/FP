@@ -37,16 +37,25 @@ function checktel(tel){
     }
 }
 
+function checked(){
+	//전화번호 조합
+	modMan.m_tel.value=modMan.seltel.value+"-"+modMan.tel1.value+"-"+modMan.tel2.value;
+}
+
 </script>
 </head>
 <body>
 <div class="container">
 <div class="card">
-	<form class="form-inline" name="modMan" action="manProfile.do" method="post">
+	<form class="form-inline" name="modMan" action="manProfile.do" onsubmit="return checked()" method="post">
 	<h1 class="card-header" align="center">관리자 프로필</h1>
 		<table class="table">
+			<c:set var="mdto" value="${m_list}"/>
+			<c:set var="sdto" value="${s_list}"/>
 			<tr>
 				<td colspan="3" align="center">
+					<!-- 관리자 인덱스 넘기기 -->
+					<input type="hidden" name="man_ix" value="${man_ix}">
 					<img width="120" height="120" name="proimg" src="img/profile_default.jpg">
 				</td>
 			</tr>
@@ -58,40 +67,48 @@ function checktel(tel){
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><div class="form-group"><input type="text" class="form-control" name="e_name" readonly="readonly" required="required"></div></td>
+				<td><div class="form-group"><input type="text" value="${mdto.m_name}" class="form-control" name="pro_m_name" readonly="readonly" required="required"></div></td>
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><div class="form-group"><input type="text" class="form-control" name="e_email" readonly="readonly">&nbsp;&nbsp;&nbsp;
+				<td><div class="form-group"><input type="text" value="${mdto.m_email}" class="form-control" name="pro_m_email" readonly="readonly">&nbsp;&nbsp;&nbsp;
 					<input type="button" class="btn btn-primary" name="changePwd" value="비밀번호 변경하기">
 				</div></td>
+			</tr>
+			<tr>
+				<th>비밀번호 변경</th>
+				<td>
+					<div class="form-group">
+					<input type="password" class="form-control" name="m_pwd">
+					</div>
+				</td>
 			</tr>
 			<tr>
 				<th>핸드폰번호</th>
 				<td>
 				<div class="form-group">
-					<input type="text" hidden="" name="e_tel">
+					<input type="text" hidden="" name="m_tel">
 						<select class="form-control" name="seltel" required="required">
-							<option>010</option>
-							<option>011</option>
-							<option>018</option>
+							<option value="010">010</option>
+							<option value="011">011</option>
+							<option value="018">018</option>
 						</select>-
-					<input style="width:70px;height:40px;" type="text" class="form-control" maxlength="4" name="tel1" maxlength="4" required="required" onchange="checktel(this);">-
-					<input style="width:70px;height:40px;" type="text" class="form-control" maxlength="4" name="tel2" maxlength="4" required="required" onchange="checktel(this);">
+					<input style="width:70px;height:40px;" type="text" value="${m_tel1}" class="form-control" maxlength="4" name="tel1" maxlength="4" required="required" onchange="checktel(this);">-
+					<input style="width:70px;height:40px;" type="text" value="${m_tel2}" class="form-control" maxlength="4" name="tel2" maxlength="4" required="required" onchange="checktel(this);">
 				</div>
 				</td>
 			</tr>
 			<tr>
 				<th>사업자 등록번호</th>
-				<td><div class="form-group"><input type="text" class="form-control" name="CORPORATE_NUMBER" readonly="readonly"></div></td>
+				<td><div class="form-group"><input type="text" value="${mdto.corporate_number}" class="form-control" name="corporate_number" readonly="readonly"></div></td>
 			</tr>
 			<tr>
 				<th>회사 / 매장 명</th>
-				<td><div class="form-group"><input type="text" class="form-control" name="STORE_NAME" readonly="readonly"></div></td>
+				<td><div class="form-group"><input type="text" value="${sdto.store_name}" class="form-control" name="store_name" readonly="readonly"></div></td>
 			</tr>
 			<tr>
 				<th>매장 주소</th>
-				<td><div class="form-group"><input type="text" size="65" class="form-control" name="STORE_ADDR" readonly="readonly"></div></td>
+				<td><div class="form-group"><input type="text" value="${sdto.store_addr}" size="65" class="form-control" name="store_addr" readonly="readonly"></div></td>
 			</tr>
 			<tr>
 				<td colspan="3" align="center">

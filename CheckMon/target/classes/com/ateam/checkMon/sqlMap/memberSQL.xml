@@ -155,8 +155,22 @@
 	</select>
 	<update id="modEmpProfileSQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
 		update emp_tb
-		set e_pwd=#{e_pwd},e_tel=#{e_tel},e_birthDay=#{e_birthDay}
+		set e_pwd=#{e_pwd},e_tel=#{e_tel},e_birthday=#{e_birthday}
 		where emp_ix=#{emp_ix}
 	</update>
-	
+	<select id="modManProfileFormSQL" parameterType="int" resultType="com.ateam.checkMon.member.model.ManDTO">
+		select *
+		from man_tb
+		where man_ix=#{man_ix}
+	</select>
+	<select id="modStoreProfileFormSQL" parameterType="int" resultType="com.ateam.checkMon.member.model.StoreDTO">
+		select *
+		from store_tb
+		where man_ix=#{man_ix}
+	</select>
+	<update id="modManProfileSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
+		update man_tb
+		set m_pwd=#{m_pwd},m_tel=#{m_tel}
+		where man_ix=#{man_ix}
+	</update>
 </mapper>

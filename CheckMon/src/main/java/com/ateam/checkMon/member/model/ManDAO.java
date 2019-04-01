@@ -13,4 +13,7 @@ public interface ManDAO {
 	public String manName(String m_email);
 	public int addManPwd(ManDTO dto);
 	public String manAutoLogin(String m_email);
+	public ManDTO modManProfileForm(int man_ix);
+	public StoreDTO modStoreProfileForm(int man_ix);
+	public int modManProfile(ManDTO dto);
 }

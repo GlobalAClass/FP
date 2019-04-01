@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <script>
 window.alert('${msg}');
-location.href='modEmpProfileForm.do';
+location.href='index.do';
 </script>

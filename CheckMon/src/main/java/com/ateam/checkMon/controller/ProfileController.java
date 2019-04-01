@@ -54,41 +54,57 @@ public class ProfileController {
 	
 	//근무자 프로필 수정 SQL Update
 	@RequestMapping("/empProfile.do")
-	public ModelAndView modEmpProfile(EmpDTO dto,
-			@RequestParam(value="emp_ix",required=false)int emp_ix,
-			@RequestParam(value="e_tel",required=false)String e_tel,
-			@RequestParam(value="e_birthDay",required=false)String e_birthday,
-			@RequestParam(value="e_pwd",required=false)String e_pwd) {
+	public ModelAndView modEmpProfile(EmpDTO dto) {
 		ModelAndView mav=new ModelAndView();
-		System.out.println(emp_ix);
-		System.out.println(emp_ix);
-		System.out.println(e_tel);
-		System.out.println(e_tel);
-		System.out.println(e_birthday);
-		System.out.println(e_birthday);
-		System.out.println(e_pwd);
-		System.out.println(e_pwd);
+
 		int result=empdao.modEmpProfile(dto);
 		String msg=result>0?"프로필 수정이 완료 되었습니다.":"프로필 수정에 실패 하였습니다.";
-		
 		mav.addObject("msg",msg);
-		mav.setViewName("emp/profile/empProfileMsg");
+		mav.setViewName("emp/profile/ProfileMsg");
 		return mav;
 	}
 	
 	
 	//관리자 프로필 페이지 이동 선택시 DB값 뿌리기 
-	@RequestMapping("/goManProfile.do")
-	public ModelAndView goManProfile(
-			@RequestParam(value="man_ix",required=false,defaultValue="0")int man_ix) {
+	@RequestMapping("/modManProfileForm.do")
+	public ModelAndView modManProfileForm(
+			@RequestParam(value="man_ix",required=false,defaultValue="0")int man_ix,
+			HttpSession session) {
 		
 		ModelAndView mav=new ModelAndView();
 		
+		int m_ix=(Integer)session.getAttribute("man_ix");
+		
+		//관리자 DB 정보
+		ManDTO m_list=mandao.modManProfileForm(m_ix);
+		
+		//관리자 핸드폰 나누기
+		String m_tel=m_list.getM_tel();
+		String m_tel1=m_tel.substring(4,8);
+		String m_tel2=m_tel.substring(9,13);
+		
+		//관리자 매장 DB 정보
+		StoreDTO s_list=mandao.modStoreProfileForm(m_ix);
+		mav.addObject("m_tel1",m_tel1);
+		mav.addObject("m_tel2",m_tel2);
+		mav.addObject("m_list",m_list);
+		mav.addObject("s_list",s_list);
 		mav.setViewName("man/profile/manProfile");
 		
 		return mav;
 	}
 	
+	@RequestMapping("/manProfile.do")
+	public ModelAndView modManProfile(ManDTO dto) {
+		
+		ModelAndView mav=new ModelAndView();
+		
+		int result=mandao.modManProfile(dto);
+		String msg=result>0?"프로필 수정이 완료 되었습니다.":"프로필 수정에 실패 하였습니다.";
+		mav.addObject("msg",msg);
+		mav.setViewName("emp/profile/ProfileMsg");
+		return mav;
+	}
 	
 	
 	

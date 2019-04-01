@@ -54,6 +54,8 @@ function checked(){
 			<c:set var="dto" value="${list}"/>
 			<tr>
 				<td colspan="3" align="center">
+					<!-- 근무자 인덱스 넘기기 -->
+					<input type="hidden" name="emp_ix" value="${emp_ix}">
 					<img width="120" height="120" name="proimg" src="img/profile_default.jpg">
 				</td>
 			</tr>
@@ -76,7 +78,6 @@ function checked(){
 				<td>
 					<div class="form-group">
 					<input type="password" class="form-control" name="e_pwd">
-					<input type="hidden" value="${emp_ix}">
 					</div>
 				</td>
 			</tr>

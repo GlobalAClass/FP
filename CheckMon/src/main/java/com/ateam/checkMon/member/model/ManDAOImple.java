@@ -67,4 +67,22 @@ public class ManDAOImple implements ManDAO {
 		return temp;
 	}
 	
+	//관리자 프로필 페이지 이동 선택시 DB값 전송
+	public ManDTO modManProfileForm(int man_ix) {
+		ManDTO list=sqlMap.selectOne("modManProfileFormSQL",man_ix);
+		return list;
+	}
+	
+	//관리자 프로필 페이지 이동 선택시 매장정보 DB값 전송
+	public StoreDTO modStoreProfileForm(int man_ix) {
+		StoreDTO list=sqlMap.selectOne("modStoreProfileFormSQL",man_ix);
+		return list;
+	}
+	
+	//관리자 프로필 수정
+	public int modManProfile(ManDTO dto) {
+		int res=sqlMap.update("modManProfileSQL",dto);
+		return res;
+	}
+	
 }

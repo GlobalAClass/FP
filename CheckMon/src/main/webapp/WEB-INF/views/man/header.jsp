@@ -28,7 +28,7 @@
                                 </div>
 								
 								<!-- 관리자 인덱스 넘기기 -->
-								<c:url var="manIxUrl" value="goManProfile.do">
+								<c:url var="manIxUrl" value="modManProfileForm.do">
 									<c:param name="man_ix">${man_ix}</c:param>
 								</c:url>
                                 <!-- item-->
