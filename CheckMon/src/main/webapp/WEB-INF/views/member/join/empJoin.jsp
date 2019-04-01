@@ -134,7 +134,7 @@ function checkPwd(){
 //Submit 전에 유효성 검사 및 생년월일 / 전화번호 조합
 function checked(){
 	//생년월일 조합
-	empJoin.e_birthDay.value=empJoin.year.value+"-"+empJoin.month.value+"-"+empJoin.day.value;
+	empJoin.e_birthday.value=empJoin.year.value+"-"+empJoin.month.value+"-"+empJoin.day.value;
 	//전화번호 조합
 	empJoin.e_tel.value=empJoin.seltel.value+"-"+empJoin.tel1.value+"-"+empJoin.tel2.value;
 	if(empJoin.e_email.value==""){
@@ -149,7 +149,7 @@ function checked(){
 		alert("이름을 확인해주세요.");
 		empJoin.ename.focus();
 		return false;
-	}else if(empJoin.e_birthDay.value==""){
+	}else if(empJoin.e_birthday.value==""){
 		alert("생년월일을 선택해주세요.");
 		empJoin.ebirthDay.focus();
 		return false;
@@ -229,7 +229,7 @@ function checked(){
 		<th>생년월일</th>
 		<td>
 		<div class="form-group">
-			<input type="text" hidden="" name="e_birthDay">
+			<input type="text" hidden="" name="e_birthday">
 			<select class="form-control" 	name="year" required="required">
 				<option value="">년</option>
 				<c:forEach var="i" begin="1970" end="2019" step="1">

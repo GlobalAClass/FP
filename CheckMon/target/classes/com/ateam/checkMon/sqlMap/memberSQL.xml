@@ -109,6 +109,12 @@
 		and e_pwd=#{e_pwd}
 	</select>
 	
+	<select id="empIxSQL" parameterType="String" resultType="int">
+		select emp_ix
+		from emp_tb
+		where e_email=#{e_email}
+	</select>
+	
 	<select id="empNameSQL" parameterType="String" resultType="String">
 		select e_name
 		from emp_tb
@@ -120,6 +126,12 @@
 		from man_tb
 		where m_email=#{m_email}
 		and m_pwd=#{m_pwd}
+	</select>
+	
+	<select id="manIxSQL" parameterType="String" resultType="int">
+		select man_ix
+		from man_tb
+		where m_email=#{m_email}
 	</select>
 	
 	<select id="manNameSQL" parameterType="String" resultType="String">
@@ -136,4 +148,15 @@
 		from store_tb
 		where store_name like '%'||#{searchStore}||'%'
 	</select>
+	<select id="modEmpProfileFormSQL" parameterType="int" resultType="com.ateam.checkMon.member.model.EmpDTO">
+		select *
+		from emp_tb
+		where emp_ix=#{emp_ix}
+	</select>
+	<update id="modEmpProfileSQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
+		update emp_tb
+		set e_pwd=#{e_pwd},e_tel=#{e_tel},e_birthDay=#{e_birthDay}
+		where emp_ix=#{emp_ix}
+	</update>
+	
 </mapper>

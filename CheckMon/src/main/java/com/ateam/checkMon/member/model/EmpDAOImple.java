@@ -51,6 +51,12 @@ public class EmpDAOImple implements EmpDAO {
 		return list;
 	}
 	
+	//근무자 인덱스
+	public int empIx(String e_email) {
+		int temp=sqlMap.selectOne("empIxSQL",e_email);
+		return temp;
+	}
+	
 	//근무자 이름
 	public String empName(String e_email) {
 		String res=sqlMap.selectOne("empNameSQL",e_email);
@@ -72,6 +78,18 @@ public class EmpDAOImple implements EmpDAO {
 		List<StoreDTO> list = sqlMap.selectList("getStoreListSQL",searchStore);
 		System.out.println("imple : "+list);
 		return list;
+	}
+	
+	//근무자 프로필 페이지 이동 선택시 DB값 전송
+	public EmpDTO modEmpProfileForm(int emp_ix) {
+		EmpDTO list=sqlMap.selectOne("modEmpProfileFormSQL",emp_ix);
+		return list;
+	}
+		
+	//근무자 프로필 수정
+	public int modEmpProfile(EmpDTO dto) {
+		int res=sqlMap.update("modEmpProfileSQL",dto);
+		return res;
 	}
 
 }

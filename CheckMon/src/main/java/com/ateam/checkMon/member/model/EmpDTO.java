@@ -21,7 +21,7 @@ public class EmpDTO {
 	private String e_tel;
 	
 	//근무자 생년월일
-	private String e_birthDay;
+	private String e_birthday;
 	
 	//근무자 직책
 	private String e_position;
@@ -34,41 +34,41 @@ public class EmpDTO {
 	
 	//근무자 랜덤 비밀번호
 	private String e_rpwd;
-	
+
 	public EmpDTO() {
 		super();
 	}
 
-	public EmpDTO(int emp_Ix, int man_Ix, String e_email, String e_pwd, String e_name, String e_tel, String e_birthDay,
+	public EmpDTO(int emp_ix, int man_ix, String e_email, String e_pwd, String e_name, String e_tel, String e_birthday,
 			String e_position, String e_group, String authorization, String e_rpwd) {
 		super();
-		this.emp_ix = emp_Ix;
-		this.man_ix = man_Ix;
+		this.emp_ix = emp_ix;
+		this.man_ix = man_ix;
 		this.e_email = e_email;
 		this.e_pwd = e_pwd;
 		this.e_name = e_name;
 		this.e_tel = e_tel;
-		this.e_birthDay = e_birthDay;
+		this.e_birthday = e_birthday;
 		this.e_position = e_position;
 		this.e_group = e_group;
 		this.authorization = authorization;
 		this.e_rpwd = e_rpwd;
 	}
 
-	public int getEmp_Ix() {
+	public int getEmp_ix() {
 		return emp_ix;
 	}
 
-	public void setEmp_Ix(int emp_Ix) {
-		this.emp_ix = emp_Ix;
+	public void setEmp_ix(int emp_ix) {
+		this.emp_ix = emp_ix;
 	}
 
-	public int getMan_Ix() {
+	public int getMan_ix() {
 		return man_ix;
 	}
 
-	public void setMan_Ix(int man_Ix) {
-		this.man_ix = man_Ix;
+	public void setMan_ix(int man_ix) {
+		this.man_ix = man_ix;
 	}
 
 	public String getE_email() {
@@ -103,12 +103,12 @@ public class EmpDTO {
 		this.e_tel = e_tel;
 	}
 
-	public String getE_birthDay() {
-		return e_birthDay;
+	public String getE_birthday() {
+		return e_birthday;
 	}
 
-	public void setE_birthDay(String e_birthDay) {
-		this.e_birthDay = e_birthDay;
+	public void setE_birthday(String e_birthday) {
+		this.e_birthday = e_birthday;
 	}
 
 	public String getE_position() {
@@ -142,8 +142,5 @@ public class EmpDTO {
 	public void setE_rpwd(String e_rpwd) {
 		this.e_rpwd = e_rpwd;
 	}
-
-	
-	
 	
 }

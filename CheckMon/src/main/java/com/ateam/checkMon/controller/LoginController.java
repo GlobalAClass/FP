@@ -43,15 +43,9 @@ public class LoginController {
 			e_map.put("e_email",l_email);
 			e_map.put("e_pwd",l_pwd);
 			
-			//근무자 이름 추출
-			String empname=empdao.empName(l_email);
-			
-			//근무자 아이디 및 이름 세션에 저장
-			HttpSession session=req.getSession();
-			session.setAttribute("e_name",empname);
-			
 			//근무자 DB값과 입력값 비교
 			EmpDTO elist=empdao.empLogin(e_map);
+			
 			if(elist==null) {
 				String msg="등록 되지 않은 ID 및 비밀번호 입니다.";
 				mav.addObject("msg",msg);
@@ -62,7 +56,7 @@ public class LoginController {
 					Cookie ck_epwd=new Cookie("e_rpwd",e_rpwd);
 					ck_epwd.setMaxAge(0);
 					resp.addCookie(ck_epwd);
-				}else {
+				}else {		
 					empdao.addEmpPwd(edto);
 					Cookie mem=new Cookie("member",member);
 					mem.setMaxAge(60*60*24*7);
@@ -74,6 +68,17 @@ public class LoginController {
 					ck_epwd.setMaxAge(60*60*24*7);
 					resp.addCookie(ck_epwd);
 				}
+				
+				//근무자 이름 및 인덱스 추출
+				String empname=empdao.empName(l_email);
+				int emp_ix=empdao.empIx(l_email);
+				
+				//근무자 이름 및 인덱스 세션에 저장
+				HttpSession session=req.getSession();
+				session.setAttribute("e_name",empname);
+				session.setAttribute("emp_ix",emp_ix);
+				
+				mav.addObject("emp_ix",emp_ix);
 				mav.addObject("e_name",empname);
 				mav.setViewName("emp/home");
 			}
@@ -85,15 +90,9 @@ public class LoginController {
 			m_map.put("m_email",l_email);
 			m_map.put("m_pwd",l_pwd);	
 			
-			//관리자 이름 추출
-			String manname=mandao.manName(l_email);
-			
-			//관리자 아이디 및 이름 세션에 저장
-			HttpSession session=req.getSession();
-			session.setAttribute("m_name", manname);
-			
 			//관리자 DB값과 입력값 비교
 			ManDTO mlist=mandao.manLogin(m_map);
+			
 			if(mlist==null) {
 				String msg="등록 되지 않은 ID 및 비밀번호 입니다.";		
 				mav.addObject("msg",msg);
@@ -117,6 +116,17 @@ public class LoginController {
 					ck_mpwd.setMaxAge(60*60*24*7);
 					resp.addCookie(ck_mpwd);
 				}
+				
+				//관리자 이름 및 인덱스 추출
+				String manname=mandao.manName(l_email);
+				int man_ix=mandao.manIx(l_email);
+				
+				//관리자 이름 및 인덱스 세션에 저장
+				HttpSession session=req.getSession();
+				session.setAttribute("m_name", manname);
+				session.setAttribute("man_ix",man_ix);
+				
+				mav.addObject("man_ix",man_ix);
 				mav.addObject("m_name",manname);
 				mav.setViewName("man/home");
 			}

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.ateam.checkMon.manEmpRun.model.ManEmpRunDAO;
 import com.ateam.checkMon.manEmpRun.model.ManEmpRunDTO;
 import com.ateam.checkMon.member.model.*;
@@ -43,7 +42,7 @@ public class EmpController {
 	@RequestMapping(value="/empJoin.do",method=RequestMethod.POST)
 	public ModelAndView addEmpJoin(EmpDTO edto, ManEmpRunDTO rdto) {
 		int e_ix = empdao.getNextEmpIx();
-		edto.setEmp_Ix(e_ix);
+		edto.setEmp_ix(e_ix);
 		int e_result=empdao.addEmpJoin(edto);
 		rdto.setEmp_ix(e_ix);
 		int r_result=manemprundao.addManEmpRun(rdto);

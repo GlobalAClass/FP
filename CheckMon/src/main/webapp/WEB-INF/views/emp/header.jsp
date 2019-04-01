@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <header>
 <!-- top bar navigation -->
 	<div class="headerbar">
@@ -25,9 +26,13 @@
                                 <div class="dropdown-item noti-title">
                                     <h5 class="text-overflow"><small>근무자 ${e_name}님</small> </h5>
                                 </div>
-
+								
+								<!-- 근무자 인덱스 넘기기 -->
+								<c:url var="empIxUrl" value="modEmpProfileForm.do">
+									<c:param name="emp_ix">${emp_ix}</c:param>
+								</c:url>
                                 <!-- item-->
-                                <a href="#" class="dropdown-item notify-item">
+                                <a href="${empIxUrl}" class="dropdown-item notify-item">
                                     <i class="fa fa-user"></i> <span>프로필 수정하기</span>
                                 </a>
 

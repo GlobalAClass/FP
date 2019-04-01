@@ -61,4 +61,10 @@ public class ManDAOImple implements ManDAO {
 		return res;
 	}
 	
+	//관리자 인덱스
+	public int manIx(String m_email) {
+		int temp=sqlMap.selectOne("manIxSQL",m_email);
+		return temp;
+	}
+	
 }
