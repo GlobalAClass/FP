@@ -94,8 +94,8 @@
 					<li class="submenu">
                         <a href="#"><i class="fa fa-calendar"></i> <span> 스케줄 관리 </span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled">
-								<li><a href="#">근무 시간 템플릿 관리</a></li>
-								<li><a href="#">스케줄 관리</a></li>
+								<li><a href="hourTemplateList.do">근무 시간 템플릿 관리</a></li>
+								<li><a href="scheduleMonthList.do">스케줄 관리</a></li>
 								<li><a href="#">휴가 요청 관리</a></li>
 							</ul>
                     </li>
