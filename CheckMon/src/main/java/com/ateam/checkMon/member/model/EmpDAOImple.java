@@ -15,6 +15,12 @@ public class EmpDAOImple implements EmpDAO {
 		this.sqlMap = sqlMap;
 	}
 	
+	//근무자 등록되려는 인덱스 가져오기
+	public int getNextEmpIx() {
+		int res = sqlMap.selectOne("getNextEmpIxSQL");
+		return res;
+	}
+	
 	//근무자 회원가입
 	public int addEmpJoin(EmpDTO dto) {
 		int count = sqlMap.insert("addEmpJoinSQL", dto);

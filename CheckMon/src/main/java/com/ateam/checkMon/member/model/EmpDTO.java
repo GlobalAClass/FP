@@ -3,10 +3,10 @@ package com.ateam.checkMon.member.model;
 public class EmpDTO {
 	
 	//근무자 인덱스
-	private int emp_Ix;
+	private int emp_ix;
 	
 	//관리자 인덱스
-	private int man_Ix;
+	private int man_ix;
 	
 	//근무자 아이디(이메일)
 	private String e_email;
@@ -42,8 +42,8 @@ public class EmpDTO {
 	public EmpDTO(int emp_Ix, int man_Ix, String e_email, String e_pwd, String e_name, String e_tel, String e_birthDay,
 			String e_position, String e_group, String authorization, String e_rpwd) {
 		super();
-		this.emp_Ix = emp_Ix;
-		this.man_Ix = man_Ix;
+		this.emp_ix = emp_Ix;
+		this.man_ix = man_Ix;
 		this.e_email = e_email;
 		this.e_pwd = e_pwd;
 		this.e_name = e_name;
@@ -56,19 +56,19 @@ public class EmpDTO {
 	}
 
 	public int getEmp_Ix() {
-		return emp_Ix;
+		return emp_ix;
 	}
 
 	public void setEmp_Ix(int emp_Ix) {
-		this.emp_Ix = emp_Ix;
+		this.emp_ix = emp_Ix;
 	}
 
 	public int getMan_Ix() {
-		return man_Ix;
+		return man_ix;
 	}
 
 	public void setMan_Ix(int man_Ix) {
-		this.man_Ix = man_Ix;
+		this.man_ix = man_Ix;
 	}
 
 	public String getE_email() {

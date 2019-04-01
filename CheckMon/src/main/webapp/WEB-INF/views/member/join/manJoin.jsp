@@ -232,9 +232,9 @@ function checked(){
 <body>
 <div class="container">
 	<div class="card">
-<form class="form-inline" name="manJoin" action="manJoin.do" onsubmit="return checked()" method="post">
+<form class="form-inline" name="manJoin" id="form" action="manJoin.do" onsubmit="return checked()" method="post">
 <h1 class="card-header">관리자 회원가입</h1>
-<table class="table">
+<table class="table" id="tab">
 	<tr>
 		<td colspan="3" align="center">
 			<img width="120" height="120" name="proimg" src="img/profile_default.jpg">
@@ -322,14 +322,25 @@ function checked(){
 		<div class="form-group">
 			<input type="text" class="form-control" id="s_name" required="required" size="50" placeholder="찾기 버튼을 눌러주세요." readonly="readonly">&nbsp;
 			<input type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" value="매장 찾기">
-			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
-			    <div class="modal-content">
-			   		<div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">매장 찾기</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
+			
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" align="center">
+			<input type="submit" class="btn btn-success" id="submitbtn" value="가입하기">
+			<a href="index.do"><input type="button" class="btn btn-secondary" value="취소"></a>
+		</td>
+	</tr>
+</table>
+<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	   		<div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">매장 찾기</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
 			     	 </div>
 			     	 <div class="modal-body">
 				      	<div class="row">
@@ -363,25 +374,15 @@ function checked(){
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer" align="center">
-					<!-- 클릭한 매장 정보 -->
-						<input type="hidden" name="m_latitude" value="">
-						<input type="hidden" name="m_longitude" value="">
-						<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
-					</div>
-					</div>
-			    </div>
-			  </div>
+			<div class="modal-footer" align="center">
+				<!-- 클릭한 매장 정보 -->
+				<input type="hidden" name="m_latitude" value="">
+				<input type="hidden" name="m_longitude" value="">
+				<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
 			</div>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="3" align="center">
-			<input type="submit" class="btn btn-success" value="가입하기">
-			<a href="index.do"><input type="button" class="btn btn-secondary" value="취소"></a>
-		</td>
-	</tr>
-</table>
+		</div>
+	</div>
+</div>
 </form>
 </div>
 </div>
@@ -641,12 +642,14 @@ function setStoreName(){
 	$('#myModal').modal('hide');
 }
 
-//모달에서 엔터키 눌럿을 때 검색으로 들어가도록 서정
+//모달에서 엔터키 눌럿을 때 검색으로 들어가도록 설정
 $('#myModal').on('keypress', function (event) { 
     var keycode = (event.keyCode ? event.keyCode : event.which); 
-    if(keycode == '13'){ 
+    if(keycode == '13'){
     	searchPlaces();
+    	return false;
     } 
 });
+
 </script>
 </html>

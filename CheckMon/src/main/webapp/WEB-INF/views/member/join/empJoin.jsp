@@ -208,7 +208,7 @@ function checked(){
 		<td>
 		<div class="form-group">
 			<input type="text" class="form-control" hidden="" name="e_pwd" value="">
-			<input type="password" class="form-control" name="e_pwd1" placeholder="비밀번호 입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="password" class="form-control" name="e_pwd1" placeholder="비밀번호 입력" required="required" onkeyup="noSpace(this);checkPwd()">
 		</div>
 		</td>
 	</tr>
@@ -216,7 +216,7 @@ function checked(){
 		<th>비밀번호 확인</th>
 		<td>
 		<div class="form-group">
-			<input type="password" class="form-control" name="e_pwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="password" class="form-control" name="e_pwd2" placeholder="비밀번호 재입력" required="required" onkeyup="noSpace(this);checkPwd()">
 			<input type="text" class="form-control" name="checkpwd" disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
@@ -302,7 +302,8 @@ function checked(){
 					</div>
 					<div class="modal-footer" align="center">
 					<!-- 클릭한 매장 정보 -->
-						<input type="hidden" id="choose_store" name="man_ix" value="">
+						<input type="hidden" id="choose_store" name="req_store" value="">
+						<input type="hidden" id="man_ix" name="man_ix" value="">
 						<input type="hidden" id="store_name" value="">
 						<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
 					</div>
@@ -314,7 +315,7 @@ function checked(){
 	</tr>
 	<tr>
 		<td colspan="3" align="center">
-			<input type="submit" class="btn btn-success" value="가입하기">
+			<input type="submit" class="btn btn-success" id="submit" value="가입하기">
 			<a href="index.do"><input type="button" class="btn btn-secondary" value="취소"></a>
 		</td>
 	</tr>
@@ -395,7 +396,8 @@ function showResultStore(){
 		         list=storeList[i];
 		         text_list += '<a class="list-group-item list-group-item-action" id="list-'+i+'-list" data-toggle="list" href="#list-'+i+'"' 
 		         			+'onclick="setTimeout(function(){map('+list.m_latitude+','+list.m_longitude+')},500);'
-		         			+'document.all.choose_store.value='+list.man_ix+';document.all.store_name.value=\''+list.store_name+'\';" role="tab">'+list.store_name+'</a>';
+		         			+'document.all.choose_store.value='+list.store_ix+';document.all.store_name.value=\''+list.store_name+'\';'
+		         			+'document.all.man_ix.value='+list.man_ix+'" role="tab">'+list.store_name+'</a>';
 		         text_content += '<div class="tab-pane fade" id="list-'+i+'" role="tabpane'+i+'" aria-labelledby="list-'+i+'-list">'
 		         				+'<div name="map" style="width:350px;height:350px;"></div>'
 		         				+'<h5>주소 : '+list.store_addr+'</h5>'
@@ -429,8 +431,9 @@ function setStoreName(){
 //모달에서 엔터키 눌럿을 때 검색으로 들어가도록 서정
 $('#myModal').on('keypress', function (event) { 
     var keycode = (event.keyCode ? event.keyCode : event.which); 
-    if(keycode == '13'){ 
+    if(keycode == '13'){
     	showStore();
+    	return false;
     } 
 });
 

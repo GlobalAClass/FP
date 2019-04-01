@@ -7,7 +7,7 @@
 		insert into
 			Emp_TB
 		values(
-			Emp_TB_SEQ.nextval,
+			#{emp_ix},
 			null,
 			#{e_email},
 			#{e_pwd},
@@ -18,6 +18,18 @@
 			null,
 			null,
 			null
+		)
+	</insert>
+	
+	<insert id="addManEmpRunSQL" parameterType="com.ateam.checkMon.manEmpRun.model.ManEmpRunDTO">
+		insert into
+			req_tb
+		values(
+			req_tb_seq.nextval,
+			#{emp_ix},
+			#{req_store},
+			null,
+			#{man_ix}
 		)
 	</insert>
 	
@@ -66,6 +78,10 @@
 	
 	<select id="getNextManIxSQL" resultType="int">
 		select man_tb_seq.nextval from dual
+	</select>
+	
+	<select id="getNextEmpIxSQL" resultType="int">
+		select emp_tb_seq.nextval from dual
 	</select>
 	
 	<insert id="addStoreManJoinSQL" parameterType="com.ateam.checkMon.member.model.StoreDTO">
