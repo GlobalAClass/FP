@@ -4,6 +4,7 @@ import java.util.*;
 
 public interface EmpDAO {
 
+	public int getNextEmpIx();
 	public int addEmpJoin(EmpDTO dto);
 	public String empIdCheck(String e_email);
 	public EmpDTO empLogin(Map<String,String> map);
