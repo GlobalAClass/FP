@@ -76,7 +76,6 @@ public class EmpDAOImple implements EmpDAO {
 	//근무자 - 매장정보 선택 시 매장 리스트 불러옴
 	public List<StoreDTO> getStoreList(String searchStore){
 		List<StoreDTO> list = sqlMap.selectList("getStoreListSQL",searchStore);
-		System.out.println("imple : "+list);
 		return list;
 	}
 	

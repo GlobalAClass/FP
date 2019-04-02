@@ -7,7 +7,7 @@
 
 		<!-- LOGO -->
         <div class="headerbar-left">
-			<a href="home.do" class="logo"><img alt="Logo" src="assets/images/logo.png" /> <span>CheckMon</span></a>
+			<a href="manHome.do" class="logo"><img alt="Logo" src="assets/images/logo.png" /> <span>CheckMon</span></a>
         </div>
 
         <nav class="navbar-custom">
@@ -70,7 +70,7 @@
 			<ul>
 
 					<li class="submenu">
-						<a class="active" href="home.do"><i class="fa fa-fw fa-bars"></i><span> ChechMon 홈으로 </span> </a>
+						<a class="active" href="manHome.do"><i class="fa fa-fw fa-bars"></i><span> ChechMon 홈으로 </span> </a>
                     </li>
                     
                     <li class="submenu">

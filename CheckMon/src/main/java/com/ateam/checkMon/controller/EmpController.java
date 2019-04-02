@@ -107,7 +107,6 @@ public class EmpController {
 	public ModelAndView getStoreName(
 			@RequestParam(value="searchStore")String searchStore) {
 		List<StoreDTO> list = empdao.getStoreList(searchStore);
-		System.out.println("controller : "+list.toString());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list",list);
 		mav.setViewName("cmjson");
