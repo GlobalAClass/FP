@@ -1,5 +1,6 @@
 package com.ateam.checkMon.controller;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.ateam.checkMon.member.model.*;
 import java.util.*;
+import java.io.*;
 
 @Controller
 public class LoginController {
@@ -20,6 +22,8 @@ public class LoginController {
 	private EmpDAO empdao;
 	@Autowired
 	private ManDAO mandao;
+	@Autowired
+	private ServletContext context;
 	
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public ModelAndView login(
@@ -32,8 +36,9 @@ public class LoginController {
 			@RequestParam(value="remember",required=false)String remember,
 			@RequestParam(value="member",required=false)String member,
 			@RequestParam(value="e_rpwd",required=false)String e_rpwd,
-			@RequestParam(value="m_rpwd",required=false)String m_rpwd) {
-		
+			@RequestParam(value="m_rpwd",required=false)String m_rpwd,
+			@RequestParam(value="m_email",required=false)String m_email) {
+
 		ModelAndView mav=new ModelAndView();
 		//근무자 로그인 선택
 		if(member.equals("emp")) {
@@ -64,20 +69,32 @@ public class LoginController {
 					Cookie email=new Cookie("l_email",l_email);
 					email.setMaxAge(60*60*24*7);
 					resp.addCookie(email);
-					Cookie ck_epwd=new Cookie("e_rpwd",e_rpwd);
-					ck_epwd.setMaxAge(60*60*24*7);
-					resp.addCookie(ck_epwd);
+					Cookie ck_erpwd=new Cookie("e_rpwd",e_rpwd);
+					ck_erpwd.setMaxAge(60*60*24*7);
+					resp.addCookie(ck_erpwd);
 				}
 				
 				//근무자 이름 및 인덱스 추출
 				String empname=empdao.empName(l_email);
 				int emp_ix=empdao.empIx(l_email);
 				
+				//근무자 프로필 이미지 가져오기
+				File employee = new File(context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix);
+				File[] files=employee.listFiles();
+				String imgpath;
+				
+				if(files==null) {
+					imgpath="assets/images/emp/profile_default.jpg";
+				}else {
+					imgpath="assets/images/emp/profile/"+emp_ix+"\\"+files[0].getName();
+				}
+
 				//근무자 이름 및 인덱스 세션에 저장
 				HttpSession session=req.getSession();
 				session.setAttribute("e_name",empname);
 				session.setAttribute("emp_ix",emp_ix);
 				
+				mav.addObject("imgpath",imgpath);
 				mav.addObject("emp_ix",emp_ix);
 				mav.addObject("e_name",empname);
 				mav.setViewName("emp/home");
@@ -104,28 +121,44 @@ public class LoginController {
 					ck_mpwd.setMaxAge(0);
 					resp.addCookie(ck_mpwd);
 				}else {
-					//근무자 랜덤비밀번호 DB에 저장
-					mandao.addManPwd(mdto);
+					//관리자 랜덤비밀번호 DB에 저장
+					int res=mandao.addManPwd(mdto);
+					System.out.println(res);
+					System.out.println(res);
+					System.out.println(res);
+					System.out.println(res);
+					
 					Cookie mem=new Cookie("member",member);
 					mem.setMaxAge(60*60*24*7);
 					resp.addCookie(mem);
 					Cookie email=new Cookie("l_email",l_email);
 					email.setMaxAge(60*60*24*7);
 					resp.addCookie(email);
-					Cookie ck_mpwd=new Cookie("m_rpwd",m_rpwd);
-					ck_mpwd.setMaxAge(60*60*24*7);
-					resp.addCookie(ck_mpwd);
+					Cookie ck_mrpwd=new Cookie("m_rpwd",m_rpwd);
+					ck_mrpwd.setMaxAge(60*60*24*7);
+					resp.addCookie(ck_mrpwd);
 				}
 				
 				//관리자 이름 및 인덱스 추출
 				String manname=mandao.manName(l_email);
 				int man_ix=mandao.manIx(l_email);
 				
+//				//관리자 프로필 이미지 가져오기
+//				File manager = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix);
+//				File[] files=manager.listFiles();
+//				String imgpath;
+//				if(files==null) {
+//					imgpath="assets/images/man/profile_default.jpg";
+//				}else {
+//					imgpath="assets/images/man/profile/"+man_ix+"\\"+files[0].getName();
+//				}
+				
 				//관리자 이름 및 인덱스 세션에 저장
 				HttpSession session=req.getSession();
 				session.setAttribute("m_name", manname);
 				session.setAttribute("man_ix",man_ix);
 				
+				//mav.addObject("imgpath",imgpath);
 				mav.addObject("man_ix",man_ix);
 				mav.addObject("m_name",manname);
 				mav.setViewName("man/home");
@@ -147,12 +180,12 @@ public class LoginController {
 		
 		ModelAndView mav=new ModelAndView();
 		//저장 쿠키값 초기화 
-		Cookie ck_epwd=new Cookie("e_rpwd",e_rpwd);
-		ck_epwd.setMaxAge(0);
-		resp.addCookie(ck_epwd);
-		Cookie ck_mpwd=new Cookie("m_rpwd",m_rpwd);
-		ck_mpwd.setMaxAge(0);
-		resp.addCookie(ck_mpwd);
+		Cookie ck_erpwd=new Cookie("e_rpwd",e_rpwd);
+		ck_erpwd.setMaxAge(0);
+		resp.addCookie(ck_erpwd);
+		Cookie ck_mrpwd=new Cookie("m_rpwd",m_rpwd);
+		ck_mrpwd.setMaxAge(0);
+		resp.addCookie(ck_mrpwd);
 		Cookie email=new Cookie("l_email",l_email);
 		email.setMaxAge(0);
 		resp.addCookie(email);

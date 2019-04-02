@@ -1,7 +1,6 @@
 package com.ateam.checkMon.member.model;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -13,6 +12,7 @@ public class ManDAOImple implements ManDAO {
 		super();
 		this.sqlMap = sqlMap;
 	}
+	
 	//관리자 매장정보 인덱스
 	public int getNextManIx() {
 		int res=sqlMap.selectOne("getNextManIxSQL");

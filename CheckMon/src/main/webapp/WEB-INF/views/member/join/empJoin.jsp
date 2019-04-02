@@ -86,7 +86,7 @@ function select(){
 }
 //미리 보기 이미지 기본 세팅
 function setDefaultImg(){
-	empJoin.proimg.src="img/profile_default.jpg";
+	empJoin.proimg.src="assets/images/emp/profile_default.jpg";
 }
 function showImg(profile){
 	
@@ -151,7 +151,7 @@ function checked(){
 		return false;
 	}else if(empJoin.e_birthday.value==""){
 		alert("생년월일을 선택해주세요.");
-		empJoin.ebirthDay.focus();
+		empJoin.ebirthday.focus();
 		return false;
 	}else if(empJoin.e_tel.value==""){
 		alert("핸드폰번호를 입력해주세요.");
@@ -167,12 +167,12 @@ function checked(){
 <body>
 <div class="container">
 	<div class="card">
-<form class="form-inline" name="empJoin" action="empJoin.do" onsubmit="return checked()" method="post">
+<form class="form-inline" name="empJoin" action="empJoin.do" onsubmit="return checked()" method="post" enctype="multipart/form-data">
 <h1 class="card-header" align="center">근무자 회원가입</h1>
 <table class="table">
 	<tr>
 		<td colspan="3" align="center">
-			<img width="120" height="120" name="proimg" src="img/profile_default.jpg">
+			<img width="120" height="120" name="proimg" src="assets/images/emp/profile_default.jpg">
 		</td>
 	</tr>
 	<tr>

@@ -13,7 +13,7 @@
 			#{e_pwd},
 			#{e_name},
 			#{e_tel},
-			#{e_birthDay},
+			#{e_birthday},
 			null,
 			null,
 			null,

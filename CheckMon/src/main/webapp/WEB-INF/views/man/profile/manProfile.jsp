@@ -37,6 +37,19 @@ function checktel(tel){
     }
 }
 
+//미리 보기 이미지 기본 세팅
+function showImg(profile){
+	
+	var reader = new FileReader();
+	var file = profile.files[0]; //파일 배열로 저장 되기 때문에 첫번째 파일이 현재 선택된 파일
+	reader.readAsDataURL(file);
+	reader.onload = function(){
+		var img = modMan.proimg; //미리보기 이미지 띄우기
+		img.src = reader.result;
+	}
+}
+
+//데이터 전송 전에 조합
 function checked(){
 	//전화번호 조합
 	modMan.m_tel.value=modMan.seltel.value+"-"+modMan.tel1.value+"-"+modMan.tel2.value;
@@ -47,7 +60,7 @@ function checked(){
 <body>
 <div class="container">
 <div class="card">
-	<form class="form-inline" name="modMan" action="manProfile.do" onsubmit="return checked()" method="post">
+	<form class="form-inline" name="modMan" action="manProfile.do" onsubmit="return checked()" method="post" enctype="multipart/form-data">
 	<h1 class="card-header" align="center">관리자 프로필</h1>
 		<table class="table">
 			<c:set var="mdto" value="${m_list}"/>
@@ -56,7 +69,7 @@ function checked(){
 				<td colspan="3" align="center">
 					<!-- 관리자 인덱스 넘기기 -->
 					<input type="hidden" name="man_ix" value="${man_ix}">
-					<img width="120" height="120" name="proimg" src="img/profile_default.jpg">
+					<img width="120" height="120" name="proimg" src="${imgpath}">
 				</td>
 			</tr>
 			<tr>
@@ -71,9 +84,7 @@ function checked(){
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><div class="form-group"><input type="text" value="${mdto.m_email}" class="form-control" name="pro_m_email" readonly="readonly">&nbsp;&nbsp;&nbsp;
-					<input type="button" class="btn btn-primary" name="changePwd" value="비밀번호 변경하기">
-				</div></td>
+				<td><div class="form-group"><input type="text" value="${mdto.m_email}" class="form-control" name="pro_m_email" readonly="readonly"></div></td>
 			</tr>
 			<tr>
 				<th>비밀번호 변경</th>

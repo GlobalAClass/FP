@@ -130,7 +130,7 @@ function select(){
 }
 //미리 보기 이미지 기본 세팅
 function setDefaultImg(){
-	manJoin.proimg.src="img/profile_default.jpg";
+	manJoin.proimg.src="assets/images/man/profile_default.jpg";
 }
 function showImg(profile){
 	
@@ -232,12 +232,12 @@ function checked(){
 <body>
 <div class="container">
 	<div class="card">
-<form class="form-inline" name="manJoin" id="form" action="manJoin.do" onsubmit="return checked()" method="post">
+<form class="form-inline" name="manJoin" id="form" action="manJoin.do" onsubmit="return checked()" method="post" enctype="multipart/form-data">
 <h1 class="card-header">관리자 회원가입</h1>
 <table class="table" id="tab">
 	<tr>
 		<td colspan="3" align="center">
-			<img width="120" height="120" name="proimg" src="img/profile_default.jpg">
+			<img width="120" height="120" name="proimg" src="assets/images/man/profile_default.jpg">
 		</td>
 	</tr>
 	<tr>
@@ -273,7 +273,7 @@ function checked(){
 		<td>
 		<div class="form-group">
 			<input type="text" class="form-control" hidden="" name="m_pwd" value="">
-			<input type="password" class="form-control" name="m_pwd1" placeholder="비밀번호 입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="password" class="form-control" name="m_pwd1" placeholder="비밀번호 입력" required="required" onkeyup="noSpace(this);checkPwd()">
 		</div>
 		</td>
 	</tr>
@@ -281,7 +281,7 @@ function checked(){
 		<th>비밀번호 확인</th>
 		<td>
 		<div class="form-group">
-			<input type="password" class="form-control" name="m_pwd2" placeholder="비밀번호 재입력" required="required" onchange="noSpace(this);checkPwd()">
+			<input type="password" class="form-control" name="m_pwd2" placeholder="비밀번호 재입력" required="required" onkeyup="noSpace(this);checkPwd()">
 			<input type="text" class="form-control" name="checkpwd" disabled="disabled" style="width: 250px; border: none; background: none;">
 		</div>
 		</td>
