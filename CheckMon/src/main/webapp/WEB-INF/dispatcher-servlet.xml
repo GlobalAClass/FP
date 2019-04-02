@@ -26,7 +26,7 @@
 		<property name="configLocation" value="classpath:/mybaties-config.xml"></property>
 	</bean>
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>	
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
 	</bean>
 
 	<!-- config -->
@@ -54,6 +54,11 @@
 		</constructor-arg>
 	</bean>
 	<bean id="manEmpRunDao" class="com.ateam.checkMon.manEmpRun.model.ManEmpRunDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
+		</constructor-arg>
+	</bean>
+	<bean id="hourTemplateDao" class="com.ateam.checkMon.hourTemplate.model.HourTemplateDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>

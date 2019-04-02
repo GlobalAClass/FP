@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkMonHourTemplate">
+	<select id="getTemplateListSQL" parameterType="hashmap" resultType="com.ateam.checkMon.hourTemplate.model.HourTemplateDTO">
+	<![CDATA[
+	select * from
+	(select rownum as rnum, a.* from 
+	(select * from hour_template_tb order by hour_template_ix desc)a)b 
+	where rnum>=((#{cp}-1)*#{listsize}+1) and
+	rnum<=#{cp}*${listsize}]]>
+	</select>
+	<select id="templateListSizeSQL" resultType="Integer">
+	select count(hour_template_ix) as total
+	from hour_template_tb
+	</select>
+	<insert id="addTemplateSQL" parameterType="com.ateam.checkMon.hourTemplate.model.HourTemplateDTO">
+	insert into
+		hour_template_tb
+	values(
+		hour_template_tb_seq.nextval,
+		#{template_name},
+		#{hour_start_time},
+		#{hour_end_time},
+		#{template_position}
+	)
+	</insert>
+	<delete id="delTemplateSQL" parameterType="int">
+	delete from hour_template_tb
+	where hour_template_ix=#{hour_template_ix}
+	</delete>
+</mapper>

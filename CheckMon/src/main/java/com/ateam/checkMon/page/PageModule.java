@@ -16,27 +16,42 @@ public class PageModule {
 		   usergroup--;
 		}
 		
+		//페이지 아무것도 없을 때 default 값 설정
+		if(totalpage==0) totalpage=1;
+		
+		sb.append("<ul class=\"pagination\">");
+		
 	    if(usergroup!=0){
-	    	sb.append("<a href='");
+	    	sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"");
 	    	sb.append(pagename);
-	    	sb.append("?cp="+((usergroup-1)*pagesize+pagesize)+"'>&lt;&lt;</a>");
+	    	sb.append("?cp="+((usergroup-1)*pagesize+pagesize)+"\" aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
+	    			"<span class=\"sr-only\">Previous</span>\r\n" + 
+	    			"</a></li>");
 	    }
 	    
 	    for(int i=usergroup*pagesize+1;i<=usergroup*pagesize+pagesize;i++){
-	    	sb.append("&nbsp;&nbsp;<a href='");
+	    	sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"");
 	    	sb.append(pagename);
-	    	sb.append("?cp="+i+"'>"+i+"</a>&nbsp;&nbsp;");
+	    	sb.append("?cp="+i+"\">"+i+"</a></li>");
 	    
 	    	if(i==totalpage){ 
 	    		break;
 	    	}
 	    }
 	    
-	    if(usergroup!=(totalpage/pagesize+(totalpage%pagesize==0?-1:0))){
-	       sb.append("<a href='");
+	    if(usergroup!=(totalpage/pagesize+(totalpage%pagesize==0?1:0))){
+	       sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"");
 	       sb.append(pagename);
-	       sb.append("?cp="+((usergroup+1)*pagesize+1)+"'>&gt;&gt;</a>");	       
+	       sb.append("?cp="+((usergroup+1)*pagesize+1)+"\"" + 
+	       		"aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
+	       		"<span class=\"sr-only\">Next</span>\r\n" + 
+	       		"</a></li>");	       
 	    }
+	    
+	    
+	    sb.append("</ul>");
+	    
+	    System.out.println(sb.toString());
 	    
 	    return sb.toString();
 	}
