@@ -9,7 +9,7 @@
 	(select rownum as rnum, a.* from 
 	(select * from hour_template_tb order by hour_template_ix desc)a)b 
 	where rnum>=((#{cp}-1)*#{listsize}+1) and
-	rnum<=#{cp}*${listsize}]]>
+	rnum<=#{cp}*#{listsize}]]>
 	</select>
 	<select id="templateListSizeSQL" resultType="Integer">
 	select count(hour_template_ix) as total

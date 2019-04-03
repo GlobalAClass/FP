@@ -73,7 +73,7 @@ function checked(){
 			</tr>
 			<tr>
 				<td colspan="3" align="center">
-					<input type="file" name="picture" onchange="showImg(this);" accept=""><br>
+					<input type="file" name="picture" onchange="showImg(this);" accept="" value=""><br>
 					<span style="margin-left:8px; font-size:8px; color:#FA5882;">사진은 자동으로 이미지 크기에 맞게 적용됩니다.</span>
 				</td>
 			</tr>

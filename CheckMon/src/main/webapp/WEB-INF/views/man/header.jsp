@@ -27,12 +27,8 @@
                                     <h5 class="text-overflow"><small>관리자 ${sessionScope.m_name}님</small> </h5>
                                 </div>
 								
-								<!-- 관리자 인덱스 넘기기 -->
-								<c:url var="manIxUrl" value="modManProfileForm.do">
-									<c:param name="man_ix">${sessionScope.man_ix}</c:param>
-								</c:url>
                                 <!-- item-->
-                                <a href="${manIxUrl}" class="dropdown-item notify-item">
+                                <a href="modManProfileForm.do" class="dropdown-item notify-item">
                                     <i class="fa fa-user"></i> <span>프로필 수정하기</span>
                                 </a>
 

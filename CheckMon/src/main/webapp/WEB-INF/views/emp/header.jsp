@@ -28,12 +28,8 @@
                                     <h5 class="text-overflow"><small>근무자 ${sessionScope.e_name}님</small> </h5>
                                 </div>
 								
-								<!-- 근무자 인덱스 넘기기 -->
-								<c:url var="empIxUrl" value="modEmpProfileForm.do">
-									<c:param name="emp_ix">${sessionScope.emp_ix}</c:param>
-								</c:url>
                                 <!-- item-->
-                                <a href="${empIxUrl}" class="dropdown-item notify-item">
+                                <a href="modEmpProfileForm.do" class="dropdown-item notify-item">
                                     <i class="fa fa-user"></i> <span>프로필 수정하기</span>
                                 </a>
 
@@ -77,8 +73,8 @@
                      <li class="submenu">
                         <a href="#"><i class="fa fa-vcard-o"></i> <span> 근태 </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="#">월별 근태 관리</a></li>
-                                <li><a href="#">근태 변경 목록</a></li>
+                                <li><a href="empCommute.do">월별 근태 관리</a></li>
+                                <li><a href="empCommuteApplyList.do">근태 변경 목록</a></li>
                             </ul>
                     </li>
 		

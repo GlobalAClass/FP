@@ -38,12 +38,6 @@ public class ProfileController {
 			File check=new File(path);
 			File files[]=check.listFiles();
 			for(int i=0;i<files.length;i++) {
-				System.out.println(files[i].getName());
-				System.out.println(files[i].getName());
-				System.out.println(files[i].getName());
-				System.out.println(upload.getOriginalFilename());
-				System.out.println(upload.getOriginalFilename());
-				System.out.println(upload.getOriginalFilename());
 				if(!files[i].getName().equals(upload.getOriginalFilename())) {
 					files[i].delete();
 				}
