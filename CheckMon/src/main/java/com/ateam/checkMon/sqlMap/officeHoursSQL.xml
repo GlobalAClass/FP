@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkMonOfficeHours">
+	<select id="getStoreLocationSQL" parameterType="int" resultType="hashmap">
+		select m_latitude, m_longitude
+		from store_tb s, emp_tb e
+		where s.man_ix = e.man_ix and emp_ix=#{emp_ix}
+	</select>
+</mapper>

@@ -63,6 +63,12 @@ public class EmpDAOImple implements EmpDAO {
 		return res;
 	}
 	
+	//근무자 출근 - 근무자가 출근하는 매장 위도,경도 가져옴
+	public HashMap<String, String> getStoreLocation(int emp_ix) {
+		HashMap<String, String> res = sqlMap.selectOne("getStoreLocationSQL",emp_ix);
+		return res;
+	}
+	
 	// 근무자 출근 - QR정보와 매장IX 일치 확인
 	public boolean checkQRAndStorIx(String e_email, String store_ix) {
 		Map<String, String> temp = new HashMap<String, String>();

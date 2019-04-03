@@ -32,29 +32,7 @@
 <script>
 <!-- empMain에 걸어야 할 GPS 함수 -->
 
-function getLocation() {
-	  if (navigator.geolocation) { // GPS를 지원하면
-		  	//추가적인 조건 걸고(핸드폰일때만?)
-	    navigator.geolocation.getCurrentPosition(function(position) {
-	    	var latitude=position.coords.latitude;
-	    	var longitude=position.coords.longitude;
-	    }, function(error) {
-	    	var res = error.code;
-	    	if(res==1){ //사용자가 위치 정보 수집을 거부함
-	    		alert('위치 수집을 거절하신 경우 \n사이트를 이용할 수 없습니다.\n');
-	    	}else if(res==2){ //위치 정보 수집 불가(ex. GPS 동작 불가 지역)
-	    		alert('위치정보 수집 불가한 지역에 위치하고 있습니다.');
-	    	}
-	    }, {
-	      enableHighAccuracy: true, //배터리 소모를 늘려서 정확도를 높임
-	      maximumAge: 0,
-	      timeout: Infinity
-	    });
-	  } else {
-	    alert('현재 접속한 기기가 \nGPS를 지원하지 않습니다');
-	  }
-}
-getLocation();
+
 </script>
 
 <body class="adminbody">
@@ -86,7 +64,7 @@ getLocation();
 						<!-- end row -->
 						
 						<div class="">
-							<button onclick="javascript:location.href='';">출근하기</button>
+							<button onclick="javascript:location.href='loadingGPS.do';">출근하기</button>
 						</div>
 
 						<div class="alert alert-danger" role="alert">

@@ -5,6 +5,7 @@
 <configuration>
 	<mappers>
 		<mapper resource="com/ateam/checkMon/sqlMap/memberSQL.xml"/>
+		<mapper resource="com/ateam/checkMon/sqlMap/officeHoursSQL.xml"/>
 		<mapper resource="com/ateam/checkMon/sqlMap/hourTemplateSQL.xml"/>
 	</mappers>
 </configuration>

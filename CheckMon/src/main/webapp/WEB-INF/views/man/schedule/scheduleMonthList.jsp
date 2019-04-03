@@ -93,10 +93,6 @@
 }
 </style>
 <!-- END CSS for this page -->
-
-<script src="assets/js/jquery-1.10.2.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 </head>
 <body class="adminbody">
 
@@ -132,8 +128,9 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 			     	 </div>
-			     	 <div class="modal-body">
-					</div>
+			<div class="modal-body">
+				
+			</div>
 			<div class="modal-footer" align="center">
 				<!-- 스케줄 추가 시 넘겨주어야 하는 값 hidden으로 저장 -->
 				<input class="btn btn-success" type="button" value="스케줄 추가하기" onclick="">
@@ -142,6 +139,15 @@
 	</div>
 </div>
 </body>
+
+<script src="assets/js/modernizr.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/moment.min.js"></script>
+
+<script src="assets/js/jquery-1.10.2.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/httpRequest.js"></script>
+
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 
@@ -169,8 +175,8 @@ $(document).ready(function() {
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'today',
-				center: 'prev title next',
-				right: 'month,agendaWeek,'
+				center: 'prev title  next',
+				right: 'month,agendaWeek'
 			},
 			selectable: true,
 			selectHelper: true,
