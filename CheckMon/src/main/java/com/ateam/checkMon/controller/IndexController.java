@@ -72,7 +72,7 @@ public class IndexController {
 					File employee = new File(context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix);
 					File[] files=employee.listFiles();
 					String imgpath;
-					if(files==null) {
+					if(files==null||files.length==0) {
 						imgpath="assets/images/emp/profile_default.jpg";
 					}else {
 						imgpath="assets/images/emp/profile/"+emp_ix+"\\"+files[0].getName();
@@ -91,7 +91,7 @@ public class IndexController {
 					File manager = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix);
 					File[] files=manager.listFiles();
 					String imgpath;
-					if(files==null) {
+					if(files==null||files.length==0) {
 						imgpath="assets/images/man/profile_default.jpg";
 					}else {
 						imgpath="assets/images/man/profile/"+man_ix+"\\"+files[0].getName();

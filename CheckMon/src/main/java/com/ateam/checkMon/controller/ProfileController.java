@@ -29,11 +29,25 @@ public class ProfileController {
 		try {
 			byte bytes[]=upload.getBytes();
 			String path=context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix;
-				
+			
 			//근무자 인덱스 번호 폴더 생성 
 			File img=new File(path);
 			img.mkdir();
-				
+			
+			//기존 이미지 프로필 삭제
+			File check=new File(path);
+			File files[]=check.listFiles();
+			for(int i=0;i<files.length;i++) {
+				System.out.println(files[i].getName());
+				System.out.println(files[i].getName());
+				System.out.println(files[i].getName());
+				System.out.println(upload.getOriginalFilename());
+				System.out.println(upload.getOriginalFilename());
+				System.out.println(upload.getOriginalFilename());
+				if(!files[i].getName().equals(upload.getOriginalFilename())) {
+					files[i].delete();
+				}
+			}
 			//복사할곳 
 			File outFile=new File(path+"\\"+upload.getOriginalFilename());
 			FileOutputStream fos=new FileOutputStream(outFile);
@@ -50,11 +64,26 @@ public class ProfileController {
 		try {
 			byte bytes[]=upload.getBytes();
 			String path=context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix;
-					
+			
 			//관리자 인덱스 번호 폴더 생성 
 			File img=new File(path);
 			img.mkdir();
-					
+			
+			//기존 이미지 프로필 삭제
+			File check=new File(path);
+			File files[]=check.listFiles();
+			for(int i=0;i<files.length;i++) {
+				System.out.println(files[i].getName());
+				System.out.println(files[i].getName());
+				System.out.println(files[i].getName());
+				System.out.println(upload.getOriginalFilename());
+				System.out.println(upload.getOriginalFilename());
+				System.out.println(upload.getOriginalFilename());
+				if(!files[i].getName().equals(upload.getOriginalFilename())) {
+					files[i].delete();
+				}
+			}
+			
 			//복사할곳 
 			File outFile=new File(path+"\\"+upload.getOriginalFilename());
 			FileOutputStream fos=new FileOutputStream(outFile);
@@ -81,7 +110,7 @@ public class ProfileController {
 		File emp_profile = new File(context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+e_ix);
 		File[] files=emp_profile.listFiles();
 		String imgpath;
-		if(files==null) {
+		if(files==null||files.length==0) {
 			imgpath="assets/images/emp/profile_default.jpg";
 		}else {
 			imgpath="assets/images/emp/profile/"+e_ix+"\\"+files[0].getName();
@@ -115,19 +144,17 @@ public class ProfileController {
 	public ModelAndView modEmpProfile(
 			EmpDTO dto,
 			@RequestParam(value="emp_ix",required=false,defaultValue="0")int emp_ix,
+			@RequestParam(value="e_pwd",required=false)String e_pwd,
 			MultipartHttpServletRequest multreq) {
 		ModelAndView mav=new ModelAndView();
 		
-		//기존에 존재하던 프로필이미지 삭제 
-		File emp_profile = new File(context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix);
-		File[] files=emp_profile.listFiles();
-		for(int i=0;i<files.length;i++) {
-			files[i].delete();
-		}
-		
-		//근무자 프로필 이미지 수정
 		MultipartFile upload=multreq.getFile("picture");
 		empCopyInto(emp_ix, upload);
+		
+		//근무자 비밀번호 null값 처리
+		if(e_pwd==null||e_pwd.equals("")) {
+			dto=empdao.modEmpProfileForm(emp_ix);
+		}
 		
 		int result=empdao.modEmpProfile(dto);
 		String msg=result>0?"프로필 수정이 완료 되었습니다.":"프로필 수정에 실패 하였습니다.";
@@ -156,7 +183,7 @@ public class ProfileController {
 		File man_profile = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+m_ix);
 		File[] files=man_profile.listFiles();
 		String imgpath;
-		if(files==null) {
+		if(files==null||files.length==0) {
 			imgpath="assets/images/man/profile_default.jpg";
 		}else {
 			imgpath="assets/images/man/profile/"+m_ix+"\\"+files[0].getName();
@@ -179,20 +206,19 @@ public class ProfileController {
 	public ModelAndView modManProfile(
 			ManDTO dto,
 			@RequestParam(value="man_ix",required=false,defaultValue="0")int man_ix,
+			@RequestParam(value="m_pwd",required=false)String m_pwd,
 			MultipartHttpServletRequest multreq) {
 		
 		ModelAndView mav=new ModelAndView();
-		
-		//기존에 존재하던 프로필이미지 삭제 
-		File man_profile = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix);
-		File[] files=man_profile.listFiles();
-		for(int i=0;i<files.length;i++) {
-			files[i].delete();
-		}
-		
+			
 		//관리자 프로필 수정
 		MultipartFile upload=multreq.getFile("picture");
 		manCopyInto(man_ix, upload);
+		
+		//근무자 비밀번호 null값 처리
+		if(m_pwd==null||m_pwd.equals("")) {
+			dto=mandao.modManProfileForm(man_ix);
+		}
 		
 		int result=mandao.modManProfile(dto);
 		String msg=result>0?"프로필 수정이 완료 되었습니다.":"프로필 수정에 실패 하였습니다.";

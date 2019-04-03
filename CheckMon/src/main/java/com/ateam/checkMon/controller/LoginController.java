@@ -61,7 +61,8 @@ public class LoginController {
 					Cookie ck_epwd=new Cookie("e_rpwd",e_rpwd);
 					ck_epwd.setMaxAge(0);
 					resp.addCookie(ck_epwd);
-				}else {		
+				}else {	
+					//근무자 랜덤비밀번호 저장
 					empdao.addEmpPwd(edto);
 					Cookie mem=new Cookie("member",member);
 					mem.setMaxAge(60*60*24*7);
@@ -82,7 +83,6 @@ public class LoginController {
 				File employee = new File(context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix);
 				File[] files=employee.listFiles();
 				String imgpath;
-				
 				if(files==null) {
 					imgpath="assets/images/emp/profile_default.jpg";
 				}else {
@@ -93,10 +93,8 @@ public class LoginController {
 				HttpSession session=req.getSession();
 				session.setAttribute("e_name",empname);
 				session.setAttribute("emp_ix",emp_ix);
+				session.setAttribute("imgpath",imgpath);
 				
-				mav.addObject("imgpath",imgpath);
-				mav.addObject("emp_ix",emp_ix);
-				mav.addObject("e_name",empname);
 				mav.setViewName("emp/home");
 			}
 		//관리자 로그인 선택	
@@ -122,11 +120,7 @@ public class LoginController {
 					resp.addCookie(ck_mpwd);
 				}else {
 					//관리자 랜덤비밀번호 DB에 저장
-					int res=mandao.addManPwd(mdto);
-					System.out.println(res);
-					System.out.println(res);
-					System.out.println(res);
-					System.out.println(res);
+					mandao.addManPwd(mdto);
 					
 					Cookie mem=new Cookie("member",member);
 					mem.setMaxAge(60*60*24*7);
@@ -143,24 +137,22 @@ public class LoginController {
 				String manname=mandao.manName(l_email);
 				int man_ix=mandao.manIx(l_email);
 				
-//				//관리자 프로필 이미지 가져오기
-//				File manager = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix);
-//				File[] files=manager.listFiles();
-//				String imgpath;
-//				if(files==null) {
-//					imgpath="assets/images/man/profile_default.jpg";
-//				}else {
-//					imgpath="assets/images/man/profile/"+man_ix+"\\"+files[0].getName();
-//				}
+				//관리자 프로필 이미지 가져오기
+				File manager = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix);
+				File[] files=manager.listFiles();
+				String imgpath;
+				if(files==null) {
+					imgpath="assets/images/man/profile_default.jpg";
+				}else {
+					imgpath="assets/images/man/profile/"+man_ix+"\\"+files[0].getName();
+				}
 				
 				//관리자 이름 및 인덱스 세션에 저장
 				HttpSession session=req.getSession();
 				session.setAttribute("m_name", manname);
 				session.setAttribute("man_ix",man_ix);
+				session.setAttribute("imgpath",imgpath);
 				
-				//mav.addObject("imgpath",imgpath);
-				mav.addObject("man_ix",man_ix);
-				mav.addObject("m_name",manname);
 				mav.setViewName("man/home");
 			}
 		}

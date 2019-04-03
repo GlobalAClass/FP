@@ -19,17 +19,17 @@
 						<!-- 프로필 사진 확인 부분 -->
                         <li class="list-inline-item dropdown notif">
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="${imgpath}" alt="Profile image" class="avatar-rounded">
+                                <img src="${sessionScope.imgpath}" alt="Profile image" class="avatar-rounded">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
                                 <div class="dropdown-item noti-title">
-                                    <h5 class="text-overflow"><small>관리자 ${m_name}님</small> </h5>
+                                    <h5 class="text-overflow"><small>관리자 ${sessionScope.m_name}님</small> </h5>
                                 </div>
 								
 								<!-- 관리자 인덱스 넘기기 -->
 								<c:url var="manIxUrl" value="modManProfileForm.do">
-									<c:param name="man_ix">${man_ix}</c:param>
+									<c:param name="man_ix">${sessionScope.man_ix}</c:param>
 								</c:url>
                                 <!-- item-->
                                 <a href="${manIxUrl}" class="dropdown-item notify-item">
