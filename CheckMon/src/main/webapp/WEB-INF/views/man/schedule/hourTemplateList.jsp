@@ -157,14 +157,9 @@ table th{
 		</div>
 	</div>
 </body>
-
 <script src="assets/js/modernizr.min.js"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
-
-<script src="assets/js/jquery-1.10.2.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -178,139 +173,150 @@ table th{
 <script src="assets/js/pikeadmin.js"></script>
 
 <!-- BEGIN Java Script for this page -->
+<script
+	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Counter-Up-->
+<script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+
+
+<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 <script src="assets/js/jquery-ui.min.js"></script>
-
 <script type="text/javascript">
+	//스케줄 시작 시간, 마감 시간 계산하는 함수
+	function setTempTime() {
 
-//스케줄 시작 시간, 마감 시간 계산하는 함수
-function setTempTime(){
-	
-	var m1 = document.getElementById('start_m');
-	var m2 = document.getElementById('end_m');
-	
-	var start_hour = template.start_hour.value;
-	var end_hour = template.end_hour.value;
-	
-	if(m1.options[m1.selectedIndex].value=='PM'){
-		start_hour = parseInt(start_hour)+12;
+		var m1 = document.getElementById('start_m');
+		var m2 = document.getElementById('end_m');
+
+		var start_hour = template.start_hour.value;
+		var end_hour = template.end_hour.value;
+
+		if (m1.options[m1.selectedIndex].value == 'PM') {
+			start_hour = parseInt(start_hour) + 12;
+		}
+		if (m2.options[m2.selectedIndex].value == 'PM') {
+			end_hour = parseInt(end_hour) + 12;
+		}
+
+		template.hour_start_time.value = start_hour + ':'
+				+ template.start_min.value;
+		template.hour_end_time.value = end_hour + ':' + template.end_min.value;
 	}
-	if(m2.options[m2.selectedIndex].value=='PM'){
-		end_hour = parseInt(end_hour)+12;
+
+	//Submit 전에 유효성 검사
+	function checked() {
+
+		if (template.template_name.value == '') {
+			alert('템플릿 명을 입력해주세요.');
+			return false;
+		} else if (template.start_hour.value == ''
+				|| template.start_min.value == ''
+				|| template.end_hour.value == ''
+				|| template.end_min.value == '') {
+			alert('근무 시간을 모두 입력해주세요.');
+			return false;
+		} else if (template.template_position.value == '') {
+			alert('직책명을 선택해주세요.');
+			return false;
+		} else {
+			setTempTime();
+			return true;
+		}
+
 	}
-	
-	template.hour_start_time.value = start_hour+':'+template.start_min.value;
-	template.hour_end_time.value = end_hour+':'+template.end_min.value;
-}
 
-//Submit 전에 유효성 검사
-function checked(){
-	
-	if(template.template_name.value==''){
-		alert('템플릿 명을 입력해주세요.');
-		return false;
-	}else if(template.start_hour.value==''||template.start_min.value==''||template.end_hour.value==''||template.end_min.value==''){
-		alert('근무 시간을 모두 입력해주세요.');
-		return false;
-	}else if(template.template_position.value==''){
-		alert('직책명을 선택해주세요.');
-		return false;
-	}else{
-		setTempTime();
-		return true;	
+	//ajax 이용하여 값 전송후 메세지 결과와 이동 화면값 받아와서 이동 및 메세지 출력(실패할때만)
+	function insertTemp() {
+
+		var param = 'template_name=' + template.template_name.value
+				+ '&hour_start_time=' + template.hour_start_time.value
+				+ '&hour_end_time=' + template.hour_end_time.value
+				+ '&template_position=' + template.template_position.value;
+		sendRequest('hourTemplateAdd.do', param, resultAdd, 'POST');
 	}
-	
-	
-}
 
+	function resultAdd() {
+		if (XHR.readyState == 4) {
+			if (XHR.status == 200) {
 
-//ajax 이용하여 값 전송후 메세지 결과와 이동 화면값 받아와서 이동 및 메세지 출력(실패할때만)
-function insertTemp(){
-	
-	var param = 'template_name='+template.template_name.value
-				+'&hour_start_time='+template.hour_start_time.value
-				+'&hour_end_time='+template.hour_end_time.value
-				+'&template_position='+template.template_position.value;
-	sendRequest('hourTemplateAdd.do',param,resultAdd,'POST');
-}
+				var data = eval('(' + XHR.responseText + ')');
+				var msg = data.msg;
+				var loc = data.loc;
 
-function resultAdd(){
-	if(XHR.readyState==4){
-		if(XHR.status==200){
-			
-			var data = eval('('+XHR.responseText+')');
-			var msg = data.msg;
-			var loc = data.loc;
-			
-			if(msg!=''){
-				alert(msg);
+				if (msg != '') {
+					alert(msg);
+				}
+
+				location.href = loc;
+
 			}
-			
-			location.href=loc;
-			
 		}
 	}
-}
 
-//전체선택 및 선택 한 값 삭제
-$(document).ready(function(){
-	
-	//템플릿 삭제하기 버튼 숨기기
-	$('#delete').hide();
-	
-	//체크 박스 개별 선택&해제시 삭제버튼 숨기고 나타내는 코드
-	$('input[name=checkRow]').click(function(){
-		if($('input[name="checkRow"]').is(":checked")==true){
-			$('#delete').show();
-		}else{
-			$('#delete').hide();
-		}
-	})
-	
-    //체크박스 전체 선택&해제 and 삭제버튼 숨기고 나타내는 코드
-    $('#ck_all').click(function(){
-         if($('#ck_all').prop('checked')){
-            $("input[type=checkbox]").prop('checked',true);
-            $('#delete').show();
-        }else{
-            $('input[type=checkbox]').prop('checked',false);
-            $('#delete').hide();
-        }
-    });
+	//전체선택 및 선택 한 값 삭제
+	$(document).ready(function() {
 
-	//삭제 버튼 클릭 시 삭제할것이냐는 알림과 삭제 진행
-    $('#delete').click(function(){
-        if(confirm("삭제하시겠습니까?")){
-            $("input[name=checkRow]:checked").each(function(){
-                var tr_value =$(this).val();
-                deleteTemplate(tr_value); //삭제 진행하는 함수
-            });
-        }else{
-            return false;
-        }
-    });
- 
-});
+		//템플릿 삭제하기 버튼 숨기기
+		$('#delete').hide();
 
-//ajax 이용하여 템플릿 삭제 구현
-function deleteTemplate(tr_value){
-	var params='hour_template_ix='+tr_value;
-    sendRequest('hourTemplateDel.do',params,resultDel,'POST');
-}
-
-//템플릿 삭제 후 삭제 실패하면 메세지 출력 & list로 location 설정
-function resultDel(){
-	if(XHR.readyState==4){
-		if(XHR.status==200){
-			
-			var data = eval('('+XHR.responseText+')');
-			var msg = data.msg;
-			var loc = data.loc;
-			if(msg!=''){
-				alert(msg);
+		//체크 박스 개별 선택&해제시 삭제버튼 숨기고 나타내는 코드
+		$('input[name=checkRow]').click(function() {
+			if ($('input[name="checkRow"]').is(":checked") == true) {
+				$('#delete').show();
+			} else {
+				$('#delete').hide();
 			}
-			location.href=loc;
+		})
+
+		//체크박스 전체 선택&해제 and 삭제버튼 숨기고 나타내는 코드
+		$('#ck_all').click(function() {
+			if ($('#ck_all').prop('checked')) {
+				$("input[type=checkbox]").prop('checked', true);
+				$('#delete').show();
+			} else {
+				$('input[type=checkbox]').prop('checked', false);
+				$('#delete').hide();
+			}
+		});
+
+		//삭제 버튼 클릭 시 삭제할것이냐는 알림과 삭제 진행
+		$('#delete').click(function() {
+			if (confirm("삭제하시겠습니까?")) {
+				$("input[name=checkRow]:checked").each(function() {
+					var tr_value = $(this).val();
+					deleteTemplate(tr_value); //삭제 진행하는 함수
+				});
+			} else {
+				return false;
+			}
+		});
+
+	});
+
+	//ajax 이용하여 템플릿 삭제 구현
+	function deleteTemplate(tr_value) {
+		var params = 'hour_template_ix=' + tr_value;
+		sendRequest('hourTemplateDel.do', params, resultDel, 'POST');
+	}
+
+	//템플릿 삭제 후 삭제 실패하면 메세지 출력 & list로 location 설정
+	function resultDel() {
+		if (XHR.readyState == 4) {
+			if (XHR.status == 200) {
+
+				var data = eval('(' + XHR.responseText + ')');
+				var msg = data.msg;
+				var loc = data.loc;
+				if (msg != '') {
+					alert(msg);
+				}
+				location.href = loc;
+			}
 		}
 	}
-}
 </script>
 </html>
