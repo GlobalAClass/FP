@@ -9,5 +9,6 @@
 		<mapper resource="com/ateam/checkMon/sqlMap/commuteInfoSQL.xml"/>
 		<mapper resource="com/ateam/checkMon/sqlMap/scheduleSQL.xml"/>
 		<mapper resource="com/ateam/checkMon/sqlMap/officeHoursSQL.xml"/>
+		<mapper resource="com/ateam/checkMon/sqlMap/man/empReqRun.xml"/>
 	</mappers>
 </configuration>

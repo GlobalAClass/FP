@@ -73,8 +73,8 @@
                         <a href="#"><i class="fa fa-user-circle-o"></i> <span> 직원 관리 </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="empReqRunList.do">직원 관리</a></li>
-                                <li><a href="#">그룹 관리</a></li>
-                                <li><a href="#">직책 관리</a></li>
+                                <li><a href="goGroup.do">그룹 관리</a></li>
+                                <li><a href="goPosition.do">직책 관리</a></li>
                             </ul>
                     </li>
                     
