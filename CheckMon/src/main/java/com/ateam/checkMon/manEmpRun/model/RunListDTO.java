@@ -1,12 +1,13 @@
 package com.ateam.checkMon.manEmpRun.model;
 
+import java.util.Date;
 
 public class RunListDTO {
 
-	private String req_ix;
+	private int req_ix;
 	private String e_group;
 	private String imgpath;
-	private String emp_ix;
+	private int emp_ix;
 	private String e_name;
 	private String e_position;
 	private String e_tel;
@@ -18,7 +19,7 @@ public class RunListDTO {
 	public RunListDTO() {
 		super();
 	}
-	public RunListDTO(String req_ix, String e_group, String imgpath, String emp_ix, String e_name, String e_position, String e_tel,
+	public RunListDTO(int req_ix, String e_group, String imgpath, int emp_ix, String e_name, String e_position, String e_tel,
 			String e_email, String authorization, String e_birthday, String regit_day) {
 		super();
 		this.req_ix = req_ix;
@@ -34,11 +35,22 @@ public class RunListDTO {
 		this.regit_day = regit_day;
 	}
 	
-	
-	public String getReq_ix() {
+	public RunListDTO(String e_group, int emp_ix, String e_name, String e_position, String e_tel,
+			String e_email, String authorization, String e_birthday) {
+		super();
+		this.e_group = e_group;
+		this.emp_ix = emp_ix;
+		this.e_name = e_name;
+		this.e_position = e_position;
+		this.e_tel = e_tel;
+		this.e_email = e_email;
+		this.authorization = authorization;
+		this.e_birthday = e_birthday;
+	}
+	public int getReq_ix() {
 		return req_ix;
 	}
-	public void setReq_ix(String req_ix) {
+	public void setReq_ix(int req_ix) {
 		this.req_ix = req_ix;
 	}
 	public String getE_group() {
@@ -53,10 +65,10 @@ public class RunListDTO {
 	public void setImgpath(String imgpath) {
 		this.imgpath = imgpath;
 	}
-	public String getEmp_ix() {
+	public int getEmp_ix() {
 		return emp_ix;
 	}
-	public void setEmp_ix(String emp_ix) {
+	public void setEmp_ix(int emp_ix) {
 		this.emp_ix = emp_ix;
 	}
 	public String getE_name() {

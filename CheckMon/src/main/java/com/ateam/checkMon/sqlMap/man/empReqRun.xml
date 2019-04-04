@@ -8,7 +8,7 @@
 		resultType="com.ateam.checkMon.manEmpRun.model.ReqListDTO">
 		select r.req_ix, r.emp_ix, e.e_name, e.e_birthday, e.e_tel, e.e_email
 		from req_tb r, emp_tb e
-		where r.man_ix = #{man_ix} and r.emp_ix = e.emp_ix
+		where r.man_ix = #{man_ix} and r.emp_ix = e.emp_ix and r.regit_day is null
 	</select>
 	<select id="getRunListSQL"
 		parameterType="int"
@@ -71,4 +71,17 @@
 		from group_tb
 		where man_ix = #{man_ix}
 	</select>
+	<update id="setResitDaySQL" parameterType="int">
+		update req_tb set regit_day=sysdate where req_ix= #{req_ix}
+	</update>
+	<update id="setPGASQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
+		update emp_tb set e_group=#{e_group},e_position=#{e_position},authorization = #{authorization} where emp_ix= #{emp_ix}
+	</update>
+	<update id="modEmpSQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
+		update emp_tb 
+			set e_name=#{e_name}, e_group=#{e_group}, e_position=#{e_position}, authorization = #{authorization},
+				e_tel=#{e_tel}, e_email=#{e_email}, e_birthday=#{e_birthday}
+		where emp_ix= #{emp_ix}
+	</update>
+
 </mapper>

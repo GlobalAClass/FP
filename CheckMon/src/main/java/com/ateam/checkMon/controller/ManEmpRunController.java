@@ -100,12 +100,46 @@ public class ManEmpRunController {
 	}
 
 	// 직원 승인
-	@RequestMapping("/addEmp.do")
-	public String addEmp() {
-		return "man/empRun/empReqRunList";
-	}
+	@RequestMapping(value = "addEmp.do", method = RequestMethod.POST)
+	public ModelAndView addEmp(			
+			@RequestParam(name = "emp_ix") int emp_ix,
+			@RequestParam(name = "req_ix") int req_ix,
+			@RequestParam(name = "e_position") String e_position, 
+			@RequestParam(name = "e_group") String e_group,
+			@RequestParam(name = "authorization") String authorization) {
+		AddempDTO aedto = new AddempDTO(req_ix, emp_ix, e_group, e_position, authorization);
+		int res = merdao.addEmp(aedto);
+		String msg = res > 0 ? "승인 요청을 승인했습니다." : "오류로 인해 승인하지 못했습니다.";
 
-	// 직원 승인
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.setViewName("cmjson");
+		return mav;
+	}
+	
+	// 직원 수정
+	@RequestMapping(value = "modEmp.do", method = RequestMethod.POST)
+	public ModelAndView modEmp(			
+			@RequestParam(name = "emp_ix") int emp_ix,
+			@RequestParam(name = "e_name") String e_name,
+			@RequestParam(name = "e_position") String e_position, 
+			@RequestParam(name = "e_group") String e_group,
+			@RequestParam(name = "authorization") String authorization,
+			@RequestParam(name = "e_tel") String e_tel,
+			@RequestParam(name = "e_email") String e_email,
+			@RequestParam(name = "e_birthday") String e_birthday) {
+		RunListDTO rldto = new RunListDTO(e_group, emp_ix, e_name, e_position, e_tel, e_email, authorization, e_birthday);
+		
+		int res = merdao.modEmp(rldto);
+		String msg = res > 0 ? "승인 요청을 승인했습니다." : "오류로 인해 승인하지 못했습니다.";
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.setViewName("cmjson");
+		return mav;
+	}
+	
+	// 직원 거절
 	@RequestMapping(value = "refuseEmp.do", method = RequestMethod.POST)
 	public ModelAndView refuseEmp(@RequestParam(name = "req_ix") int req_ix) {
 		int res = merdao.refuseEmp(req_ix);

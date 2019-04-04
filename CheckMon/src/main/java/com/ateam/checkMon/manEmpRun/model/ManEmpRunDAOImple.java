@@ -29,6 +29,21 @@ public class ManEmpRunDAOImple implements ManEmpRunDAO {
 		List<RunListDTO> list = sqlMap.selectList("getRunListSQL", man_ix);
 		return list;
 	}
+	
+	public int addEmp(AddempDTO temp) {
+		int res1 = sqlMap.update("setResitDaySQL", temp);
+		int res2 = sqlMap.update("setPGASQL", temp);
+		
+		if(res1<0 || res2<0) {
+			return -1;
+		}
+		return 1;
+	}
+	
+	public int modEmp(RunListDTO temp) {
+		int res = sqlMap.update("modEmpSQL", temp);
+		return res;
+	}
 
 	public int refuseEmp(int req_ix) {
 		int res = sqlMap.delete("refuseEmpSQL", req_ix);
@@ -141,4 +156,6 @@ public class ManEmpRunDAOImple implements ManEmpRunDAO {
 		int res = sqlMap.insert("delPositionSQL", position_ix);
 		return res;
 	}
+	
+	
 }

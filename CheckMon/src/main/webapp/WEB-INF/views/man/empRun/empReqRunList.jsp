@@ -157,35 +157,38 @@ img {
 										</tr>
 										<tr>
 											<th>이름</th>
-											<td><input type="text" id="e_name"></td>
+											<td><input type="text" id="ae_name" class="form-control"></td>
 										</tr>
 										<tr>
 											<th>직책</th>
-											<td><input type="text" id="e_position"></td>
+											<td><select id="e_position" class="form-control"></select></td>
 										</tr>
 										<tr>
 											<th>그룹</th>
-											<td><input type="text" id="e_group"></td>
+											<td><select id="e_group" class="form-control"></select></td>
 										</tr>
 										<tr>
 											<th>권한</th>
-											<td><input type="text" id="authorization"></td>
+											<td><select id="authorization" class="form-control">
+												<option value="false">부여하지 않음</option>
+												<option value="true">관리자 권한 부여</option>
+											</select></td>
 										</tr>
 										<tr>
-											<th>핸드폰 번호</th>
-											<td><input type="text" id="e_tel"></td>
+											<th>번호</th>
+											<td><input type="text" id="e_tel" class="form-control"></td>
 										</tr>
 										<tr>
 											<th>이메일</th>
-											<td><input type="text" id="e_email"></td>
+											<td><input type="text" id="e_email" class="form-control"></td>
 										</tr>
 										<tr>
 											<th>생년월일</th>
-											<td><input type="text" id="e_birthDay"></td>
+											<td><input type="text" id="e_birthday" class="form-control"></td>
 										</tr>
 										<tr>
 											<th>직원 승인일</th>
-											<td><input type="text" id="regit_day"></td>
+											<td id="regit_day"></td>
 										</tr>
 										<tr>
 											<th colspan="2"><!-- table의 마지막선 추가를 위한 빈공간 --></th>
@@ -195,7 +198,8 @@ img {
 							</div>
 					</div>
 					<div class="modal-footer" align="center">
-						<input class="btn btn-primary" type="submit" value="수정하기">
+						<input id="req_ix" type="hidden" >
+						<input id="btn-mod" class="btn btn-primary" type="submit" value="수정하기">
 					</div>
 					</form>
 					</div>
@@ -245,7 +249,9 @@ img {
 							</div>
 					</div>
 					<div class="modal-footer" align="center">
-						<input class="btn btn-primary" type="submit" value="수정하기">
+						<input id="add_emp_ix" type="hidden" >
+						<input id="add_req_ix" type="hidden" >
+						<input id="btn_addEmp"class="btn btn-primary" type="submit" value="승인하기">
 					</div>
 					</form>
 					</div>
@@ -269,7 +275,7 @@ img {
 			     					<div id="ref_e_img"></div>
 			     					<h2 id="ref_e_name">이름</h2>
 			     					<h5 style="color: red">정말 승인을 거절하시겠습니까?</h5>
-			     					<input id="ref_r_ix" type="hidden" name="req_ix">
+			     					<input id="ref_r_ix" type="hidden" >
 			     				</div>
 							</div>
 					</div>
@@ -334,8 +340,12 @@ img {
 		
 		//승인 수락하는 함수 - ajax
 		function addEmp(){
-			var req_ix = 'req_ix='+$('#ref_r_ix').val();
-			sendRequest('refuseEmp.do', req_ix, resMsg,'POST');
+			var params = 'emp_ix='+$('#add_emp_ix').val()
+						+'&req_ix='+$('#add_req_ix').val()
+						+'&e_position='+$('#add_e_position').val()
+						+'&e_group='+$('#add_e_group').val()
+						+'&authorization='+$('#add_e_authorization').val();
+			sendRequest('addEmp.do', params, resMsg,'POST');
 		}
 		
 		//승인 요청 거절하는 함수 - ajax
@@ -343,6 +353,21 @@ img {
 			var req_ix = 'req_ix='+$('#ref_r_ix').val();
 			sendRequest('refuseEmp.do', req_ix, resMsg,'POST');
 		}
+		
+		//직원 수정하기
+		function modEmp(){
+			var params = 'emp_ix='+$('#emp_ix').text()
+						+'&e_name='+$('#ae_name').val()
+						+'&e_position='+$('#e_position').val()
+						+'&e_group='+$('#e_group').val()
+						+'&authorization='+$('#authorization').val()
+						+'&e_tel='+$('#e_tel').val()
+						+'&e_email='+$('#e_email').val()
+						+'&e_birthday='+$('#e_birthday').val();
+			sendRequest('modEmp.do', params, resMsg,'POST');
+		}
+		
+		
 		function resMsg(){
 			if(XHR.readyState==4){
 				if(XHR.status==200){
@@ -366,7 +391,9 @@ img {
 				    var pg_names=data.pg_names;
 
 				    var p_select = $('#add_e_position');
+				    var e_p_select = $('#e_position');
 				    var g_select = $('#add_e_group');
+				    var e_g_select = $('#e_group');
 				    
 				    //프로퍼티 개수 구하기. - 객체 하나 넘어옴. 리스트형식이 아니기 때문에 length로 구할수 없음. 따라서 개수 따로 구해야함.
 				    var p_len = Number(pg_names.p_len);
@@ -378,28 +405,36 @@ img {
 					    	opt.text = pg_names['e_position'+i];
 					    	opt.value = pg_names['e_position'+i];
 					    	p_select.append(opt);
+					    	e_p_select.append(opt);
 				    	}else{
 				    		var opt = document.createElement("OPTION");
 					    	opt.text = pg_names['e_group'+(i-p_len)];
 					    	opt.value = pg_names['e_group'+(i-p_len)];
 					    	g_select.append(opt);
+					    	e_g_select.append(opt);
 				    	}
 				    }
 				}
 			}
 		}
 		
-		$(window).load(function(){
-			
-		});
-		
 		$(document).ready(function() {
 			//select에 사용될 직책, 그룹 세팅
 			getPGNames();
 			
+			//직원 요청 수락하기 onclick 함수
+			$('#btn_addEmp').on('click', function(){
+				addEmp();
+			});
+			
 			//직원 요청 거절하기 onclick 함수
 			$('#ref_btn').on('click', function(){
 				refuseEmp();
+			});
+			
+			//직원 수정하기 onclick 함수
+			$('#btn-mod').on('click', function(){
+				modEmp();
 			});
 			
 			//직원 요청 테이블
@@ -440,7 +475,8 @@ img {
 				
 				setImg(row, add_modal, '#add_e_img');
 				add_modal.find('#add_e_name').text(row.data().e_name);
-				add_modal.find('#add_r_ix').val(row.data().req_ix);
+				add_modal.find('#add_emp_ix').val(row.data().emp_ix);
+				add_modal.find('#add_req_ix').val(row.data().req_ix);
 			});
 			
 			//직원 요청 거절 modal
@@ -491,16 +527,16 @@ img {
 				
 				setImg(row, $('.bd-detail-modal-lg'), '#div_e_img');
 				$('#e_name').text(row.data().e_name);
+				$('#req_ix').val(row.data().req_ix);
 				m_t.find('#emp_ix').text(row.data().emp_ix);
-				m_t.find('#e_name').val(row.data().e_name);
+				m_t.find('#ae_name').val(row.data().e_name);
 				m_t.find('#e_position').val(row.data().e_position);
 				m_t.find('#e_group').val(row.data().e_group);
 				m_t.find('#authorization').val(row.data().authorization);
 				m_t.find('#e_tel').val(row.data().e_tel);
 				m_t.find('#e_email').val(row.data().e_email);
 				m_t.find('#e_birthday').val(row.data().e_birthday);
-				m_t.find('#regit_dat').val(row.data().e_regit_day);
-				
+				m_t.find('#regit_day').text(row.data().regit_day);
 			});
 		});
 		// END CODE FOR Child rows (show extra / detailed information) DATA TABLE

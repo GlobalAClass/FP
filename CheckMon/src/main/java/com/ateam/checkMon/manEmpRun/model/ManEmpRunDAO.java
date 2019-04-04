@@ -18,4 +18,6 @@ public interface ManEmpRunDAO {
 	int getMaxPri(int man_ix);
 	int addPosition(int man_ix, String e_position, int priority);
 	HashMap<String, String> getPGNameList(int man_ix);
+	int addEmp(AddempDTO temp);
+	int modEmp(RunListDTO temp);
 }
