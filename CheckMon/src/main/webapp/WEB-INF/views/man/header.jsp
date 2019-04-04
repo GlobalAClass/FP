@@ -83,7 +83,7 @@
                             <ul class="list-unstyled">
                                 <li><a href="#">당일 근태 현황</a></li>
                                 <li><a href="#">출퇴근 기록 관리</a></li>
-                                <li><a href="#">근태 변경신청 목록</a></li>
+                                <li><a href="commuteApplyAllList.do">근태 변경신청 목록</a></li>
                             </ul>
                     </li>
 		

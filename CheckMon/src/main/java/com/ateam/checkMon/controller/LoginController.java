@@ -211,7 +211,7 @@ public class LoginController {
 		//DB에 값을 넣어주기위해 String 형변환
 		String temp=temp_s.toString();
 		mav.addObject("temp",temp);
-		mav.setViewName("index");
+		mav.setViewName("member/join/logout");
 		return mav;
 	}
 	
