@@ -20,15 +20,6 @@
 
 <!-- Custom CSS -->
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-
-<!-- Modernizr -->
-<script src="assets/js/modernizr.min.js"></script>
-
-<!-- jQuery -->
-<script src="assets/js/jquery.min.js"></script>
-
-<!-- Moment -->
-<script src="assets/js/moment.min.js"></script>
 		
 <!-- BEGIN CSS for this page -->
 <link href="assets/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
@@ -129,11 +120,86 @@
 		        </button>
 			     	 </div>
 			<div class="modal-body">
-				
-			</div>
+					<table class="table">
+						<tr>
+							<th>근무 시간 템플릿</th>
+							<td>
+								<input type="hidden">
+								<div class="form-group">
+									<select class="form-control" id="loc_temp">
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>직책명</th>
+							<td><select class="form-control" name="template_position">
+									<option value="">직책을 선택해주세요</option>
+									<option value="직원">직원</option>
+									<option value="아르바이트">아르바이트</option>
+							</select></td>
+						</tr>
+						<tr align="right">
+							<td colspan="2"><input class="btn btn-success" type="submit"
+								value="스케줄 추가하기"></td>
+						</tr>
+					</table>
+				</div>
 			<div class="modal-footer" align="center">
 				<!-- 스케줄 추가 시 넘겨주어야 하는 값 hidden으로 저장 -->
 				<input class="btn btn-success" type="button" value="스케줄 추가하기" onclick="">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	   		<div class="modal-header">
+		        <h5 class="modal-title" id="modModalLabel"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+			     	 </div>
+			<div class="modal-body">
+				<table>
+					<tr>
+						<th>시작 시간</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" name="start_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="start_min" maxlength="2" size="5">
+								&nbsp;
+								<select class="form-control" id="start_m">
+									<option value="AM">AM</option>
+									<option value="PM">PM</option>
+								</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>마감 시간</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" name="end_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="end_min" maxlength="2" size="5">
+								&nbsp;
+								<select class="form-control" id="end_m">
+									<option value="AM">AM</option>
+									<option value="PM">PM</option>
+								</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer" align="center">
+				<!-- 클릭한 매장 정보 -->
+				<input type="hidden" name="hour_start_time">
+				<input type="hidden" name="hour_end_time">
+				<input type="hidden" id="schedule_ix" name="schedule_ix" value="">
+				<input class="btn btn-success" type="button" value="스케줄 수정하기" onclick="checkStore();">
 			</div>
 		</div>
 	</div>
@@ -143,10 +209,6 @@
 <script src="assets/js/modernizr.min.js"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
-
-<script src="assets/js/jquery-1.10.2.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -160,92 +222,111 @@
 <script src="assets/js/pikeadmin.js"></script>
 
 <!-- BEGIN Java Script for this page -->
-<script src="assets/js/jquery-ui.min.js"></script>
-<script src="assets/plugins/fullcalendar/fullcalendar.min.js"></script>
-<script>
-$(document).ready(function() {
+<script
+	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
-		/* 달력 초기화 하는 부분
-		-----------------------------------------------------------------*/
-		var date = new Date();
-		var d    = date.getDate();
-        m    = date.getMonth();
-        y    = date.getFullYear();
-		
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'today',
-				center: 'prev title  next',
-				right: 'month,agendaWeek'
-			},
-			selectable: true,
-			selectHelper: true,
-			select: function(start, end) {
-				var title = prompt('Event Title:');
-				var eventData;
-				if (title) {
-					eventData = {
-						title: title,
-						start: start,
-						end: end
-					};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
-				$('#calendar').fullCalendar('unselect');
-			},
-			editable: false, //수정 가능 여부 설정하는 부분
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-					{
-					  title          : 'All Day Event',
-					  start          : new Date(y, m, 2),
-					  className: 'bg-primary',
-					},
-					{
-					  title          : 'Long Event',
-					  start          : new Date(y, m, d - 4),
-					  end            : new Date(y, m, d - 2),
-					  className: 'bg-info',
-					},
-					{
-					  title          : 'Meeting John',
-					  start          : new Date(y, m, d, 15, 20),
-					  allDay         : false,
-					  className: 'bg-primary',
-					},
-					{
-					  title          : 'New Task',
-					  start          : new Date(y, m, d, 12, 0),
-					  end            : new Date(y, m, d, 16, 0),
-					  allDay         : false,
-					  className: 'bg-danger',
-					},
-					{
-					  title          : 'Birthday Party',
-					  start          : new Date(y, m, d + 2, 15, 0),
-					  end            : new Date(y, m, d + 2, 20, 40),
-					  allDay         : false,
-					  className: 'bg-warning',
-					},
-					{
-					  title          : 'Alice Birthday',
-					  start          : new Date(y, m, d + 4, 15, 0),
-					  end            : new Date(y, m, d + 4, 18, 30),
-					  allDay         : false,
-					  className: 'bg-info',
-					},
-					{
-					  title          : 'Click for Google',
-					  start          : new Date(y, m, 27),
-					  end            : new Date(y, m, 28),
-					  url            : 'http://google.com/',
-					  className: 'bg-danger', 
-					}
-				
-			],
-			droppable: false
-		});
+<!-- Counter-Up-->
+<script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+
+<!-- BEGIN Java Script for this page -->
+<script src="assets/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script type="text/javascript" src="assets/js/httpRequest.js"></script>
+<script>
+var date = new Date();
+var d = date.getDate();
+	m = date.getMonth()+1;
+	y = date.getFullYear();
+
+$('#calendar').fullCalendar(
+		{
+		header : {
+		left : 'today',
+		center : 'prev title next',
+		right : 'month,agendaWeek'
+		},
+		selectable : true,
+		selectHelper : true,
+		editable : false, //수정 가능 여부 설정하는 부분
+		eventLimit : 5, // allow "more" link when too many events
+		droppable : false,
+		height: 700,
+		eventClick: function(event) {
+			$('#myModal').modal('show')
+			document.all.schedule_ix.value = event.id;
+			document.getElementById('modModalLabel').innerHTML = event.title+'님의 스케줄 수정하기';
+		}
+	});
+
+//뒤로 가거나 앞으로 갈 때 달력값 다시 가져오기
+$(".fc-prev-button").on("click", function() {
+	renderCalcEvent();
 });
+$(".fc-next-button").on("click", function() {
+	renderCalcEvent();
+});
+$(".fc-today-button").on("click", function() {
+	renderCalcEvent();
+});
+
+
+	
+renderCalcEvent();
+
+//현재 스케줄 값 모두 가져오는 ajax
+function renderCalcEvent(){
+	sendRequest('getScheduleAll.do',null,resultEvent,'GET');
+}
+
+function resultEvent(){
+	if (XHR.readyState == 4) {
+		if (XHR.status == 200) {
+			var data = eval('(' + XHR.responseText + ')');
+			var eventList = data.list;
+			
+			for(var i=0;i<eventList.length;i++){
+				list=eventList[i];
+				
+				var date = list.S_YEAR+'-'+list.S_MONTH+'-'+list.S_DAY;
+				var colorcode = "#"+Math.round(Math.random()*0xffffff).toString(16);
+				
+				var event ={
+				id : list.SCHEDULE_IX,
+				title : list.E_NAME,
+				start : date,
+				color : colorcode,
+				allDay: true
+				
+				};$('#calendar').fullCalendar('renderEvent',event);
+				
+			}
+			
+		}
+	}
+}
+
+//현재 존재하는 근무시간 템플릿 가져오는 ajax
+function getTemplate(){
+	sendRequest('hourTemplateList.do',null,resultTemplate,'POST');
+}
+
+function resultTemplate(){
+	if (XHR.readyState == 4) {
+		if (XHR.status == 200) {
+			var data = eval('(' + XHR.responseText + ')');
+			var tempList = data.list;
+			
+			for(var i=0;i<tempList.length;i++){
+				list=tempList[i];
+
+			}
+		}
+	}
+}
+
 </script>
+
 <!-- END Java Script for this page -->
 </html>

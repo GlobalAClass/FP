@@ -1,6 +1,7 @@
 package com.ateam.checkMon.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ateam.checkMon.hourTemplate.model.HourTemplateDAO;
 import com.ateam.checkMon.hourTemplate.model.HourTemplateDTO;
+import com.ateam.checkMon.schedule.model.ScheduleDAO;
+import com.ateam.checkMon.schedule.model.ScheduleDTO;
 
 @Controller
 public class ManScheduleController {
@@ -19,10 +22,13 @@ public class ManScheduleController {
 	@Autowired
 	private HourTemplateDAO hdao;
 	
+	@Autowired
+	private ScheduleDAO sdao;
+	
 	/**근무시간 템플릿 관리 관련*/
 	
 	//근무시간 템플릿 관리 페이지 이동
-	@RequestMapping("/hourTemplateList.do")
+	@RequestMapping(value="/hourTemplateList.do")
 	public ModelAndView goHourTemplateList(
 			@RequestParam(value="cp",defaultValue="1")int cp
 			) {
@@ -40,6 +46,21 @@ public class ManScheduleController {
 		mav.addObject("list",list);
 		mav.addObject("paging",paging);
 		mav.setViewName("man/schedule/hourTemplateList");
+		
+		return mav;
+	}
+	
+	//근무 시간 템플릿 리스트 모두 가져오기
+	@RequestMapping(value="/hourTemplateList.do",method=RequestMethod.POST)
+	public ModelAndView getHourTemplateList() {
+		
+		List<HourTemplateDTO> list = hdao.getTemplateList();
+		
+		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list",list);
+		mav.setViewName("cmjson");
 		
 		return mav;
 	}
@@ -63,7 +84,6 @@ public class ManScheduleController {
 	public ModelAndView delTemplate(
 			@RequestParam(value="hour_template_ix")int hour_template_ix) {
 		
-		//System.out.println("cont1 ix="+ix);
 		int res = hdao.delTemplate(hour_template_ix);
 		
 		String msg = res>0?"":"템플릿 삭제에 실패하였습니다.";
@@ -75,7 +95,7 @@ public class ManScheduleController {
 		return mav;
 	}
 	
-	
+	/*---------------------------------------------------------------------*/
 	/**스케줄 관리 관련*/
 	
 	//스케줄 페이지 이동
@@ -84,8 +104,20 @@ public class ManScheduleController {
 		return "man/schedule/scheduleMonthList";
 	}
 	
+	//스케줄 목록 모두 가져오는 메소드
+	@RequestMapping(value="/getScheduleAll.do",method=RequestMethod.GET)
+	public ModelAndView getScheduleAll() {
+		
+		List<HashMap<String, Object>> list = sdao.getScheduleAll();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list",list);
+		mav.setViewName("cmjson");
+		
+		return mav;
+	}
 	
-	
+	/*---------------------------------------------------------------------*/
 	/**휴가 요청 관련*/
 	
 	//휴가 요청 페이지 이동

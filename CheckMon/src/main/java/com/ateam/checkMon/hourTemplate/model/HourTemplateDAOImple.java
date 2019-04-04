@@ -18,6 +18,11 @@ public class HourTemplateDAOImple implements HourTemplateDAO {
 		int res = sqlMap.selectOne("templateListSizeSQL");
 		return res;
 	}
+	
+	public List<HourTemplateDTO> getTemplateList() {
+		List<HourTemplateDTO> list = sqlMap.selectList("getTempListSQL");
+		return list;
+	}
 
 	public List<HourTemplateDTO> getTemplateList(int listsize, int cp) {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
