@@ -56,8 +56,6 @@ public class ManScheduleController {
 		
 		List<HourTemplateDTO> list = hdao.getTemplateList();
 		
-		
-		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list",list);
 		mav.setViewName("cmjson");
@@ -104,17 +102,58 @@ public class ManScheduleController {
 		return "man/schedule/scheduleMonthList";
 	}
 	
-	//스케줄 목록 모두 가져오는 메소드
+	//스케줄 목록 가져오는 메소드
 	@RequestMapping(value="/getScheduleAll.do",method=RequestMethod.GET)
-	public ModelAndView getScheduleAll() {
+	public ModelAndView getScheduleAll(
+				@RequestParam(value="year")String year,
+				@RequestParam(value="month")String month
+			) {
 		
-		List<HashMap<String, Object>> list = sdao.getScheduleAll();
+		List<HashMap<String, Object>> list = sdao.getSchedule(year,month);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list",list);
 		mav.setViewName("cmjson");
 		
 		return mav;
+	}
+	
+	//스케줄 수정하기
+	@RequestMapping(value="/modSchedule.do",method=RequestMethod.POST)
+	public ModelAndView modSchedule(
+				@RequestParam(value="schedule_ix")int schedule_ix,
+				@RequestParam(value="s_start_time")String s_start_time,
+				@RequestParam(value="s_end_time")String s_end_time
+			) {
+		
+		int res = sdao.modSchedule(schedule_ix,s_start_time,s_end_time);
+		String msg = res>0?"":"스케줄 수정 실패";
+		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.addObject("loc","scheduleMonthList.do");
+		mav.setViewName("cmjson");
+		
+		return mav;
+	}
+	
+	//스케줄 삭제하기
+	@RequestMapping(value="/delSchedule.do",method=RequestMethod.POST)
+	public ModelAndView delSchedule(
+				@RequestParam(value="schedule_ix")int schedule_ix
+			) {
+		
+		int res = sdao.delSchedule(schedule_ix);
+		String msg = res>0?"":"스케줄 삭제 실패";
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.addObject("loc","scheduleMonthList.do");
+		mav.setViewName("cmjson");
+		
+		return mav;
+		
 	}
 	
 	/*---------------------------------------------------------------------*/

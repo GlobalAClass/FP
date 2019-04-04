@@ -3,9 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="checkMonHourTemplate">
-	<select id="getScheduleAllSQL" resultType="hashmap">
+	<select id="getScheduleAllSQL" parameterType="hashMap" resultType="hashmap">
 	select s.*, e.e_name
 	from schedule_tb s, emp_tb e
 	where s.emp_ix=e.emp_ix
+	and s.s_year=#{year}
+    and s.s_month=#{month}
 	</select>
+	<update id="modScheduleSQL">
+	update schedule_tb
+	set s_start_time=#{s_start_time},s_end_time=#{s_end_time}
+	where schedule_ix=#{schedule_ix}
+	</update>
+	<delete id="delScheduleSQL">
+	delete from schedule_tb
+	where schedule_ix=#{schedule_ix}
+	</delete>
 </mapper>
