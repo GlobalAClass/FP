@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkMonManager">
+	<select id="getReqListSQL"
+		parameterType="int"
+		resultType="com.ateam.checkMon.manEmpRun.model.ReqListDTO">
+		select r.req_ix, r.emp_ix, e.e_name, e.e_birthday, e.e_tel, e.e_email
+		from req_tb r, emp_tb e
+		where r.man_ix = #{man_ix} and r.emp_ix = e.emp_ix
+	</select>
+	<select id="getRunListSQL"
+		parameterType="int"
+		resultType="com.ateam.checkMon.manEmpRun.model.RunListDTO">
+		select r.req_ix, e.e_group, r.emp_ix, e.e_name, e.e_position, e.e_tel, e.e_email, e.authorization, e.e_birthday, r.regit_day
+		from req_tb r, emp_tb e
+		where r.man_ix = #{man_ix} and r.emp_ix = e.emp_ix and r.regit_day > to_date('19000101', 'YYYYMMDD')
+	</select>
+	<delete id="refuseEmpSQL"
+		parameterType="int">
+		delete from req_tb where req_ix = #{req_ix}
+	</delete>
+	<select id="getGroupListSQL"
+		parameterType="int"
+		resultType="com.ateam.checkMon.manEmpRun.model.GroupDTO">
+		select group_ix, e_group, man_ix
+		from group_tb
+		where man_ix = #{man_ix}
+	</select>
+	<select id="checkGroupNameSQL" parameterType="com.ateam.checkMon.manEmpRun.model.GroupDTO" resultType="int">
+		select 1 from group_tb where man_ix = #{man_ix} and e_group = #{e_group}
+	</select>
+	<insert id="addGroupSQL" parameterType="com.ateam.checkMon.manEmpRun.model.GroupDTO">
+		insert into group_tb values(Group_TB_SEQ.nextval, #{e_group}, #{man_ix})
+	</insert>
+	<delete id="delGroupSQL" parameterType="int">
+		delete from group_tb where group_ix = #{group_ix}
+	</delete>
+	<select id="getPositionListSQL"
+		parameterType="int"
+		resultType="com.ateam.checkMon.manEmpRun.model.PositionDTO">
+		select position_ix, e_position, priority, man_ix
+		from position_tb
+		where man_ix = #{man_ix}
+	</select>
+	<select id="checkPositionNameSQL" parameterType="com.ateam.checkMon.manEmpRun.model.PositionDTO" resultType="int">
+		select 1 from position_tb where man_ix = #{man_ix} and e_position = #{e_position}
+	</select>
+	<select id="getMaxPriSQL" parameterType="int" resultType="int">
+		select max(priority) from position_tb where man_ix = #{man_ix}
+	</select>
+	<insert id="addPositionSQL" parameterType="com.ateam.checkMon.manEmpRun.model.PositionDTO">
+		insert into position_tb values(position_TB_SEQ.nextval, #{e_position}, #{priority},#{man_ix})
+	</insert>
+	<delete id="delPositionSQL" parameterType="int">
+		delete from position_tb where position_ix = #{position_ix}
+	</delete>
+	<select id="getPositionNameListSQL"
+		parameterType="int"
+		resultType="String">
+		select e_position
+		from position_tb
+		where man_ix = #{man_ix}
+		order by priority
+	</select>
+	<select id="getGroupNameListSQL"
+		parameterType="int"
+		resultType="String">
+		select e_group
+		from group_tb
+		where man_ix = #{man_ix}
+	</select>
+</mapper>

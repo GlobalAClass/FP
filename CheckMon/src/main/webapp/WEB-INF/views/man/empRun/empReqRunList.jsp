@@ -31,25 +31,15 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
 <style>
-td.details-control {
-	background: url('assets/plugins/datatables/img/details_open.png')
-		no-repeat center center;
-	cursor: pointer;
-}
-
-tr.shown td.details-control {
-	background: url('assets/plugins/datatables/img/details_close.png')
-		no-repeat center center;
-}
-
 img {
 	cursor: pointer;
 }
-
 #modal_table td{
 	border-left: 1px solid black
 }
+
 </style>
+
 <!-- END CSS for this page -->
 </head>
 <body class="adminbody">
@@ -70,7 +60,8 @@ img {
 								<h1 class="main-title float-left">- 직원 관리 -</h1>
 								<ol class="breadcrumb float-right">
 									<li class="breadcrumb-item">Home</li>
-									<!-- <li class="breadcrumb-item active">Data Tables</li>  -->
+									<li class="breadcrumb-item active">직원관리</li>
+									<li class="breadcrumb-item active">직원관리</li>
 								</ol>
 								<div class="clearfix"></div>
 							</div>
@@ -90,7 +81,7 @@ img {
 										class="table table-bordered table-hover display">
 										<thead>
 											<tr>
-												<th>사진</th>
+												<th width="55px" style="border-right: none;"></th>
 												<th>이름</th>
 												<th>생년월일</th>
 												<th>전화번호</th>
@@ -111,38 +102,37 @@ img {
 							<div class="card-header">
 								<h3>직원 목록</h3>
 							</div>
-
+							
 							<div class="card-body">
-
 								<div class="table-responsive">
-									<form name="RunTable" action="" method="get">
 									<table id="RunTable"
 										class="table table-bordered table-hover display">
 										<thead>
 											<tr>
 												<th></th>
-												<th>그룹</th>
-												<th></th>
+												<th width=15%>그룹</th>
+												<th width="55px" style="border-right: none;"></th>
 												<th>직원이름</th>
-												<th>직책</th>
+												<th width=15%>직책</th>
 												<th>전화번호</th>
-												<th>이메일</th>
+												<th width=20%>이메일</th>
 												<th width=40px style="text-align: center">수정</th>
 											</tr>
 										</thead>
 									</table>
-									</form>
+									<button class="btn btn-success" style="margin-top: 15px;">Excel 파일로 저장</button>
+									<input type="button" class="btn btn-danger" value="체크한 직원 삭제" id="e_delete" style="float: right; margin-top: 10px; margin-right: 40px;">
 								</div>
-
 							</div>
 						</div>
 						<!-- end card-->
 					</div>
 				</div>
-				
-			<input type="text" class="form-control" id="s_name" required="required" size="50" placeholder="찾기 버튼을 눌러주세요." readonly="readonly">&nbsp;
-			<input type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" value="매장 찾기">
-			<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			
+			<!-- 페이지에 쓰이는 modal 모음 -->	
+			
+			<!-- 직원 상세 정보, 수정 modal -->
+			<div id="myModal" class="modal fade bd-detail-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-lg">
 			    <div class="modal-content">
 			   		<div class="modal-header">
@@ -151,18 +141,19 @@ img {
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 			     	 </div>
+			     	 <form name="modEmp" action="modEmp.do" method="post">
 			     	 <div class="modal-body">
 			     		 <!-- 검색 진행하여 db에서 가져온 매장 목록 출력 -->
 			     			<div class="col-12" style="text-align: center">
 			     				<div >
-			     					<img src="img/profile_default.jpg" width="90px" height="100px">
-			     					<h2 id=name>윤지훈</h2>
+			     					<div id="div_e_img"></div>
+			     					<h2 id="e_name">이름</h2>
 			     				</div>
 			     				<div class="table-responsive">
 									<table class="table" id="modal_table">
 										<tr>
 											<th>직원번호</th>
-											<td id="emp_Ix"></td>
+											<td id="emp_ix"></td>
 										</tr>
 										<tr>
 											<th>이름</th>
@@ -193,6 +184,10 @@ img {
 											<td><input type="text" id="e_birthDay"></td>
 										</tr>
 										<tr>
+											<th>직원 승인일</th>
+											<td><input type="text" id="regit_day"></td>
+										</tr>
+										<tr>
 											<th colspan="2"><!-- table의 마지막선 추가를 위한 빈공간 --></th>
 										</tr>
 									</table>
@@ -200,11 +195,89 @@ img {
 							</div>
 					</div>
 					<div class="modal-footer" align="center">
-					<!-- 클릭한 매장 정보 -->
-						<input type="hidden" id="choose_store" name="man_ix" value="">
-						<input type="hidden" id="store_name" value="">
-						<input class="btn btn-success" type="button" value="매장 등록하기" onclick="checkStore();">
+						<input class="btn btn-primary" type="submit" value="수정하기">
 					</div>
+					</form>
+					</div>
+			    </div>
+			  </div>
+			
+			<!-- 직원 승인 modal -->
+			<div id="myModal" class="modal fade bd-add-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			   		<div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">직원 승인</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+			     	 </div>
+			     	 <form name="addEmp" action="addEmp.do" method="post">
+			     	 <div class="modal-body">
+			     			<div class="col-12" style="text-align: center">
+			     				<div >
+			     					<div id="add_e_img"></div>
+			     					<h2 id="add_e_name">이름</h2>
+			     				</div>
+			     				<div class="table-responsive">
+									<table class="table" id="modal_table">
+										<tr>
+											<th>직책</th>
+											<td><select id="add_e_position" class="form-control" name="e_position"></select></td>
+										</tr>
+										<tr>
+											<th>그룹</th>
+											<td><select id="add_e_group" class="form-control" name="e_group"></select></td>
+										</tr>
+										<tr>
+											<th>권한</th>
+											<td><select id="add_e_authorization" class="form-control" name="authorization">
+													<option value="false">부여하지 않음</option>
+													<option value="true">관리자 권한 부여</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th colspan="2" style="text-align: center; color: red">그룹과 직책은 각 관리 탭에서 추가할 수 있습니다.</th>
+										</tr>
+									</table>
+								</div>
+							</div>
+					</div>
+					<div class="modal-footer" align="center">
+						<input class="btn btn-primary" type="submit" value="수정하기">
+					</div>
+					</form>
+					</div>
+			    </div>
+			  </div>
+			  
+			  <!-- 직원 거절 modal -->
+			  <div id="myModal" class="modal fade bd-refuse-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			   		<div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">직원 승인 거절</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+			     	 </div>
+			     	 <form name="refuseEmp" action="refuseEmp.do" method="post">
+			     	 <div class="modal-body">
+			     			<div class="col-12" style="text-align: center">
+			     				<div >
+			     					<div id="ref_e_img"></div>
+			     					<h2 id="ref_e_name">이름</h2>
+			     					<h5 style="color: red">정말 승인을 거절하시겠습니까?</h5>
+			     					<input id="ref_r_ix" type="hidden" name="req_ix">
+			     				</div>
+							</div>
+					</div>
+					<div class="modal-footer" align="center">
+						<button id="ref_btn" type="button" class="btn btn-danger" data-dismiss="modal">거절하기</button>
+						<button type="button" class="btn btn-dark" data-dismiss="modal">취소하기</button>
+					</div>
+					</form>
 					</div>
 			    </div>
 			  </div>
@@ -222,7 +295,7 @@ img {
 				href="https://www.pikeadmin.com"><b>Pike Admin</b></a>
 			</span>
 		</footer>
-
+	
 	</div>
 	<!-- END main -->
 
@@ -242,100 +315,150 @@ img {
 	<script src="assets/js/pikeadmin.js"></script>
 
 	<!-- BEGIN Java Script for this page -->
-	<script
+	<script  
 		src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-
+ 
 	<!-- Counter-Up-->
 	<script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
 	<script src="assets/plugins/counterup/jquery.counterup.min.js"></script> 
+	<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 
 	<script>
-		// START CODE FOR Child rows (show extra / detailed information) DATA TABLE 
-		function format(d) {
-			// `d` is the original data object for the row
-			return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; margin: 0px auto">'
-						+ '<tr>'
-							+ '<th>생년월일</th>'
-							+ '<th>직원 승인일</th>'
-							+ '<th>근무일수</th>'
-						+ '</tr>'
-						+ '<tr>'
-							+ '<td>' + d.name + '</td>'
-							+ '<td>' + d.extn + '</td>'
-							+ '<td>...</td>'
-						+ '</tr>'
-					+ '</table>';
+		$(function() { 
+			$("input:text").keydown(function(evt) { 
+				if (evt.keyCode == 13) return false; 
+			}); 
+		});
+		
+		//승인 수락하는 함수 - ajax
+		function addEmp(){
+			var req_ix = 'req_ix='+$('#ref_r_ix').val();
+			sendRequest('refuseEmp.do', req_ix, resMsg,'POST');
 		}
+		
+		//승인 요청 거절하는 함수 - ajax
+		function refuseEmp(){
+			var req_ix = 'req_ix='+$('#ref_r_ix').val();
+			sendRequest('refuseEmp.do', req_ix, resMsg,'POST');
+		}
+		function resMsg(){
+			if(XHR.readyState==4){
+				if(XHR.status==200){
+					var data = eval('('+XHR.responseText+')');
+				    var msg=data.msg;
+				    
+				    alert(msg);
+				    location.href='empReqRunList.do';
+				}
+			}
+		}
+		
+		//그룹명 가져오는 - ajax
+		function getPGNames(){
+			sendRequest('getPGNameList.do', null, setPG,'POST');
+		}
+		function setPG(){
+			if(XHR.readyState==4){
+				if(XHR.status==200){
+					var data = eval('('+XHR.responseText+')');
+				    var pg_names=data.pg_names;
 
+				    var p_select = $('#add_e_position');
+				    var g_select = $('#add_e_group');
+				    
+				    //프로퍼티 개수 구하기. - 객체 하나 넘어옴. 리스트형식이 아니기 때문에 length로 구할수 없음. 따라서 개수 따로 구해야함.
+				    var p_len = Number(pg_names.p_len);
+				   	var len = p_len + Number(pg_names.g_len);
+				    
+				    for(var i=0; i< len;i++){
+				    	if(i<p_len){
+					    	var opt = document.createElement("OPTION");
+					    	opt.text = pg_names['e_position'+i];
+					    	opt.value = pg_names['e_position'+i];
+					    	p_select.append(opt);
+				    	}else{
+				    		var opt = document.createElement("OPTION");
+					    	opt.text = pg_names['e_group'+(i-p_len)];
+					    	opt.value = pg_names['e_group'+(i-p_len)];
+					    	g_select.append(opt);
+				    	}
+				    }
+				}
+			}
+		}
+		
+		$(window).load(function(){
+			
+		});
+		
 		$(document).ready(function() {
-			var table = $('#ReqTable').DataTable({
-				"ajax" : "assets/data/dataTablesObjects.txt",
+			//select에 사용될 직책, 그룹 세팅
+			getPGNames();
+			
+			//직원 요청 거절하기 onclick 함수
+			$('#ref_btn').on('click', function(){
+				refuseEmp();
+			});
+			
+			//직원 요청 테이블
+			var ReqTable = $('#ReqTable').DataTable({
+			    "ajax": {
+		        	'url' : '/CheckMon/getReqList.do',
+		       	 	'type' : 'POST'
+			    	},
 				"columns" : [ 
-					{"data" : "name"}, 
-					{"data" : "position"}, 
-					{"data" : "office"},
-					{"data" : "salary"},
-					{"data" : "start_date"},
+					{"data" : "imgpath", "orderable" : false}, 
+					{"data" : "e_name"}, 
+					{"data" : "e_birthday"},
+					{"data" : "e_tel"},
+					{"data" : "e_email"},
 					{
-						"className" : null,
+						"className" : 'add_refuse',
 						"orderable" : false,
 						"data" : null,
-						"defaultContent" : '&nbsp;<img src="assets/images/empReqRunList/add-user.svg" onclick="addEmp()" width=30px height=30px> &emsp; <img src="assets/images/empReqRunList/remove-user.svg" onclick="refuseEmp()" width=30px height=30px>'
+						"defaultContent" : '&nbsp;<img src="assets/images/empReqRunList/add-user.svg" class="addEmp" data-toggle="modal" data-target=".bd-add-modal" width=30px height=30px> &emsp; <img src="assets/images/empReqRunList/remove-user.svg" class="refuseEmp" data-toggle="modal" data-target=".bd-refuse-modal" width=30px height=30px>'
 					}
 				],
 				"order" : [ [ 1, 'asc' ] ]
 			});
-
-			// Add event listener for opening and closing details
-			$('#ReqTable tbody').on('click', 'td.details-control1', function() {
-				var tr = $(this).closest('tr');
-				var row = table.row(tr);
+			
+			//modal 이미지 세팅 함수
+			function setImg(row, modal, id){
+				var div_img = modal.find(id);
+				div_img.empty();
+				div_img.append(row.data().imgpath);
+				div_img.find('img').attr("width",'75px');
+				div_img.find('img').attr("height",'80px');
+			}
+			
+			//직원 요청 승인 modal
+			$('#ReqTable tbody').on('click', 'td.add_refuse img.addEmp', function() {
+				var row = ReqTable.row($(this).closest('tr'));
+				var add_modal = $('.bd-add-modal');
 				
-				if (row.child.isShown()) {
-					// This row is already open - close it
-					row.child.hide();
-					tr.removeClass('shown');
-				} else {
-					// Open this row
-					row.child(format(row.data())).show();
-					tr.addClass('shown');
-				}
+				setImg(row, add_modal, '#add_e_img');
+				add_modal.find('#add_e_name').text(row.data().e_name);
+				add_modal.find('#add_r_ix').val(row.data().req_ix);
 			});
 			
-			
-			var table = $('#RunTable').DataTable({
-				//"ajax" : "assets/data/dataTablesObjects.txt",
-				"data": [
-						    {
-						      "id": "1",
-						      "name": "Tiger Nixon",
-						      "position": "System Architect",
-						      "salary": "$320,800",
-						      "start_date": "2011/04/25",
-						      "office": "Edinburgh",
-						      "extn": "5421"
-						    },
-						    {
-						      "id": "2",
-						      "name": "Garrett Winters",
-						      "position": "Accountant",
-						      "salary": "$170,750",
-						      "start_date": "2011/07/25",
-						      "office": "Tokyo",
-						      "extn": "8422"
-						    },
-						    {
-						      "id": "3",
-						      "name": "Ashton Cox",
-						      "position": "Junior Technical Author",
-						      "salary": "$86,000",
-						      "start_date": "2009/01/12",
-						      "office": "San Francisco",
-						      "extn": "1562"
-						    }
-						],
+			//직원 요청 거절 modal
+			$('#ReqTable tbody').on('click', 'td.add_refuse img.refuseEmp', function() {
+				var row = ReqTable.row($(this).closest('tr'));
+				var ref_modal = $('.bd-refuse-modal');
+				
+				setImg(row, ref_modal, '#ref_e_img');
+				ref_modal.find('#ref_e_name').text(row.data().e_name);
+				ref_modal.find('#ref_r_ix').val(row.data().req_ix);
+			});
+
+			//직원 목록 테이블
+			var RunTable = $('#RunTable').DataTable({
+				"ajax": {
+		        	'url' : '/CheckMon/getRunList.do',
+		       	 	'type' : 'POST'
+			    	},
 				"columns" : [ 
 					{
 						"className" : 'check',
@@ -343,62 +466,48 @@ img {
 						"data" : null,
 						"defaultContent" : '<input type="checkbox">'
 					},
-					{"data" : null},
-					{"orderable" : false, "defaultContent" : '<img src="WEB-INF/img/emp/profile_default.jpg" width=60px height=50px>'},
-					{"data" : "name"},
-					{"data" : "position"},
-					{"data" : "office"},
-					{"data" : "salary"},
+					{"data" : "e_group"},
+					{"data" : "imgpath", "orderable" : false},
+					{"data" : "e_name"},
+					{"data" : "e_position"},
+					{"data" : "e_tel"},
+					{"data" : "e_email"},
 					{
 						"className" : 'details',
 						"orderable" : false,
 						"data" : null,
-						"defaultContent" : '<img src="assets/images/empReqRunList/edit.svg" width="40px" height="40px" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg" style="background : white">'
+						"defaultContent" : '<img src="assets/images/empReqRunList/edit.svg" width="40px" height="40px" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg" style="background : white">'
 					},
 				],
 				"order" : [ [ 1, 'asc' ] ]
 			});
 
-			// 직원 체크
-			$('#RunTable tbody').on('click', 'td.check input', function() {
-				var tr = $(this).closest('tr');
-				var row = table.row(tr);
-				
-				alert(row.data().id);
-			});
 			
-			// 직원 수정
+			// 직원 수정 modal form
 			$('#RunTable tbody').on('click', 'td.details img', function() {
 				var tr = $(this).closest('tr');
-				var row = table.row(tr);
-				
-				//json객체에 맞게 이름 수정하기
+				var row = RunTable.row(tr);
 				var m_t = $('#modal_table');
-				m_t.find('#emp_Ix').text(row.data().id);
-				m_t.find('#e_name').val(row.data().name);
-				m_t.find('#e_position').val(row.data().position);
-				m_t.find('#e_group').val(row.data().group);
-				m_t.find('#authorization').val(row.data().authorization);
-				m_t.find('#e_tel').val(row.data().tel);
-				m_t.find('#e_birthDay').val(row.data().birthDay);
 				
+				setImg(row, $('.bd-detail-modal-lg'), '#div_e_img');
+				$('#e_name').text(row.data().e_name);
+				m_t.find('#emp_ix').text(row.data().emp_ix);
+				m_t.find('#e_name').val(row.data().e_name);
+				m_t.find('#e_position').val(row.data().e_position);
+				m_t.find('#e_group').val(row.data().e_group);
+				m_t.find('#authorization').val(row.data().authorization);
+				m_t.find('#e_tel').val(row.data().e_tel);
+				m_t.find('#e_email').val(row.data().e_email);
+				m_t.find('#e_birthday').val(row.data().e_birthday);
+				m_t.find('#regit_dat').val(row.data().e_regit_day);
 				
 			});
 		});
 		// END CODE FOR Child rows (show extra / detailed information) DATA TABLE
 	</script>
 
-	<script>
-		//직원 승인 이미지 클릭 시
-		function addEmp(){
-			alert('승인');
-		}
-		//직원 거절 이미지 클릭 시
-		function refuseEmp(){
-			alert('거절');
-		}
-	</script>
 	<!-- END Java Script for this page -->
+
 
 </body>
 </html>
