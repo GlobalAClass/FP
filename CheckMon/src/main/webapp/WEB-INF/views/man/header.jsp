@@ -19,7 +19,7 @@
 						<!-- 프로필 사진 확인 부분 -->
                         <li class="list-inline-item dropdown notif">
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="${sessionScope.imgpath}" alt="Profile image" class="avatar-rounded">
+                                <img src="${imgpath}" alt="Profile image" class="avatar-rounded">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
@@ -86,7 +86,7 @@
                      <li class="submenu">
                         <a href="#"><i class="fa fa-vcard-o"></i> <span> 근태 관리 </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="#">당일 근태 현황</a></li>
+                                <li><a href="dayCommuteList.do">당일 근태 현황</a></li>
                                 <li><a href="#">출퇴근 기록 관리</a></li>
                                 <li><a href="commuteApplyAllList.do">근태 변경신청 목록</a></li>
                             </ul>

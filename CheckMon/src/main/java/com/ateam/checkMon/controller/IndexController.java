@@ -75,7 +75,7 @@ public class IndexController {
 					if(files==null||files.length==0) {
 						imgpath="assets/images/emp/profile_default.jpg";
 					}else {
-						imgpath="assets/images/emp/profile/"+emp_ix+"\\"+files[0].getName();
+						imgpath="assets/images/emp/profile/"+emp_ix+"/"+files[0].getName();
 					}
 					mav.addObject("imgpath",imgpath);
 					mav.setViewName("emp/home");
@@ -94,7 +94,7 @@ public class IndexController {
 					if(files==null||files.length==0) {
 						imgpath="assets/images/man/profile_default.jpg";
 					}else {
-						imgpath="assets/images/man/profile/"+man_ix+"\\"+files[0].getName();
+						imgpath="assets/images/man/profile/"+man_ix+"/"+files[0].getName();
 					}
 					
 					mav.addObject("imgpath",imgpath);

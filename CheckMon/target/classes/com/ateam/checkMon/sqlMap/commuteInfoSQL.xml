@@ -16,4 +16,51 @@
  		select count(emp_ix) as total 
  		from emp_commute_tb
  	</select>
+ 	
+ 	<select id="getDayCommuteListSizeSQL" resultType="Integer">
+ 		select count(emp_commute_ix) as total
+		from emp_commute_tb
+		where workday=to_char(sysdate,'yyyy-mm-dd')
+ 	</select>
+ 	<select id="getDayCommuteListSQL" parameterType="hashmap" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO">
+ 		<![CDATA[
+		select * from
+		(select rownum as rnum, a.* from 
+		(select e.emp_ix,e.e_name,e.e_position,ecom.worktime,ecom.leavetime,ecom.state
+		from emp_tb e, emp_commute_tb ecom
+		where e.emp_ix=ecom.emp_ix and e.man_ix=#{man_ix} and ecom.workday=to_char(sysdate,'yyyy-mm-dd'))a)b 
+		where rnum>=((#{cp}-1)*#{listsize}+1) and
+		rnum<=#{cp}*#{listsize}]]>
+ 	</select>
+ 	<select id="getCommuteApplyAllListSQL" parameterType="hashmap" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO">
+ 		<![CDATA[
+		select * from
+		(select rownum as rnum, a.* from
+		(select e.emp_ix, e.e_name,
+   		ecom.worktime,ecom.leavetime,ecom.workday,ecom.emp_commute_ix,
+    	ech.emp_change_ix,ech.c_worktime,ech.c_leavetime,ech.title,
+    	ech.reason,ech.progress,ech.c_return
+   		 from emp_tb e, emp_commute_tb ecom, emp_change_tb ech
+   		 where ech.emp_ix = e.emp_ix
+        and ech.emp_commute_ix = ecom.emp_commute_ix
+        and e.man_ix=#{man_ix} order by emp_change_ix desc)a)b
+		where rnum>=((#{cp}-1)*#{listsize}+1) and
+		rnum<=#{cp}*#{listsize}]]>
+ 	</select>
+ 	<select id="CommuteApplyAllListSizeSQL" resultType="Integer">
+ 		select count(emp_change_ix) as total
+		from emp_change_tb
+		order by emp_change_ix desc
+ 	</select>
+ 	<update id="addCommuteApplyReturnSQL" parameterType="com.ateam.checkMon.empCommute.model.EmpCommuteApplyDTO">
+ 		update emp_change_tb
+ 		set c_return=#{c_return}
+ 		where emp_change_ix=#{emp_change_ix}
+ 	</update>
+ 	<update id="addCommuteApplyProgressSQL" parameterType="com.ateam.checkMon.empCommute.model.EmpCommuteApplyDTO">
+ 		update emp_change_tb
+		set progress=#{progress}
+		where emp_change_ix=#{emp_change_ix}
+ 	</update>
+ 	
  </mapper>

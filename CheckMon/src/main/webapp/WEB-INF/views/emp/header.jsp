@@ -20,7 +20,7 @@
                         <li class="list-inline-item dropdown notif">
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             	<!-- img src="assets/images/avatars/admin.png" -->
-                                <img src="${sessionScope.imgpath}" alt="Profile image" class="avatar-rounded">
+                                <img src="${imgpath}" alt="Profile image" class="avatar-rounded">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->

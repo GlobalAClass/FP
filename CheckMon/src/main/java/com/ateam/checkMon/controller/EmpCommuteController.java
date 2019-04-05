@@ -47,17 +47,4 @@ public class EmpCommuteController {
 		return mav;
 	}
 	
-	//근무자 근태변경목록 세부정보보기
-	@RequestMapping("/empCommuteApplyDetail.do")
-	public ModelAndView empCommuteApplyDetail(
-			@RequestParam(value="emp_commute_ix",required=false,defaultValue="0")int emp_commute_ix){
-		
-		ModelAndView mav=new ModelAndView();
-		
-
-		mav.setViewName("emp/commute/commuteApplyList");
-		return mav;
-		
-	}
-	
 }

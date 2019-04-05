@@ -61,7 +61,7 @@ table th{
                            </tr>
                         </thead>
                         <tbody>
-                        <c:set var="list" value="${list}" />
+                        <c:set var="list" value="${list}"/>
                         <c:if test="${empty list}">
                            <tr align="center">
                               <td colspan="4">근무 변경 목록이 존재하지 않습니다.</td>
@@ -72,7 +72,7 @@ table th{
                               <td>${list.workday}</td>
                               <td>${list.title}</td>
                               <c:choose>
-                                 <c:when test="${list.progress=='반려확인'}">
+                                 <c:when test="${list.progress=='반려'}">
                                     <td>
                                        <input type="button" data-toggle="modal" data-target="#myModal" 
                                        data-workday="${list.workday}" data-worktime="${list.worktime}" data-leavetime="${list.leavetime}" 

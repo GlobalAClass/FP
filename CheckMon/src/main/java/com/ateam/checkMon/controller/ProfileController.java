@@ -28,25 +28,30 @@ public class ProfileController {
 	public void empCopyInto(int emp_ix,MultipartFile upload) {
 		try {
 			byte bytes[]=upload.getBytes();
-			String path=context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix;
 			
-			//근무자 인덱스 번호 폴더 생성 
-			File img=new File(path);
-			img.mkdir();
-			
-			//기존 이미지 프로필 삭제
-			File check=new File(path);
-			File files[]=check.listFiles();
-			for(int i=0;i<files.length;i++) {
-				if(!files[i].getName().equals(upload.getOriginalFilename())) {
-					files[i].delete();
+			//근무자가 파일 선택 햇을 경우만 밑의 코드가 수행됨
+			if(!upload.getOriginalFilename().equals("")) {
+				String path=context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix;
+				
+				//근무자 인덱스 번호 폴더 생성 
+				File img=new File(path);
+				img.mkdir();
+				
+				//기존 이미지 프로필 삭제
+				File check=new File(path);
+				File files[]=check.listFiles();
+				for(int i=0;i<files.length;i++) {
+					if(!files[i].getName().equals(upload.getOriginalFilename())) {
+						files[i].delete();
+					}
 				}
+				
+				//복사할곳 
+				File outFile=new File(path+"\\"+upload.getOriginalFilename());
+				FileOutputStream fos=new FileOutputStream(outFile);
+				fos.write(bytes);
+				fos.close();
 			}
-			//복사할곳 
-			File outFile=new File(path+"\\"+upload.getOriginalFilename());
-			FileOutputStream fos=new FileOutputStream(outFile);
-			fos.write(bytes);
-			fos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,32 +62,30 @@ public class ProfileController {
 	public void manCopyInto(int man_ix,MultipartFile upload) {
 		try {
 			byte bytes[]=upload.getBytes();
-			String path=context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix;
 			
-			//관리자 인덱스 번호 폴더 생성 
-			File img=new File(path);
-			img.mkdir();
-			
-			//기존 이미지 프로필 삭제
-			File check=new File(path);
-			File files[]=check.listFiles();
-			for(int i=0;i<files.length;i++) {
-				System.out.println(files[i].getName());
-				System.out.println(files[i].getName());
-				System.out.println(files[i].getName());
-				System.out.println(upload.getOriginalFilename());
-				System.out.println(upload.getOriginalFilename());
-				System.out.println(upload.getOriginalFilename());
-				if(!files[i].getName().equals(upload.getOriginalFilename())) {
-					files[i].delete();
+			//관리자가 파일 선택 햇을 경우 밑의 코드가 수행 됨
+			if(!upload.getOriginalFilename().equals("")) {
+				String path=context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix;
+				
+				//관리자 인덱스 번호 폴더 생성 
+				File img=new File(path);
+				img.mkdir();
+				
+				//기존 이미지 프로필 삭제
+				File check=new File(path);
+				File files[]=check.listFiles();
+				for(int i=0;i<files.length;i++) {
+					if(!files[i].getName().equals(upload.getOriginalFilename())) {
+						files[i].delete();
+					}
 				}
+				
+				//복사할곳 
+				File outFile=new File(path+"\\"+upload.getOriginalFilename());
+				FileOutputStream fos=new FileOutputStream(outFile);
+				fos.write(bytes);
+				fos.close();
 			}
-			
-			//복사할곳 
-			File outFile=new File(path+"\\"+upload.getOriginalFilename());
-			FileOutputStream fos=new FileOutputStream(outFile);
-			fos.write(bytes);
-			fos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

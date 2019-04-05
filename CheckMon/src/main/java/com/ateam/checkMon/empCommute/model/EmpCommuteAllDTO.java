@@ -11,6 +11,12 @@ public class EmpCommuteAllDTO {
 	//근태 변경 신청 인덱스
 	private int emp_change_ix;
 		
+	//근무자 이름
+	private String e_name;
+	
+	//근무자 직책
+	private String e_position;
+	
 	//근무자 출근 시간
 	private String worktime;
 		
@@ -48,13 +54,15 @@ public class EmpCommuteAllDTO {
 		super();
 	}
 
-	public EmpCommuteAllDTO(int emp_commute_ix, int emp_ix, int emp_change_ix, String worktime, String leavetime,
-			String workday, int daytime, String state, String c_worktime, String c_leavetime, String title,
-			String reason, String progress, String c_return) {
+	public EmpCommuteAllDTO(int emp_commute_ix, int emp_ix, int emp_change_ix, String e_name, String e_position,
+			String worktime, String leavetime, String workday, int daytime, String state, String c_worktime,
+			String c_leavetime, String title, String reason, String progress, String c_return) {
 		super();
 		this.emp_commute_ix = emp_commute_ix;
 		this.emp_ix = emp_ix;
 		this.emp_change_ix = emp_change_ix;
+		this.e_name = e_name;
+		this.e_position = e_position;
 		this.worktime = worktime;
 		this.leavetime = leavetime;
 		this.workday = workday;
@@ -90,6 +98,22 @@ public class EmpCommuteAllDTO {
 
 	public void setEmp_change_ix(int emp_change_ix) {
 		this.emp_change_ix = emp_change_ix;
+	}
+
+	public String getE_name() {
+		return e_name;
+	}
+
+	public void setE_name(String e_name) {
+		this.e_name = e_name;
+	}
+
+	public String getE_position() {
+		return e_position;
+	}
+
+	public void setE_position(String e_position) {
+		this.e_position = e_position;
 	}
 
 	public String getWorktime() {
@@ -179,5 +203,5 @@ public class EmpCommuteAllDTO {
 	public void setC_return(String c_return) {
 		this.c_return = c_return;
 	}
-	
+
 }
