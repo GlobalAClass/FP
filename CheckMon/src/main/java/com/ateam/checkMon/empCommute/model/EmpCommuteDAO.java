@@ -5,7 +5,7 @@ import java.util.*;
 public interface EmpCommuteDAO {
 
 	//근무자 페이지
-	public int commuteListSize();
+	public int commuteListSize(int emp_ix);
 	public List<EmpCommuteAllDTO> getCommuteAllList(int listsize, int cp,int emp_ix);
 	
 	

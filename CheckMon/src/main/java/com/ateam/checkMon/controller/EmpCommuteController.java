@@ -32,11 +32,11 @@ public class EmpCommuteController {
 			@RequestParam(value="cp",defaultValue="1")int cp,
 			HttpSession session) {
 		ModelAndView mav=new ModelAndView();
-		
-		int totalcnt=cdao.commuteListSize();
+		int emp_ix=(Integer)session.getAttribute("emp_ix");
+		int totalcnt=cdao.commuteListSize(emp_ix);
 		int listsize = 5;
 		int pagesize = 5;
-		int emp_ix=(Integer)session.getAttribute("emp_ix");
+		
 		
 		List<EmpCommuteAllDTO> list=cdao.getCommuteAllList(listsize, cp, emp_ix);
 		String paging = com.ateam.checkMon.page.PageModule.getMakePage("empCommuteApplyList.do", totalcnt, listsize, pagesize, cp);

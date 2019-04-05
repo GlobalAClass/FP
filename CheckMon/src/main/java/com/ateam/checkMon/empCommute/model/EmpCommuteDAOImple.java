@@ -13,8 +13,8 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 	}
 	
 	//근무자와 관리자 근태변경 목록 페이징 위한 개수 가져오기
-	public int commuteListSize() {
-		int temp=sqlMap.selectOne("commuteListSizeSQL");
+	public int commuteListSize(int emp_ix) {
+		int temp=sqlMap.selectOne("commuteListSizeSQL",emp_ix);
 		return temp;
 	}
 	

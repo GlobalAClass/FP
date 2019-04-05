@@ -27,7 +27,7 @@ public class EmpCommuteAllDTO {
 	private String workday;
 		
 	//근무자 근무시간
-	private int daytime;
+	private String daytime;
 		
 	//근무자 근태상태
 	private String state;
@@ -55,7 +55,7 @@ public class EmpCommuteAllDTO {
 	}
 
 	public EmpCommuteAllDTO(int emp_commute_ix, int emp_ix, int emp_change_ix, String e_name, String e_position,
-			String worktime, String leavetime, String workday, int daytime, String state, String c_worktime,
+			String worktime, String leavetime, String workday, String daytime, String state, String c_worktime,
 			String c_leavetime, String title, String reason, String progress, String c_return) {
 		super();
 		this.emp_commute_ix = emp_commute_ix;
@@ -140,11 +140,11 @@ public class EmpCommuteAllDTO {
 		this.workday = workday;
 	}
 
-	public int getDaytime() {
+	public String getDaytime() {
 		return daytime;
 	}
 
-	public void setDaytime(int daytime) {
+	public void setDaytime(String daytime) {
 		this.daytime = daytime;
 	}
 

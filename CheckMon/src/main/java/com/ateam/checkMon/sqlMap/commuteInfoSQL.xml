@@ -7,14 +7,20 @@
  		<![CDATA[
 		select * from
 		(select rownum as rnum, a.* from 
-		(select a.emp_commute_ix,a.emp_ix,a.worktime,a.leavetime,a.workday,a.daytime,a.state,b.emp_change_ix,b.c_worktime,b.c_leavetime,b.title,b.reason,b.progress,b.c_return 
-		from emp_commute_tb a,emp_change_tb b where a.emp_commute_ix=b.emp_commute_ix)a)b 
-		where rnum>=((#{cp}-1)*#{listsize}+1) and emp_ix=#{emp_ix} and
+		(select a.emp_commute_ix , a.emp_ix,
+    	a.worktime, a.leavetime, a.workday, a.daytime, a.state,
+   		b.emp_change_ix, b.c_worktime, b.c_leavetime, b.title, b.reason, b.progress, b.c_return 
+    	from emp_commute_tb a,emp_change_tb b 
+    	where a.emp_ix = b.emp_ix 
+    	and a.emp_commute_ix = b.emp_commute_ix 
+    	and a.emp_ix=#{emp_ix} order by emp_change_ix desc)a)b 
+		where rnum>=((#{cp}-1)*#{listsize}+1) and
 		rnum<=#{cp}*#{listsize}]]>
  	</select>
- 	<select id="commuteListSizeSQL" resultType="Integer">
- 		select count(emp_ix) as total 
- 		from emp_commute_tb
+ 	<select id="commuteListSizeSQL" resultType="Integer" parameterType="Integer">
+ 		select count(emp_ix) as total
+		from emp_commute_tb
+		where emp_ix=#{emp_ix}
  	</select>
  	
  	<select id="getDayCommuteListSizeSQL" resultType="Integer">
@@ -40,8 +46,8 @@
    		ecom.worktime,ecom.leavetime,ecom.workday,ecom.emp_commute_ix,
     	ech.emp_change_ix,ech.c_worktime,ech.c_leavetime,ech.title,
     	ech.reason,ech.progress,ech.c_return
-   		 from emp_tb e, emp_commute_tb ecom, emp_change_tb ech
-   		 where ech.emp_ix = e.emp_ix
+   		from emp_tb e, emp_commute_tb ecom, emp_change_tb ech
+   		where ech.emp_ix = e.emp_ix
         and ech.emp_commute_ix = ecom.emp_commute_ix
         and e.man_ix=#{man_ix} order by emp_change_ix desc)a)b
 		where rnum>=((#{cp}-1)*#{listsize}+1) and
