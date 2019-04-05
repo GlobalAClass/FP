@@ -70,11 +70,7 @@ public class EmpDAOImple implements EmpDAO {
 	}
 	
 	// 근무자 출근 - QR정보와 매장IX 일치 확인
-	public boolean checkQRAndStorIx(String e_email, String store_ix) {
-		Map<String, String> temp = new HashMap<String, String>();
-		temp.put("eemail", e_email);
-		temp.put("storeIx", store_ix);
-		
+	public boolean checkQRAndStorIx(CheckQRDTO temp) {
 		boolean res = sqlMap.selectOne("checkQRAndStorIxSQL", temp) == null ? false : true;
 		return res;
 	}

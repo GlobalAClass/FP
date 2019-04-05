@@ -31,6 +31,11 @@
                                 <a href="modManProfileForm.do" class="dropdown-item notify-item">
                                     <i class="fa fa-user"></i> <span>프로필 수정하기</span>
                                 </a>
+                                
+                                <!-- item-->
+                                <a href="generateQR.do" class="dropdown-item notify-item">
+                                    <i class="fa fa-barcode"></i> <span>매장 QR Code</span>
+                                </a>
 
                                 <!-- item-->
                                 <a href="logout.do" class="dropdown-item notify-item">

@@ -4,22 +4,41 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QR인식</title>
+<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<title>CheckMon</title>
+		<meta name="description" content="Free Bootstrap 4 Admin Theme | Pike Admin">
+		<meta name="author" content="Pike Web Development - https://www.pikephp.com">
+
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+		<!-- Bootstrap CSS -->
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		
+		<!-- Font Awesome CSS -->
+		<link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		
+		<!-- Custom CSS -->
+		<link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+		
+		<!-- BEGIN CSS for this page -->
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+		<!-- END CSS for this page -->
+		
 </head>
 <body>
 	<section class="container" id="demo-content">
-		<h1 class="title">QR코드를 인식해주세요.</h1>
-		수정해야 할 부분 : Session에서 근무자의 id 혹은 index를 이용하여 조회하는 거 구성하기.
-		1. form태그 안에 근무자 정보 받을 태그 쓰기
-		2. controller 수정
-		3. dao 수정
-		4. sql 수정.
 		<br>
-		<div>
-			<video id="video" width="300" height="200"
-				style="border: 1px solid gray"></video>
+		<div class="alert alert-success" role="alert">
+			  <h4 class="alert-heading" style="text-align: center">QR code를 인식시켜 주세요.</h4>
 		</div>
-		
+		<div class="card" >
+		  <video id="video" class="card-img-top" style="border: 1px solid gray"></video>
+		</div>
+		<br>
 	</section>
 
 	<form id="QRfm" action="checkQRInfo.do" method="post">

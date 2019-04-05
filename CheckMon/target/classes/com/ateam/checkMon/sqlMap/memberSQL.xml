@@ -140,8 +140,8 @@
 		where m_email=#{m_email}
 	</select>
 	<select id="checkQRAndStorIxSQL" parameterType="map" resultType="int">
-		select 1 from man_tb m, emp_tb e 
-		where m.man_ix = e.man_ix and e.e_email=#{e_email} and store_ix = #{storeIx}
+		select 1 from store_tb s, emp_tb e 
+		where e.emp_ix = #{emp_ix} and s.man_ix = e.man_ix and store_ix = #{storeIx}
 	</select>
 	<select id="getStoreListSQL" parameterType="String" resultType="com.ateam.checkMon.member.model.StoreDTO">
 		select *

@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ateam.checkMon.member.model.CheckQRDTO;
 import com.ateam.checkMon.member.model.EmpDAO;
+import com.ateam.checkMon.member.model.ManDAO;
+import com.ateam.checkMon.member.model.StoreDTO;
 
 @Controller
 public class QRController {
 	
 	@Autowired EmpDAO dao;
+	@Autowired ManDAO mao;
 	
 	
 	//GPS 인식 페이지 이동하기
@@ -89,15 +93,12 @@ public class QRController {
 	//QR 인식 후 결과 처리.
 	@RequestMapping("/checkQRInfo.do")
 	public ModelAndView checkQRInfo(
-			@RequestParam(name="storeIx")String store_ix
-			//,HttpSession s
+			@RequestParam(name="storeIx")int store_ix,
+			HttpSession s
 			) {
-		
-		//System.out.println(storeIx);
-		//String uid = (String)s.getAttribute("uid");
-		String uid = "1@naver.com";
-		boolean QRcheck = dao.checkQRAndStorIx(uid, store_ix);
-		
+		int emp_ix = (Integer)s.getAttribute("emp_ix");
+		CheckQRDTO temp = new CheckQRDTO(emp_ix, store_ix);
+		boolean QRcheck = dao.checkQRAndStorIx(temp);
 		
 		ModelAndView mav = new ModelAndView("member/checkCom/msgCom");
 		mav.addObject("QRcheck", QRcheck);
@@ -107,7 +108,14 @@ public class QRController {
 
 	// QR생성 및 다운로드 페이지
 	@RequestMapping("/generateQR.do")
-	public String goQRGenerator() {
-		return "member/checkCom/generateQR";
+	public ModelAndView goQRGenerator(HttpSession s) {
+		int man_ix = (Integer)s.getAttribute("man_ix");
+		//관리자 프로필에서 사용한 함수를 그냥 가져다 씀. 하나만 가져옮 매장정보.
+		StoreDTO sdto = mao.modStoreProfileForm(man_ix);
+		
+		ModelAndView mav = new ModelAndView("member/checkCom/generateQR");
+		mav.addObject("sdto", sdto);
+		
+		return mav;
 	}
 }

@@ -11,10 +11,10 @@ public interface EmpDAO {
 	public String empName(String e_email);
 	public int empIx(String e_email);
 	public HashMap<String, String> getStoreLocation(int emp_ix);
-	boolean checkQRAndStorIx(String e_email, String storeIx);
 	public int addEmpPwd(EmpDTO dto);
 	public String empAutoLogin(String e_email);
 	public List<StoreDTO> getStoreList(String searchStore);
 	public EmpDTO modEmpProfileForm(int emp_ix);
 	public int modEmpProfile(EmpDTO dto);
+	boolean checkQRAndStorIx(CheckQRDTO temp);
 }
