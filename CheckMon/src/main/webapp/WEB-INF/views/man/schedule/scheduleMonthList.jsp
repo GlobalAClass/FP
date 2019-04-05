@@ -120,6 +120,7 @@
 		        </button>
 			     	 </div>
 			<div class="modal-body">
+					<form name="add" onsubmit="return checked2()">
 					<table class="table">
 						<tr>
 							<th>근무 시간 템플릿</th>
@@ -127,8 +128,8 @@
 								<div class="row">
 									<input type="hidden">
 									<div class="form-group">
-										<select class="form-control" id="loc_sel">
-											<option value="" selected>선택 안됨</option>
+										<select class="form-control" id="loc_sel" name="selectTemp">
+											<option value="" selected>템플릿을 선택해주세요</option>
 										</select>
 									</div>
 								</div>
@@ -138,21 +139,25 @@
 							<th>스케줄 배정할 직원</th>
 							<td>
 								<div class="col-12" id="loc_emp">
-								<p>스케줄을 배정할 직원의 이름, 그룹, 직책명으로 검색후 <b>체크박스를 선택해주세요</b></p>
+								<p>직원의 이름, 그룹, 직책명으로 검색 후 <b>체크박스를 선택해주세요</b><b style="color:red;"> (최대 5명)</b></p>
 								<%@include file="/WEB-INF/views/module/search.jsp" %>
+								</div>
+								<div id="loc_res_emp">
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
+								<p align="center" style="font-size:20px;">선택한 직원들의 스케줄을 <b>배정할 날짜</b>를 클릭해주세요</p>
 								<div id="calendar2"></div>
 								<div class="clearfix"></div>
 							</td>
 						</tr>
 						<tr align="right">
-							<td colspan="2"><input class="btn btn-success" type="submit" value="스케줄 추가하기"></td>
+							<td colspan="2"><input class="btn btn-success btn-lg" type="submit" value="스케줄 추가하기" onclick="addSchedule()"></td>
 						</tr>
 					</table>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -166,13 +171,11 @@
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
-				     	 </div>
+				</div>
 				<form class="form-inline" name="modify" onsubmit="return checked()" action="javascript:updateSchedule()">
 				<div class="modal-body">
+					<div id="loc_date"></div>
 					<table class="table">
-						<tr>
-							<td colspan="2" id="loc_date"></td>
-						</tr>
 						<tr align="center">
 							<th>시작 시간</th>
 							<td>
@@ -245,12 +248,16 @@
 <!-- BEGIN Java Script for this page -->
 <script src="assets/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src='assets/plugins/fullcalendar/locale-all.js'></script>
+<script src="assets/js/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="assets/js/httpRequest.js"></script>
 <script>
 var date = new Date();
 var d = date.getDate();
 	m = date.getMonth()+1;
 	y = date.getFullYear();
+
+//mm형식으로 바꿔주기
+if (m < 10) { m = '0' + m; }
 
 //달력 생성
 $('#calendar').fullCalendar(
@@ -268,11 +275,25 @@ $('#calendar').fullCalendar(
 		droppable : false,
 		height: 700,
 		eventClick: function(event) {
-			$('#modModal').modal('show');
-			var loc_date = document.getElementById('loc_date');
-			loc_date.innerHTML=event.start;
+			$('#modModal').modal('show'); //모달 열어주는 jquery
+			//스케줄 날짜 나타내는 코드
+			var loc_date = document.getElementById('loc_date'); //스케줄 변경 선택한 년-월-일 나타낼 공간
+			var moment = event.start;
+			loc_date.innerHTML='<h4 align="center">'+moment.format('YYYY')+'년 '+moment.format('MM')+'월 '+moment.format('DD')+'일</h4>';
+			
+			//해당 스케줄의 인덱스 세팅
 			document.all.schedule_ix.value = event.id;
+			
+			//해당 스케줄의 근무자 이름 세팅
 			document.getElementById('modModalLabel').innerHTML = '<b>'+event.title+'</b>님의 스케줄 수정/삭제하기';
+		
+		},
+		eventRender: function(event, $el) {
+			$el.popover({
+		      content : event.description,
+		      trigger :'hover',
+		      placement : 'top'
+		    });
 		}
 });
 
@@ -284,19 +305,19 @@ renderCalcEvent(y,m);
 $(".fc-prev-button").click( function() {
 	var moment = $('#calendar').fullCalendar('getDate');
 	var year = moment.format('YYYY');
-	var month = moment.format('M');
+	var month = moment.format('MM');
 	renderCalcEvent(year,month);
 });
 $(".fc-next-button").click( function() {
 	var moment = $('#calendar').fullCalendar('getDate');
 	var year = moment.format('YYYY');
-	var month = moment.format('M');
+	var month = moment.format('MM');
 	renderCalcEvent(year,month);
 });
 $(".fc-today-button").click( function() {
 	var moment = $('#calendar').fullCalendar('getDate');
 	var year = moment.format('YYYY');
-	var month = moment.format('M');
+	var month = moment.format('MM');
 	renderCalcEvent(year,month);
 });
 
@@ -311,7 +332,8 @@ function renderCalcEvent(year,month){
 function resultEvent(){
 	if (XHR.readyState == 4) {
 		if (XHR.status == 200) {
-			var data = eval('('+XHR.responseText+')');
+			var data = eval('(' +XHR.responseText+ ')');
+			
 			var eventList = data.list;
 			
 			for(var i=0;i<eventList.length;i++){
@@ -325,10 +347,11 @@ function resultEvent(){
 				title : list.E_NAME,
 				start : date,
 				color : colorcode,
+				description : '스케줄 시간 : '+list.S_START_TIME+' - '+list.S_END_TIME,
 				allDay: true
 				
 				};$('#calendar').fullCalendar('renderEvent',event);
-			}
+			} 
 			
 		}
 	}
@@ -441,14 +464,16 @@ function resultTemplate(){
 				//스케줄 추가하는 모달 열기
 				$('#addModal').modal('show');
 				
+				//select option 추가할 위치
 				var loc_sel = document.getElementById('loc_sel');
 				
+				//option 항목 추가
 				for(var i=0;i<tempList.length;i++){
 					list=tempList[i];
 					
 					var opt = document.createElement('option');
 					opt.text = list.hour_start_time+' ~ '+list.hour_end_time+' | '+list.template_position;
-					opt.value = list.hour_template_ix;
+					opt.value = list.hour_start_time+','+list.hour_end_time;
 					
 					loc_sel.options.add(opt);
 				}
@@ -456,37 +481,66 @@ function resultTemplate(){
 		}
 	}
 }
+function checked2(){
+var selectTemp = document.all.loc_sel.value;
+	if(selectTemp==''){
+		alert('템플릿을 선택해주세요.');
+		return false;
+	}
+	return true;
+}
 
-$('#add_schedule').click(function() {
-	$('#calendar2').fullCalendar({
+//스케줄을 생성할 날짜를 집어넣을 배열
+var arr = new Array();
+
+$('#searchEmp').click(function() {
+	
+	var calendar2 = $('#calendar2').fullCalendar({
 			header : {
-			left : 'today',
-			center : 'prev title next',
-			right : ''
+				left : '',
+				center : 'title',
+				right : ''
 			},
 			locale : 'ko',
 			selectable : true,
 			selectHelper : true,
 			editable : false, //수정 가능 여부 설정하는 부분
-			eventLimit : 5, // allow "more" link when too many events
+			eventLimit : 1,
 			droppable : false,
+			dragScroll : false,
+ 			dayClick: function(date,jsEvent,view){
+ 				
+				if($(this).css('background-color')=='rgba(0, 0, 0, 0)'){
+					$(this).css('background-color','#ff9f89');
+					arr.push(date.format('YYYY-MM-DD')); //삽입 선택한 날짜 배열에 넣기
+ 				}else{
+ 					$(this).css('background-color','rgba(0, 0, 0, 0)');
+ 					var ix = arr.indexOf(date.format('YYYY-MM-DD')); //삭제 선택한 날짜와 일치하는 항목의 인덱스
+ 					arr.splice(ix,1);
+ 				}
+				
+			} 
+			
 	});
 });
 
 //ajax 이용하여 스케줄 추가하기
-function addSchedule(str_group_ix){
-	var param = '';
-	sendRequest('addSchedule.do', param, resMsg,'POST');
+function addSchedule(){
+	var params = 'selectTemp='+add.selectTemp.value+'&selectEmp='+selectEmp+'&selectDate='+arr.sort();
+	sendRequest('addSchedule.do', params, resultAdd,'POST');
 }
 
-function resMsg(){
+function resultAdd(){
 	if(XHR.readyState==4){
 		if(XHR.status==200){
 			var data = eval('('+XHR.responseText+')');
 		    var msg=data.msg;
 		    
-		    alert(msg);
-		    location.href='';
+		    if(msg!=''){
+		    	alert(msg);
+		    }
+		    
+		    location.href='scheduleMonthList.do';
 		}
 	}
 }

@@ -5,10 +5,10 @@
 <configuration>
 	<mappers>
 		<mapper resource="com/ateam/checkMon/sqlMap/memberSQL.xml"/>
-		<mapper resource="com/ateam/checkMon/sqlMap/hourTemplateSQL.xml"/>
+		<mapper resource="com/ateam/checkMon/sqlMap/man/hourTemplateSQL.xml"/>
 		<mapper resource="com/ateam/checkMon/sqlMap/commuteInfoSQL.xml"/>
-		<mapper resource="com/ateam/checkMon/sqlMap/scheduleSQL.xml"/>
-		<mapper resource="com/ateam/checkMon/sqlMap/officeHoursSQL.xml"/>
+		<mapper resource="com/ateam/checkMon/sqlMap/man/scheduleSQL.xml"/>
+		<mapper resource="com/ateam/checkMon/sqlMap/man/officeHoursSQL.xml"/>
 		<mapper resource="com/ateam/checkMon/sqlMap/man/empReqRun.xml"/>
 	</mappers>
 </configuration>

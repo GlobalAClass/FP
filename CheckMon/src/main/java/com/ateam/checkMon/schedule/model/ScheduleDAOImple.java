@@ -38,5 +38,10 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		int res = sqlMap.delete("delScheduleSQL",schedule_ix);
 		return res;
 	}
+	
+	public int addSchedule(ScheduleDTO dto) {
+		int res = sqlMap.insert("addScheduleSQL",dto);
+		return res;
+	}
 
 }

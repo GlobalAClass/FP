@@ -15,7 +15,7 @@
 			</thead>
 		</table>
 	</div>
-	<input type="button" id="add_schedule" class="btn btn-danger" value="직원 추가하기" style="margin-top: 20px;float: right;">
+	<input type="button" id="searchEmp" class="btn btn-danger" value="직원 추가하기" style="margin-top: 20px;float: right;">
 </div>
 						
 	<!-- END main -->
@@ -59,14 +59,14 @@
 			
 			
 			//템플릿 삭제하기 버튼 숨기기
-			$('#add_schedule').hide();
+			$('#searchEmp').hide();
 			
 			//체크 박스 개별 선택&해제시 삭제버튼 숨기고 나타내는 코드
 			$('#SearchTable').on('click','input[name=checkRow]',function(){
 				if($('input[name="checkRow"]').is(":checked")==true){
-					$('#add_schedule').show();
+					$('#searchEmp').show();
 				}else{
-					$('#add_schedule').hide();
+					$('#searchEmp').hide();
 				}
 			})
 			
@@ -74,16 +74,15 @@
 		    $('#ck_all').click(function(){
 		         if($('#ck_all').prop('checked')){
 		            $("input[type=checkbox]").prop('checked',true);
-		            $('#add_schedule').show();
+		            $('#searchEmp').show();
 		        }else{
 		            $('input[type=checkbox]').prop('checked',false);
-		            $('#add_schedule').hide();
+		            $('#searchEmp').hide();
 		        }
 		    });
 
 			//삭제 버튼 클릭 시 삭제할것이냐는 알림과 삭제 진행
-		    $('#add_schedule').click(function(){
-		        if(confirm("삭제하시겠습니까?")){
+		    $('#searchEmp').click(function(){
 		        	var emp_ix = "";
 		        	var len = $("input[name=checkRow]:checked").size();
 		            $("input[name=checkRow]:checked").each(function(i){
@@ -93,10 +92,9 @@
 						var row = SearchTable.row($(this).closest('tr'));
 		            	emp_ix += row.data().emp_ix;
 		            });
+		            
 		            selectEmp = emp_ix; //체크박스 선택한 인원으로 함수 실행.
-		        }else{
-		            return false;
-		        }
+		            
 		    });
 		});
 		// END CODE FOR Child rows (show extra / detailed information) DATA TABLE

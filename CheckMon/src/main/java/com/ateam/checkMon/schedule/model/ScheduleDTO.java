@@ -38,6 +38,17 @@ public class ScheduleDTO {
 		this.s_start_time = s_start_time;
 		this.s_end_time = s_end_time;
 	}
+	
+	public ScheduleDTO(Integer emp_ix, String s_year, String s_month, String s_day,
+			String s_start_time, String s_end_time) {
+		super();
+		this.emp_ix = emp_ix;
+		this.s_year = s_year;
+		this.s_month = s_month;
+		this.s_day = s_day;
+		this.s_start_time = s_start_time;
+		this.s_end_time = s_end_time;
+	}
 
 	public Integer getSchedule_ix() {
 		return schedule_ix;

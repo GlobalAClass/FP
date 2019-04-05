@@ -156,6 +156,43 @@ public class ManScheduleController {
 		
 	}
 	
+	@RequestMapping(value="/addSchedule.do",method=RequestMethod.POST)
+	public ModelAndView addSchedule(
+				@RequestParam(value="selectTemp")String selectTemp,
+				@RequestParam(value="selectEmp")String selectEmp,
+				@RequestParam(value="selectDate")String selectDate
+			) {
+		
+		String temp[] = selectTemp.split(",");
+		String emp[] = selectEmp.split(",");
+		String date[] = selectDate.split(",");
+		
+		String s_start_time=temp[0];
+		String s_end_time=temp[1];
+		
+		int res=0;
+		
+		for(int i=0;i<emp.length;i++) {
+			for(int j=0;j<date.length;j++) {
+				int emp_ix = Integer.parseInt(emp[i]);
+				String s_year = date[j].substring(0, 4);
+				String s_month = date[j].substring(5, 7);
+				String s_day = date[j].substring(8, 10);
+				
+				ScheduleDTO dto = new ScheduleDTO(emp_ix, s_year, s_month, s_day, s_start_time, s_end_time);
+				res = sdao.addSchedule(dto);
+			}
+		}
+		
+		String msg = res<0?"스케줄 추가 실패":"";
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.setViewName("cmjson");
+		
+		return null;
+	}
+	
 	/*---------------------------------------------------------------------*/
 	/**휴가 요청 관련*/
 	

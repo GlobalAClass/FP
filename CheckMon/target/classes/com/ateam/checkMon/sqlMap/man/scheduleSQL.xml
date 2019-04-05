@@ -19,4 +19,17 @@
 	delete from schedule_tb
 	where schedule_ix=#{schedule_ix}
 	</delete>
+	<insert id="addScheduleSQL" parameterType="com.ateam.checkMon.schedule.model.ScheduleDTO">
+	insert into
+		schedule_tb
+	values(
+		schedule_tb_seq.nextval,
+		#{emp_ix},
+		#{s_year},
+		#{s_month},
+		#{s_day},
+		#{s_start_time},
+		#{s_end_time}
+	)
+	</insert>
 </mapper>
