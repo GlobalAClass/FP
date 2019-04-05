@@ -19,7 +19,7 @@ public class ManEmpRunDAOImple implements ManEmpRunDAO {
 		int res = sqlMap.insert("addManEmpRunSQL", rdto);
 		return res;
 	}
-
+	
 	public List<ReqListDTO> getReqList(int man_ix) {
 		List<ReqListDTO> list = sqlMap.selectList("getReqListSQL", man_ix);
 		return list;
@@ -30,6 +30,7 @@ public class ManEmpRunDAOImple implements ManEmpRunDAO {
 		return list;
 	}
 	
+	// 직원 승인하기
 	public int addEmp(AddempDTO temp) {
 		int res1 = sqlMap.update("setResitDaySQL", temp);
 		int res2 = sqlMap.update("setPGASQL", temp);
@@ -54,7 +55,6 @@ public class ManEmpRunDAOImple implements ManEmpRunDAO {
 		List<GroupDTO> list = sqlMap.selectList("getGroupListSQL", man_ix);
 		return list;
 	}
-
 	public List<PositionDTO> getPositionList(int man_ix) {
 		List<PositionDTO> list = sqlMap.selectList("getPositionListSQL", man_ix);
 		return list;

@@ -101,13 +101,15 @@ public class ManEmpRunController {
 
 	// 직원 승인
 	@RequestMapping(value = "addEmp.do", method = RequestMethod.POST)
-	public ModelAndView addEmp(			
+	public ModelAndView addEmp(
+			HttpSession s,
 			@RequestParam(name = "emp_ix") int emp_ix,
 			@RequestParam(name = "req_ix") int req_ix,
 			@RequestParam(name = "e_position") String e_position, 
 			@RequestParam(name = "e_group") String e_group,
 			@RequestParam(name = "authorization") String authorization) {
-		AddempDTO aedto = new AddempDTO(req_ix, emp_ix, e_group, e_position, authorization);
+		int man_ix = (Integer) s.getAttribute("man_ix");
+		AddempDTO aedto = new AddempDTO(req_ix, man_ix, emp_ix, e_group, e_position, authorization);
 		int res = merdao.addEmp(aedto);
 		String msg = res > 0 ? "승인 요청을 승인했습니다." : "오류로 인해 승인하지 못했습니다.";
 

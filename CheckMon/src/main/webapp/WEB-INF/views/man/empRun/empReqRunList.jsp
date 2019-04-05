@@ -405,13 +405,19 @@ img {
 					    	opt.text = pg_names['e_position'+i];
 					    	opt.value = pg_names['e_position'+i];
 					    	p_select.append(opt);
-					    	e_p_select.append(opt);
+					    	var opt1 = document.createElement("OPTION");
+					    	opt1.text = pg_names['e_position'+i];
+					    	opt1.value = pg_names['e_position'+i];
+					    	e_p_select.append(opt1);
 				    	}else{
 				    		var opt = document.createElement("OPTION");
 					    	opt.text = pg_names['e_group'+(i-p_len)];
 					    	opt.value = pg_names['e_group'+(i-p_len)];
 					    	g_select.append(opt);
-					    	e_g_select.append(opt);
+					    	var opt1 = document.createElement("OPTION");
+					    	opt1.text = pg_names['e_group'+(i-p_len)];
+					    	opt1.value = pg_names['e_group'+(i-p_len)];
+					    	e_g_select.append(opt1);
 				    	}
 				    }
 				}

@@ -3,6 +3,7 @@ package com.ateam.checkMon.manEmpRun.model;
 public class AddempDTO {
 
 	private int req_ix;
+	private int man_ix;
 	private int emp_ix;
 	private String e_group;
 	private String e_position;
@@ -11,9 +12,10 @@ public class AddempDTO {
 	public AddempDTO() {
 		super();
 	}
-	public AddempDTO(int req_ix, int emp_ix, String e_group, String e_position, String authorization) {
+	public AddempDTO(int req_ix, int man_ix, int emp_ix, String e_group, String e_position, String authorization) {
 		super();
 		this.req_ix = req_ix;
+		this.man_ix = man_ix;
 		this.emp_ix = emp_ix;
 		this.e_group = e_group;
 		this.e_position = e_position;
@@ -24,6 +26,12 @@ public class AddempDTO {
 	}
 	public void setReq_ix(int req_ix) {
 		this.req_ix = req_ix;
+	}
+	public int getMan_ix() {
+		return man_ix;
+	}
+	public void setMan_ix(int man_ix) {
+		this.man_ix = man_ix;
 	}
 	public int getEmp_ix() {
 		return emp_ix;

@@ -75,7 +75,7 @@
 		update req_tb set regit_day=sysdate where req_ix= #{req_ix}
 	</update>
 	<update id="setPGASQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
-		update emp_tb set e_group=#{e_group},e_position=#{e_position},authorization = #{authorization} where emp_ix= #{emp_ix}
+		update emp_tb set man_ix = #{man_ix}, e_group=#{e_group},e_position=#{e_position},authorization = #{authorization} where emp_ix= #{emp_ix}
 	</update>
 	<update id="modEmpSQL" parameterType="com.ateam.checkMon.member.model.EmpDTO">
 		update emp_tb 
