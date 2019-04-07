@@ -54,7 +54,7 @@ table th{
 						<h1 class="card-header" align="center">근무 시간 템플릿 관리</h1>
 						<div class="card-body">
 							<div align="right" style="margin-bottom: 10px;">
-								<input type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" value="템플릿 만들기">
+								<input type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" value="템플릿 만들기" onclick="position()">
 							</div>
 							<table class="table table-bordered">
 								<thead>
@@ -137,10 +137,7 @@ table th{
 							<tr>
 								<th>직책명</th>
 								<td>
-									<select class="form-control" name="template_position">
-										<option value="">직책을 선택해주세요</option>
-										<option value="직원">직원</option>
-										<option value="아르바이트">아르바이트</option>
+									<select class="form-control" id="loc_position" name="template_position">
 									</select>
 								</td>
 							</tr>
@@ -318,5 +315,39 @@ table th{
 			}
 		}
 	}
+
+	
+	function position(){
+		sendRequest('getPositionList.do',null,resultPosition,'POST');
+	}
+
+	function resultPosition(){
+		if (XHR.readyState == 4) {
+			if (XHR.status == 200) {
+				var data = eval('(' + XHR.responseText + ')');
+				var tempList = data.data;
+				
+ 				//템플릿이 존재하지 않는 경우, 근무시간 템플릿 만드는 화면으로 이동
+				if(tempList.length==0){
+					alert('직책을 생성해주세요.');
+					location.href="goPosition.do";
+				}else{
+					
+					var loc_position = document.getElementById('loc_position');
+					
+					for(var i=0;i<tempList.length;i++){
+						list=tempList[i];
+						
+						var opt = document.createElement('option');
+						opt.text = list.e_position;
+						opt.value = list.position_ix;
+						
+						loc_position .options.add(opt);
+					}
+				} 
+			}
+		}
+	}
+	
 </script>
 </html>

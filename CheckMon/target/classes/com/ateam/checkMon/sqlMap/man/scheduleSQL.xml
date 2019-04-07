@@ -32,4 +32,12 @@
 		#{s_end_time}
 	)
 	</insert>
+	<select id="getScheduleEmpSQL" parameterType="hashmap" resultType="com.ateam.checkMon.schedule.model.ScheduleDTO">
+	select *
+	from schedule_tb
+	where emp_ix=${emp_ix}
+	and s_year>=#{year}
+	and s_month>=#{month}
+	and s_day>=#{date}
+	</select>
 </mapper>

@@ -89,9 +89,7 @@
 
 	<div id="main">
 	<%@include file="/WEB-INF/views/man/header.jsp" %>
-	
 		<div class="content-page">
-		
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
@@ -279,7 +277,7 @@ $('#calendar').fullCalendar(
 			//스케줄 날짜 나타내는 코드
 			var loc_date = document.getElementById('loc_date'); //스케줄 변경 선택한 년-월-일 나타낼 공간
 			var moment = event.start;
-			loc_date.innerHTML='<h4 align="center">'+moment.format('YYYY')+'년 '+moment.format('MM')+'월 '+moment.format('DD')+'일</h4>';
+			loc_date.innerHTML='<h4 align="center" style="font-weight:bold;">'+moment.format('YYYY')+'년 '+moment.format('MM')+'월 '+moment.format('DD')+'일</h4>';
 			
 			//해당 스케줄의 인덱스 세팅
 			document.all.schedule_ix.value = event.id;

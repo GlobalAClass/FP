@@ -43,5 +43,16 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		int res = sqlMap.insert("addScheduleSQL",dto);
 		return res;
 	}
+	
+	public List<ScheduleDTO> getScheduleEmp(int emp_ix, String year, String month, String date) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_ix", emp_ix);
+		map.put("year",year);
+		map.put("month",month);
+		map.put("date",date);
+		
+		List<ScheduleDTO> list = sqlMap.selectList("getScheduleEmpSQL",map);
+		return list;
+	}
 
 }
