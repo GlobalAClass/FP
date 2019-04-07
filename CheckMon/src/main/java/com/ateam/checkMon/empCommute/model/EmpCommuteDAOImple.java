@@ -12,6 +12,18 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 		this.sqlMap = sqlMap;
 	}
 	
+	//근무자 달력 확인
+	public List<EmpCommuteAllDTO> getCommuteList(int emp_ix) {
+		List<EmpCommuteAllDTO> list=sqlMap.selectList("getCommuteListSQL",emp_ix);
+		return list;
+	}
+	
+	//근무자 근태 변경 신청
+	public int addCommuteApply(EmpCommuteApplyDTO dto) {
+		int res=sqlMap.insert("addCommuteApplySQL",dto);
+		return res;
+	}
+	
 	//근무자와 관리자 근태변경 목록 페이징 위한 개수 가져오기
 	public int commuteListSize(int emp_ix) {
 		int temp=sqlMap.selectOne("commuteListSizeSQL",emp_ix);

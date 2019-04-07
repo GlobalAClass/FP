@@ -73,7 +73,7 @@
                      <li class="submenu">
                         <a href="#"><i class="fa fa-vcard-o"></i> <span> 근태 </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="empCommute.do">월별 근태 관리</a></li>
+                                <li><a href="empCommuteForm.do">월별 근태 관리</a></li>
                                 <li><a href="empCommuteApplyList.do">근태 변경 목록</a></li>
                             </ul>
                     </li>

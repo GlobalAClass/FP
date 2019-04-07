@@ -3,6 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="checkMonCommute">
+	<select id="getCommuteListSQL" parameterType="Integer" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO">
+		select a.emp_ix,a.e_name,b.emp_commute_ix,b.worktime,b.leavetime,b.workday,b.state
+		from emp_tb a,emp_commute_tb b
+		where a.emp_ix=b.emp_ix
+		and a.emp_ix=#{emp_ix}
+	</select>
+	<insert id="addCommuteApplySQL" parameterType="com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO">
+		insert into
+			emp_change_tb
+		values(
+			emp_change_tb_seq.nextval,
+			#{emp_commute_ix},
+			#{emp_ix},
+			#{c_worktime},
+			#{c_leavetime},
+			#{title},
+			#{reason},		
+			null,
+			null
+		)
+	</insert>
  	<select id="getCommuteAllListSQL" parameterType="hashmap" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO">
  		<![CDATA[
 		select * from

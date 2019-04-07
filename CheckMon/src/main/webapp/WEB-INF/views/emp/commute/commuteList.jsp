@@ -97,8 +97,8 @@
 				<div class="container">
 					<div class="card col-12">
 						<h1 class="card-header" align="center">월별 근태 관리</h1>
-						<div align="right" style="margin:20px;">
-							<input type="button" class="btn btn-primary btn-lg" value="스케줄 추가하기" onclick="getTemplate();">
+						<div align="right" style="display:inline-block;margin:20px;">
+							<span style="background:#5858FA;color:#ffffff;">정상 출근</span>&nbsp;&nbsp;<span style="background:#FF4000;color:#ffffff;">지각 / 결근</span>
 						</div>
 						<div>
 							<div id="calendar"></div>
@@ -110,114 +110,100 @@
 		</div>
 	</div>
 	
-	<div id="Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	   		<div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">스케줄 추가하기</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-			     	 </div>
-			<div class="modal-body">
-					<table class="table">
-						<tr>
-							<th>근무 시간 템플릿</th>
-							<td>
-								<div class="row">
-									<input type="hidden">
-									<div class="form-group">
-										<select class="form-control" id="loc_sel">
-											<option value="" selected>선택 안됨</option>
-										</select>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th>스케줄 배정할 직원</th>
-							<td>
-								<div class="col-12" id="loc_emp">
-								<p>스케줄을 배정할 직원의 이름, 그룹, 직책명으로 검색후 <b>체크박스를 선택해주세요</b></p>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div id="calendar2"></div>
-								<div class="clearfix"></div>
-							</td>
-						</tr>
-						<tr align="right">
-							<td colspan="2"><input class="btn btn-success" type="submit" value="스케줄 추가하기"></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="modModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-lg">
-		    <div class="modal-content">
-		   		<div class="modal-header">
-			        <h5 class="modal-title" id="modModalLabel"></h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-				     	 </div>
-				<form class="form-inline" name="modify" onsubmit="return checked()" action="javascript:updateSchedule()">
-				<div class="modal-body">
-					<table class="table">
-						<tr>
-							<td colspan="2" id="loc_date"></td>
-						</tr>
-						<tr align="center">
-							<th>시작 시간</th>
-							<td>
-								<div class="form-group">
-									<input type="text" class="form-control" name="start_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="start_min" maxlength="2" size="5">
-									&nbsp;
-									<select class="form-control" id="start_m">
-										<option value="AM">AM</option>
-										<option value="PM">PM</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr align="center"> 
-							<th>마감 시간</th>
-							<td>
-								<div class="form-group">
-									<input type="text" class="form-control" name="end_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="end_min" maxlength="2" size="5">
-									&nbsp;
-									<select class="form-control" id="end_m">
-										<option value="AM">AM</option>
-										<option value="PM">PM</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-						<td>
-							<input type="hidden" name="hour_start_time">
-							<input type="hidden" name="hour_end_time">
-							<input type="hidden" id="schedule_ix" name="schedule_ix" value="">
-							<input class="btn btn-danger" type="button" value="스케줄 삭제하기" onclick="delSchedule()">
-						</td>
-						<td align="right">
-							<input class="btn btn-success" type="submit" value="스케줄 수정하기">
-						</td>
-						</tr>
-					</table>
-				</div>
-				</form>
-			</div>
-		</div>
-	</div>
+	<div id="myModal" class="modal fade" tabindex="-1"
+         role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h2 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">근태 변경 신청서</h2>
+                  <button type="button" class="close" data-dismiss="modal"
+                     aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <form class="form-inline" name="commuteapply" onsubmit="return checked()" action="javascript:updateCommute()">
+                  	<input type="hidden" name="emp_commute_ix">
+                  	<input type="hidden" name="c_worktime">
+                  	<input type="hidden" name="c_leavetime">
+                  	<table class="table">
+                  		<tr>
+                  			<th>변경 요구 날짜</th>
+                  			<td><div id="loc_workday"></div></td>
+                  		</tr>
+                  		<tr>
+                  			<th>현재 근태 시간</th>
+                  			<td>
+                  			<div class="form-group">
+							&nbsp;
+							<input type="text" class="form-control" name="loc_workhours" maxlength="2" size="5" readonly="readonly">
+							&nbsp;:&nbsp;
+							<input type="text" class="form-control" name="loc_workminutes" maxlength="2" size="5" readonly="readonly">
+							&nbsp;~&nbsp;
+							<input type="text" class="form-control" name="loc_leavehours" maxlength="2" size="5" readonly="readonly">
+							&nbsp;:&nbsp;
+							<input type="text" class="form-control" name="loc_leaveminutes" maxlength="2" size="5" readonly="readonly">
+                  			</div>
+                  			</td>
+                  		</tr>
+                  		<tr>
+                  			<th>변경 요청 시간</th>
+                  			<td>
+                  			<div class="form-group">
+                  			<select class="form-control" id="start_m" required="required">
+								<option value="AM">AM</option>
+								<option value="PM">PM</option>
+							</select>
+							&nbsp;
+							<input type="text" class="form-control" name="cha_workhours" maxlength="2" size="5" required="required">
+							&nbsp;:&nbsp;
+							<input type="text" class="form-control" name="cha_workminutes" maxlength="2" size="5" required="required">
+							&nbsp;~&nbsp;
+							<select class="form-control" id="end_m" required="required">
+								<option value="AM">AM</option>
+								<option value="PM">PM</option>
+							</select>
+							&nbsp;
+							<input type="text" class="form-control" name="cha_leavehours" maxlength="2" size="5" required="required">
+							&nbsp;:&nbsp;
+							<input type="text" class="form-control" name="cha_leaveminutes" maxlength="2" size="5" required="required">
+                  			</div>
+                  			</td>
+                  		</tr>
+                  		<tr>
+                  			<th>제목</th>
+                  			<td>
+                  			<div class="form-group">
+                  			<select class="form-control" name="title" required="required">
+								<option value="지각->정상출근 요청합니다.">지각->정상출근 요청합니다.</option>
+								<option value="결근->정상출근 요청합니다.">결근->정상출근 요청합니다.</option>
+							</select>
+                  			</div>
+                  			</td>
+                  		</tr>
+                  		<tr>
+                  			<th>사유</th>
+                  			<td>
+                  			<div class="form-group">
+                  			<textarea class="form-control" name="reason" cols="60" rows="5" required="required"></textarea>
+                  			</div>
+                  			</td>
+                  		</tr>
+                  		<tr>
+                  			<td colspan="3" align="center">
+                  			<input type="submit" class="btn btn-primary" value="제출하기">
+                  			</td>
+                  		</tr>
+                  	</table>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
 </body>
 
 <script src="assets/js/modernizr.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>	
 <script src="assets/js/moment.min.js"></script>
 
 <script src="assets/js/popper.min.js"></script>
@@ -244,6 +230,7 @@
 <!-- BEGIN Java Script for this page -->
 <script src="assets/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src='assets/plugins/fullcalendar/locale-all.js'></script>
+<script src="assets/js/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="assets/js/httpRequest.js"></script>
 <script>
 var date = new Date();
@@ -251,11 +238,14 @@ var d = date.getDate();
 	m = date.getMonth()+1;
 	y = date.getFullYear();
 
+//mm형식으로 바꿔주기
+if (m < 10) { m = '0' + m; }
+
 //달력 생성
 $('#calendar').fullCalendar(
 		{
 		header : {
-		left : 'today',
+		left : '',
 		center : 'prev title next',
 		right : '',
 		},
@@ -266,229 +256,169 @@ $('#calendar').fullCalendar(
 		eventLimit : 5, // allow "more" link when too many events
 		droppable : false,
 		height: 700,
-		eventClick: function(event) {
-			$('#modModal').modal('show');
-			var loc_date = document.getElementById('loc_date');
-			loc_date.innerHTML=event.start;
-			document.all.schedule_ix.value = event.id;
-			document.getElementById('modModalLabel').innerHTML = '<b>'+event.title+'</b>님의 스케줄 수정/삭제하기';
-		}
+		eventClick:function(event){
+			$('#myModal').modal('show');
+			var loc_workday = document.getElementById('loc_workday');
+			var workday = event.start;
+			
+			//근무 변경 날짜 세팅
+			loc_workday.innerHTML = workday.format('YYYY')+'년'+workday.format('MM')+'월'+workday.format('DD')+'일';
+			
+			var worktime = event.title;
+			//출근 시간 = 시
+			var workhours=worktime.substring(0,2);
+			//출근 시간 = 분
+			var workminutes=worktime.substring(3,5);
+			//퇴근 시간 = 시
+			var leavehours=worktime.substring(8,10);
+			//퇴근 시간 = 분
+			var leaveminutes=worktime.substring(11,13);
+			
+			//기존 출/퇴근 시간 값 세팅
+			commuteapply.loc_workhours.value = workhours;
+			commuteapply.loc_workminutes.value = workminutes;
+			commuteapply.loc_leavehours.value = leavehours;
+			commuteapply.loc_leaveminutes.value = leaveminutes;
+			
+			//근태 변경 인덱스 세팅
+			document.all.emp_commute_ix.value = event.id;
+			
+		},
+		eventRender: function(event, $el) {
+	         $el.popover({
+	            content : event.description,
+	            trigger :'hover',
+	            placement : 'top'
+	          });
+	      }
 });
 
 //첫 화면 세팅 시 스케줄 가져옴
-renderCalcEvent(y,m);
+renderCalcEvent();
 
 
 //뒤로 가거나 앞으로 갈 때 달력 년,월에 해당하는 스케줄값 다시 가져오기
 $(".fc-prev-button").click( function() {
-	var moment = $('#calendar').fullCalendar('getDate');
-	var year = moment.format('YYYY');
-	var month = moment.format('M');
-	renderCalcEvent(year,month);
+	renderCalcEvent();
 });
 $(".fc-next-button").click( function() {
-	var moment = $('#calendar').fullCalendar('getDate');
-	var year = moment.format('YYYY');
-	var month = moment.format('M');
-	renderCalcEvent(year,month);
+	renderCalcEvent();
 });
 $(".fc-today-button").click( function() {
-	var moment = $('#calendar').fullCalendar('getDate');
-	var year = moment.format('YYYY');
-	var month = moment.format('M');
-	renderCalcEvent(year,month);
+	renderCalcEvent();
 });
 
 
-//현재 일,월에 존재하는 스케줄 값 모두 가져오는 ajax
-function renderCalcEvent(year,month){
-	var params = 'year='+year
-				+'&month='+month;
-	sendRequest('getScheduleAll.do',params,resultEvent,'GET');
+//현재 일,월에 존재하는 근무자 출/퇴근 값 모두 가져오는 ajax
+function renderCalcEvent(){
+	sendRequest('empCommute.do',null,resultEvent,'GET');
 }
 
 function resultEvent(){
 	if (XHR.readyState == 4) {
 		if (XHR.status == 200) {
-			var data = eval('('+XHR.responseText+')');
+			var data = eval('(' +XHR.responseText+ ')');
+			
 			var eventList = data.list;
 			
 			for(var i=0;i<eventList.length;i++){
 				var list=eventList[i];
 				
-				var date = list.S_YEAR+'-'+list.S_MONTH+'-'+list.S_DAY;
-				var colorcode = "#"+Math.round(Math.random()*0xffffff).toString(16);
+				var date = list.workday;
+				// 출/퇴근 시간 계산하여 색깔 지정해주기
+				
+// 				if() 조건줘서 밑으로 보내야함
+// 				var worktime_s=list.worktime;
+// 				var leavetime_s=list.leavetime;
+				
+// 				var worktime=worktime_s.replace(/:/gi, "");
+// 				var leavetime=leavetime_s.replace(/:/gi, "");
 				
 				var event ={
-				id : list.SCHEDULE_IX,
-				title : list.E_NAME,
+				id : list.emp_commute_ix,
+				title : list.worktime+' - '+list.leavetime,
 				start : date,
-				color : colorcode,
+				backgroundColor : '#5858FA', //#FF4000 지각/결근
+				description : '클릭시 근태 변경 신청 가능',
 				allDay: true
 				
 				};$('#calendar').fullCalendar('renderEvent',event);
-			}
-			
+				
+			} 
 		}
 	}
+
 }
 
-//-------------스케줄 수정 및 삭제하기 Modal에서 사용하는 함수---------------//
-//수정 Submit 전에 유효성 검사
-function checked() {
-	if (modify.start_hour.value == ''
-			|| modify.start_min.value == ''
-			|| modify.end_hour.value == ''
-			|| modify.end_min.value == '') {
-		alert('근무 시간을 모두 입력해주세요.');
+function checked(){
+	if(commuteapply.cha_workhours.value==''
+		||commuteapply.cha_workminutes.value==''
+		||commuteapply.cha_leavehours.value==''
+		||commuteapply.cha_leaveminutes.value==''){
+		alert('변경 근무 시간을 모두 입력해주세요.');
 		return false;
-	} else {
-		setTempTime();
+	}else if(document.all.title.value==''){
+		alert('제목을 선택 해주세요');
+		return false;
+	}else if(document.all.reason.value==''){
+		alert('사유를 작성해주세요');
+		return false;
+	}else{
+		setWorkTime();
 		return true;
 	}
 }
 
-//스케줄 시작 시간, 마감 시간 계산하는 함수
-function setTempTime() {
-
+function setWorkTime(){
+	
 	var m1 = document.getElementById('start_m');
 	var m2 = document.getElementById('end_m');
-
-	var start_hour = modify.start_hour.value;
-	var end_hour = modify.end_hour.value;
-
+	
+	var cha_workhours = commuteapply.cha_workhours.value;
+	var cha_leavehours = commuteapply.cha_leavehours.value;
+	
 	if (m1.options[m1.selectedIndex].value == 'PM') {
-		start_hour = parseInt(start_hour) + 12;
+		cha_workhours = parseInt(cha_workhours) + 12;
 	}
 	if (m2.options[m2.selectedIndex].value == 'PM') {
-		end_hour = parseInt(end_hour) + 12;
+		cha_leavehours = parseInt(cha_leavehours) + 12;
 	}
-
-	modify.hour_start_time.value = start_hour+':'+modify.start_min.value;
-	modify.hour_end_time.value = end_hour+':'+modify.end_min.value;
-}
-
-//ajax 이용하여 스케줄 수정
-function updateSchedule(){
-	var params = 'schedule_ix='+modify.schedule_ix.value
-				+'&s_start_time='+modify.hour_start_time.value
-				+'&s_end_time='+modify.hour_end_time.value;
 	
-	sendRequest('modSchedule.do',params,resultUp,'POST');
+	commuteapply.c_worktime.value = cha_workhours+':'+commuteapply.cha_workminutes.value;
+	commuteapply.c_leavetime.value = cha_leavehours+':'+commuteapply.cha_leaveminutes.value;
 }
 
-//스케줄 수정 후
+
+//ajax 이용하여 근무 수정
+function updateCommute(){
+	var params = 'emp_commute_ix='+commuteapply.emp_commute_ix.value
+				+'&c_worktime='+commuteapply.c_worktime.value
+				+'&c_leavetime='+commuteapply.c_leavetime.value
+				+'&title='+commuteapply.title.value
+				+'&reason='+commuteapply.reason.value;
+	
+	sendRequest('addCommuteApply.do',params,resultUp,'POST');
+}
+
+//근무 수정 후
 function resultUp(){
 	if (XHR.readyState == 4) {
 		if (XHR.status == 200) {
 			var data = eval('(' + XHR.responseText + ')');
 			var msg = data.msg;
-			var loc = data.loc;
 
 			if (msg != '') {
 				alert(msg);
-			}
-
-			location.href = loc;
-		}
-	}
-}
-
-//ajax 이용하여 스케줄 삭제
-function delSchedule(){
-	var res = confirm('스케줄을 삭제하시겠습니까?\n(주의! 복구할 수 없습니다.)')
-	if(res){
-		var param = 'schedule_ix='+modify.schedule_ix.value;
-		sendRequest('delSchedule.do',param,resultDel,'POST');
-	}
-}
-//스케줄 삭제 후
-function resultDel(){
-	if (XHR.readyState == 4) {
-		if (XHR.status == 200) {
-			var data = eval('(' + XHR.responseText + ')');
-			var msg = data.msg;
-			var loc = data.loc;
-
-			if (msg != '') {
-				alert(msg);
-			}
-
-			location.href = loc;
-		}
-	}
-}
-
-//-------------스케줄 추가하기 Modal에서 사용하는 함수---------------//
-//현재 존재하는 근무시간 템플릿 가져오는 ajax
-function getTemplate(){
-	sendRequest('hourTemplateList.do',null,resultTemplate,'POST');
-}
-
-function resultTemplate(){
-	if (XHR.readyState == 4) {
-		if (XHR.status == 200) {
-			var data = eval('(' + XHR.responseText + ')');
-			var tempList = data.list;
-			
-			//템플릿이 존재하지 않는 경우, 근무시간 템플릿 만드는 화면으로 이동
-			if(tempList.length==0){
-				alert('근무 시간 템플릿을 생성해주세요.');
-				location.href="hourTemplateList.do";
 			}else{
-				
-				//스케줄 추가하는 모달 열기
-				$('#addModal').modal('show');
-				
-				var loc_sel = document.getElementById('loc_sel');
-				
-				for(var i=0;i<tempList.length;i++){
-					list=tempList[i];
-					
-					var opt = document.createElement('option');
-					opt.text = list.hour_start_time+' ~ '+list.hour_end_time+' | '+list.template_position;
-					opt.value = list.hour_template_ix;
-					
-					loc_sel.options.add(opt);
-				}
+				alert(msg);
 			}
+	
+			location.href='empCommuteForm.do';
+			
 		}
 	}
 }
 
-$('#add_schedule').click(function() {
-	$('#calendar2').fullCalendar({
-			header : {
-			left : 'today',
-			center : 'prev title next',
-			right : ''
-			},
-			locale : 'ko',
-			selectable : true,
-			selectHelper : true,
-			editable : false, //수정 가능 여부 설정하는 부분
-			eventLimit : 5, // allow "more" link when too many events
-			droppable : false,
-	});
-});
-
-//ajax 이용하여 스케줄 추가하기
-function addSchedule(str_group_ix){
-	var param = '';
-	sendRequest('addSchedule.do', param, resMsg,'POST');
-}
-
-function resMsg(){
-	if(XHR.readyState==4){
-		if(XHR.status==200){
-			var data = eval('('+XHR.responseText+')');
-		    var msg=data.msg;
-		    
-		    alert(msg);
-		    location.href='';
-		}
-	}
-}
 
 </script>
 
