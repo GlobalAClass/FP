@@ -141,7 +141,7 @@
 	</select>
 	<select id="checkQRAndStorIxSQL" parameterType="map" resultType="int">
 		select 1 from store_tb s, emp_tb e 
-		where e.emp_ix = #{emp_ix} and s.man_ix = e.man_ix and store_ix = #{storeIx}
+		where e.emp_ix = #{emp_ix} and s.man_ix = e.man_ix and store_ix = #{store_ix}
 	</select>
 	<select id="getStoreListSQL" parameterType="String" resultType="com.ateam.checkMon.member.model.StoreDTO">
 		select *
@@ -171,6 +171,22 @@
 	<update id="modManProfileSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
 		update man_tb
 		set m_pwd=#{m_pwd},m_tel=#{m_tel}
-		where man_ix=#{man_ix}
+		where man_ix=#{man_ix}=
+	</update>
+	<select id="checkWorkingSQL" parameterType="int" resultType="Integer">
+		select emp_commute_ix
+   		from emp_commute_tb 
+    	where emp_ix = #{emp_ix}
+        		and leavetime is null
+        		and (workday = to_char(sysdate, 'YYYY-MM-DD') or workday = to_char(sysdate-1, 'YYYY-MM-DD'))
+	</select>
+	<insert id="goToWorkSQL" parameterType="int">
+		insert into emp_commute_tb
+		values(emp_commute_tb_seq.nextval, #{emp_ix}, to_char(sysdate, 'HH24:MI'), null, to_char(sysdate, 'YYYY-MM-DD'), null, null)
+	</insert>
+	<update id="getOffWorkSQL" parameterType="HashMap">
+		update emp_commute_tb 
+		    set leavetime = to_char(sysdate, 'HH24:MI')
+		    where emp_ix = #{emp_ix} and emp_commute_ix = #{emp_commute_ix}
 	</update>
 </mapper>

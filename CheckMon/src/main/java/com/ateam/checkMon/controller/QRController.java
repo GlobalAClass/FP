@@ -100,11 +100,41 @@ public class QRController {
 		CheckQRDTO temp = new CheckQRDTO(emp_ix, store_ix);
 		boolean QRcheck = dao.checkQRAndStorIx(temp);
 		
+		String msg= "";
+		//근무자가 찍은 QR코드와 근무지 QR코드 일치
+		if(QRcheck) {
+			msg += "QR코드가 일치합니다.";
+			int res;
+			
+			Integer commute_ix = dao.checkWorking(emp_ix);
+			//출근중 -> 퇴근 기록
+			if(commute_ix != null) {
+				//퇴근 기록
+				res = dao.getOffWork(emp_ix, commute_ix);
+				//퇴근 정상적으로 기록됨
+				if(res>0) {
+					msg += " 정상 퇴근하셨습니다.";
+				}
+			}
+			//출근 전 -> 출근 기록
+			else { 
+				//출근 기록하기
+				res = dao.goToWork(emp_ix);
+				//출근 정상적으로 기록됨
+				if(res>0) {
+					msg += " 정상 출근하셨습니다.";
+				}
+			}
+		}else { //근무지QR과 불일치
+			msg += "QR코드가 일치하지 않습니다.";
+		}
+		
 		ModelAndView mav = new ModelAndView("member/checkCom/msgCom");
 		mav.addObject("QRcheck", QRcheck);
 		
 		return mav;
 	}
+
 
 	// QR생성 및 다운로드 페이지
 	@RequestMapping("/generateQR.do")

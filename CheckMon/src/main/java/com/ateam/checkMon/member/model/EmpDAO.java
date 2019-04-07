@@ -17,4 +17,7 @@ public interface EmpDAO {
 	public EmpDTO modEmpProfileForm(int emp_ix);
 	public int modEmpProfile(EmpDTO dto);
 	boolean checkQRAndStorIx(CheckQRDTO temp);
+	int goToWork(int emp_ix);
+	Integer checkWorking(int emp_ix);
+	int getOffWork(int emp_ix, int emp_commute_ix);
 }

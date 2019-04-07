@@ -140,6 +140,27 @@ public class ManEmpRunController {
 		mav.setViewName("cmjson");
 		return mav;
 	}
+	// 직원 삭제
+	@RequestMapping(value = "delEmp.do", method = RequestMethod.POST)
+	public ModelAndView delEmp(@RequestParam(name = "str_ix") String str_ix) {
+		String arr_ix[] = str_ix.split(",");
+
+		int res = -1;
+		String msg = "삭제했습니다.";
+		for (int i = 0; i < arr_ix.length; i+=2) {
+			res = merdao.delEmp(Integer.parseInt(arr_ix[i]), Integer.parseInt(arr_ix[i+1]));
+			if (res < 0) {
+				msg = i + "번째 행 삭제 오류입니다.";
+				break;
+			}
+		}
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.setViewName("cmjson");
+		return mav;
+	}
+	
 	
 	// 직원 거절
 	@RequestMapping(value = "refuseEmp.do", method = RequestMethod.POST)

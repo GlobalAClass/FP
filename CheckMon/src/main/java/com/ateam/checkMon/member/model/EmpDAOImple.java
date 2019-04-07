@@ -14,6 +14,27 @@ public class EmpDAOImple implements EmpDAO {
 		super();
 		this.sqlMap = sqlMap;
 	}
+	//근무자 출근 중인지 확인 - 출근중이라면 출근한 날짜 반환
+	public Integer checkWorking(int emp_ix) {
+		Integer res = sqlMap.selectOne("checkWorkingSQL", emp_ix);
+		return res;
+	}
+	
+	//근무자 출근하기
+	public int goToWork(int emp_ix) {
+		int res = sqlMap.insert("getOffSQL", emp_ix);
+		return res;
+	}
+	
+	//근무자 퇴근하기
+	public int getOffWork(int emp_ix, int emp_commute_ix) {
+		HashMap<String, Integer> temp = new HashMap<String, Integer>();
+		temp.put("emp_ix", emp_ix);
+		temp.put("emp_commute_ix", emp_commute_ix);
+		
+		int res = sqlMap.update("getOffWorkSQL", temp);
+		return res;
+	}
 	
 	//근무자 등록되려는 인덱스 가져오기
 	public int getNextEmpIx() {

@@ -83,5 +83,12 @@
 				e_tel=#{e_tel}, e_email=#{e_email}, e_birthday=#{e_birthday}
 		where emp_ix= #{emp_ix}
 	</update>
-
+	<delete id="delReqSQL" parameterType="int">
+		delete from req_tb where req_ix = #{req_ix}
+	</delete>
+	<update id="del_Emp_MPGA_SQL" parameterType="int">
+	 	update emp_tb 
+	 		set man_ix = null, e_group=null, e_position=null, authorization = null
+	 		where emp_ix = #{emp_ix}
+	</update>
 </mapper>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CheckMon</title>
-<meta name="Content" content="직원관리">
+<meta name="Content" content="급여관리">
 <meta name="description"
 	content="Free Bootstrap 4 Admin Theme | Pike Admin">
 <meta name="author"
@@ -57,11 +57,11 @@ img {
 					<div class="row">
 						<div class="col-xl-12">
 							<div class="breadcrumb-holder">
-								<h1 class="main-title float-left">- 직원 관리 -</h1>
+								<h1 class="main-title float-left">- 급여관리 -</h1>
 								<ol class="breadcrumb float-right">
 									<li class="breadcrumb-item">Home</li>
-									<li class="breadcrumb-item active">직원관리</li>
-									<li class="breadcrumb-item active">직원관리</li>
+									<li class="breadcrumb-item active">급여관리</li>
+									<li class="breadcrumb-item active">급여관리</li>
 								</ol>
 								<div class="clearfix"></div>
 							</div>
@@ -71,7 +71,7 @@ img {
 					<div class="col-xl-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 						<div class="card mb-3">
 							<div class="card-header">
-								<h3>직원 승인 요청</h3>
+								<h3>직원 급여 관리</h3>
 							</div>
 
 							<div class="card-body">
@@ -97,37 +97,6 @@ img {
 						<!-- end card-->
 					</div>
 
-					<div class="col-xl-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-						<div class="card mb-3">
-							<div class="card-header">
-								<h3>직원 목록</h3>
-							</div>
-							
-							<div class="card-body">
-								<div class="table-responsive">
-									<table id="RunTable"
-										class="table table-bordered table-hover display">
-										<thead>
-											<tr>
-												<th><input type="checkbox" id=ck_all></th>
-												<th width=15%>그룹</th>
-												<th width="55px" style="border-right: none;"></th>
-												<th>직원이름</th>
-												<th width=15%>직책</th>
-												<th>전화번호</th>
-												<th width=20%>이메일</th>
-												<th width=40px style="text-align: center">수정</th>
-											</tr>
-										</thead>
-									</table>
-									<button class="btn btn-success" style="margin-top: 15px;">Excel 파일로 저장</button>
-									<input type="button" class="btn btn-danger" value="체크한 직원 삭제" id="delete" style="float: right; margin-top: 10px; margin-right: 40px;">
-								</div>
-							</div>
-						</div>
-						<!-- end card-->
-					</div>
-				</div>
 			
 			<!-- 페이지에 쓰이는 modal 모음 -->	
 			
@@ -206,87 +175,7 @@ img {
 			    </div>
 			  </div>
 			
-			<!-- 직원 승인 modal -->
-			<div id="myModal" class="modal fade bd-add-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
-			    <div class="modal-content">
-			   		<div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">직원 승인</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-			     	 </div>
-			     	 <form name="addEmp" action="addEmp.do" method="post">
-			     	 <div class="modal-body">
-			     			<div class="col-12" style="text-align: center">
-			     				<div >
-			     					<div id="add_e_img"></div>
-			     					<h2 id="add_e_name">이름</h2>
-			     				</div>
-			     				<div class="table-responsive">
-									<table class="table" id="modal_table">
-										<tr>
-											<th>직책</th>
-											<td><select id="add_e_position" class="form-control" name="e_position"></select></td>
-										</tr>
-										<tr>
-											<th>그룹</th>
-											<td><select id="add_e_group" class="form-control" name="e_group"></select></td>
-										</tr>
-										<tr>
-											<th>권한</th>
-											<td><select id="add_e_authorization" class="form-control" name="authorization">
-													<option value="false">부여하지 않음</option>
-													<option value="true">관리자 권한 부여</option>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th colspan="2" style="text-align: center; color: red">그룹과 직책은 각 관리 탭에서 추가할 수 있습니다.</th>
-										</tr>
-									</table>
-								</div>
-							</div>
-					</div>
-					<div class="modal-footer" align="center">
-						<input id="add_emp_ix" type="hidden" >
-						<input id="add_req_ix" type="hidden" >
-						<input id="btn_addEmp"class="btn btn-primary" type="submit" value="승인하기">
-					</div>
-					</form>
-					</div>
-			    </div>
-			  </div>
-			  
-			  <!-- 직원 거절 modal -->
-			  <div id="myModal" class="modal fade bd-refuse-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
-			    <div class="modal-content">
-			   		<div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">직원 승인 거절</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-			     	 </div>
-			     	 <form name="refuseEmp" action="refuseEmp.do" method="post">
-			     	 <div class="modal-body">
-			     			<div class="col-12" style="text-align: center">
-			     				<div >
-			     					<div id="ref_e_img"></div>
-			     					<h2 id="ref_e_name">이름</h2>
-			     					<h5 style="color: red">정말 승인을 거절하시겠습니까?</h5>
-			     					<input id="ref_r_ix" type="hidden" >
-			     				</div>
-							</div>
-					</div>
-					<div class="modal-footer" align="center">
-						<button id="ref_btn" type="button" class="btn btn-danger" data-dismiss="modal">거절하기</button>
-						<button type="button" class="btn btn-dark" data-dismiss="modal">취소하기</button>
-					</div>
-					</form>
-					</div>
-			    </div>
-			  </div>
+			
 			  
 			</div>
 			<!-- END content -->
@@ -338,22 +227,6 @@ img {
 			}); 
 		});
 		
-		//승인 수락하는 함수 - ajax
-		function addEmp(){
-			var params = 'emp_ix='+$('#add_emp_ix').val()
-						+'&req_ix='+$('#add_req_ix').val()
-						+'&e_position='+$('#add_e_position').val()
-						+'&e_group='+$('#add_e_group').val()
-						+'&authorization='+$('#add_e_authorization').val();
-			sendRequest('addEmp.do', params, resMsg,'POST');
-		}
-		
-		//승인 요청 거절하는 함수 - ajax
-		function refuseEmp(){
-			var req_ix = 'req_ix='+$('#ref_r_ix').val();
-			sendRequest('refuseEmp.do', req_ix, resMsg,'POST');
-		}
-		
 		//직원 수정하기
 		function modEmp(){
 			var params = 'emp_ix='+$('#emp_ix').text()
@@ -365,12 +238,6 @@ img {
 						+'&e_email='+$('#e_email').val()
 						+'&e_birthday='+$('#e_birthday').val();
 			sendRequest('modEmp.do', params, resMsg,'POST');
-		}
-		
-		//직원 삭제하기
-		function delEmp(str_ix){
-			var str_ix = 'str_ix='+str_ix;
-			sendRequest('delEmp.do', str_ix, resMsg,'POST');
 		}
 		
 		
@@ -433,16 +300,6 @@ img {
 		$(document).ready(function() {
 			//select에 사용될 직책, 그룹 세팅
 			getPGNames();
-			
-			//직원 요청 수락하기 onclick 함수
-			$('#btn_addEmp').on('click', function(){
-				addEmp();
-			});
-			
-			//직원 요청 거절하기 onclick 함수
-			$('#ref_btn').on('click', function(){
-				refuseEmp();
-			});
 			
 			//직원 수정하기 onclick 함수
 			$('#btn-mod').on('click', function(){
@@ -512,7 +369,7 @@ img {
 						"className" : 'check',
 						"orderable" : false,
 						"data" : null,
-						"defaultContent" : '<input type="checkbox" name=checkRow>'
+						"defaultContent" : '<input type="checkbox">'
 					},
 					{"data" : "e_group"},
 					{"data" : "imgpath", "orderable" : false},
@@ -550,50 +407,6 @@ img {
 				m_t.find('#e_birthday').val(row.data().e_birthday);
 				m_t.find('#regit_day').text(row.data().regit_day);
 			});
-			
-			//템플릿 삭제하기 버튼 숨기기
-			$('#delete').hide();
-			
-			//체크 박스 개별 선택&해제시 삭제버튼 숨기고 나타내는 코드
-			$('#RunTable').on('click','input[name=checkRow]',function(){
-				if($('input[name="checkRow"]').is(":checked")==true){
-					$('#delete').show();
-				}else{
-					$('#delete').hide();
-				}
-			})
-			
-		    //체크박스 전체 선택&해제 and 삭제버튼 숨기고 나타내는 코드
-		    $('#ck_all').click(function(){
-		         if($('#ck_all').prop('checked')){
-		            $("input[type=checkbox]").prop('checked',true);
-		            $('#delete').show();
-		        }else{
-		            $('input[type=checkbox]').prop('checked',false);
-		            $('#delete').hide();
-		        }
-		    });
-			
-			//삭제 버튼 클릭 시 삭제할것이냐는 알림과 삭제 진행
-		    $('#delete').click(function(){
-		        if(confirm("삭제하시겠습니까?")){
-		        	var str_ix = "";
-		        	var len = $("input[name=checkRow]:checked").size();
-		            $("input[name=checkRow]:checked").each(function(i){
-						if(i>0 && i< len){
-							str_ix += ',';
-		            	}
-						var row = RunTable.row($(this).closest('tr'));
-		            	str_ix += row.data().req_ix;
-		            	str_ix += ',';
-		            	str_ix += row.data().emp_ix;
-		            });
-		            delEmp(str_ix); //reqTable 삭제 함수
-		        }else{
-		            return false;
-		        }
-		    });
-			
 		});
 		// END CODE FOR Child rows (show extra / detailed information) DATA TABLE
 	</script>

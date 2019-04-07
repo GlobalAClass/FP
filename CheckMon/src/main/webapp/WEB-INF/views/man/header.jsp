@@ -105,7 +105,7 @@
 					<li class="submenu">
                         <a href="#"><i class="fa fa-money"></i> <span>급여 관리</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="#">급여 집계표</a></li>
+                                <li><a href="manPayRollList.do">급여 집계표</a></li>
 								<li><a href="#">시급 단위 설정</a></li>
                             </ul>
                     </li>

@@ -20,4 +20,5 @@ public interface ManEmpRunDAO {
 	HashMap<String, String> getPGNameList(int man_ix);
 	int addEmp(AddempDTO temp);
 	int modEmp(RunListDTO temp);
+	int delEmp(int req_ix, int emp_ix);
 }

@@ -41,9 +41,23 @@ public class ManEmpRunDAOImple implements ManEmpRunDAO {
 		return 1;
 	}
 	
+	// 직원 수정하기
 	public int modEmp(RunListDTO temp) {
 		int res = sqlMap.update("modEmpSQL", temp);
 		return res;
+	}
+	// 직원 삭제
+	public int delEmp(int req_ix, int emp_ix) {
+		//req_tb에서 삭제
+		int res = sqlMap.delete("delReqSQL", req_ix);
+		//emp_tb에서 관리자, 직책, 그룹, 권한 삭제
+		int res1 = sqlMap.delete("del_Emp_MPGA_SQL", emp_ix);
+		
+		if(res>0 && res1>0) {
+			return 1;
+		}else {
+			return -1;
+		}
 	}
 
 	public int refuseEmp(int req_ix) {
