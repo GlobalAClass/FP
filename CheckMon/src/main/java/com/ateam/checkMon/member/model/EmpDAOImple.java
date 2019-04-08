@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
+
 public class EmpDAOImple implements EmpDAO {
 
 	private SqlSessionTemplate sqlMap;
@@ -26,14 +28,47 @@ public class EmpDAOImple implements EmpDAO {
 		return res;
 	}
 	
-	//근무자 퇴근하기
+	//근무자 퇴근하기 및 총 근무시간 기록
 	public int getOffWork(int emp_ix, int emp_commute_ix) {
 		HashMap<String, Integer> temp = new HashMap<String, Integer>();
 		temp.put("emp_ix", emp_ix);
 		temp.put("emp_commute_ix", emp_commute_ix);
-		
+
 		int res = sqlMap.update("getOffWorkSQL", temp);
-		return res;
+		
+		//총근무시간 기록을 위해 출근 시간, 퇴근 시간 가져오기.
+		EmpCommuteDTO cal = sqlMap.selectOne("getWorkLeaveTimeSQL", temp);
+		
+		//시, 분으로 나누기
+		String w_time = cal.getWorktime();
+		String w[] = w_time.split(":");
+		String l_time = cal.getLeavetime();
+		String l[] = l_time.split(":");
+		
+		//나눈 시분 숫자로 치환하기
+		Integer w_i[] = {Integer.parseInt(w[0]), Integer.parseInt(w[1])}; 
+		Integer l_i[] = {Integer.parseInt(l[0]), Integer.parseInt(l[1])}; 
+		
+		//총 근무시간 구하기(단위 : 분)
+		Integer daytime = 0;
+		//퇴근 시간의 분이 출근 시간의 분보다 클 경우
+		if(l_i[1]>=w_i[1]) {
+			daytime = l_i[1]-w_i[1];
+		}else { //작을 경우
+			l_i[0] -= 1;
+			daytime = l_i[1]-(60-w_i[1]);
+		}
+		daytime += 60*(w_i[0] - l_i[0]);
+		
+		//총 근 무시간 기록
+		temp.put("daytime", daytime);
+		int res1 = sqlMap.update("setDaytimeSQL", temp);
+
+		if(res>0 && res>0) {
+			return 1;
+		}else {
+			return -1;
+		}
 	}
 	
 	//근무자 등록되려는 인덱스 가져오기

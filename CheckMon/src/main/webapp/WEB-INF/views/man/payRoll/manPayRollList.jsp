@@ -16,6 +16,10 @@
 <!-- Favicon -->
 <link rel="shortcut icon" href="assets/images/favicon.ico">
 
+<!-- Switchery css -->
+<link href="assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+	
+
 <!-- Bootstrap CSS -->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
@@ -30,6 +34,7 @@
 <!-- BEGIN CSS for this page -->
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+	<link href="assets/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" />s
 <style>
 img {
 	cursor: pointer;
@@ -37,7 +42,13 @@ img {
 #modal_table td{
 	border-left: 1px solid black
 }
-
+td.details-control {
+	background: url('assets/plugins/datatables/img/details_open.png') no-repeat center center;
+	cursor: pointer;
+}
+tr.shown td.details-control {
+	background: url('assets/plugins/datatables/img/details_close.png') no-repeat center center;
+}
 </style>
 
 <!-- END CSS for this page -->
@@ -75,18 +86,23 @@ img {
 							</div>
 
 							<div class="card-body">
+								<div class="text-center" style="margin: 10px auto; text-align: center;">
+									<input type="text" class="form-control text-center" id="daterange" name="daterange"
+										 value="" style="width: 250px; margin: 10px auto"/>
+								</div>
 
 								<div class="table-responsive">
-									<table id="ReqTable"
+									<table id="PayRollTable"
 										class="table table-bordered table-hover display">
 										<thead>
 											<tr>
 												<th width="55px" style="border-right: none;"></th>
 												<th>이름</th>
-												<th>생년월일</th>
-												<th>전화번호</th>
-												<th>이메일</th>
-												<th width=90px style="text-align: center">승인 / 거절</th>
+												<th>직책</th>
+												<th>그룹</th>
+												<th>지급총액</th>
+												<th>공제총액</th>
+												<th>총실지급여액</th>
 											</tr>
 										</thead>
 									</table>
@@ -96,86 +112,6 @@ img {
 						</div>
 						<!-- end card-->
 					</div>
-
-			
-			<!-- 페이지에 쓰이는 modal 모음 -->	
-			
-			<!-- 직원 상세 정보, 수정 modal -->
-			<div id="myModal" class="modal fade bd-detail-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
-			    <div class="modal-content">
-			   		<div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">직원 상세 정보</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-			     	 </div>
-			     	 <form name="modEmp" action="modEmp.do" method="post">
-			     	 <div class="modal-body">
-			     		 <!-- 검색 진행하여 db에서 가져온 매장 목록 출력 -->
-			     			<div class="col-12" style="text-align: center">
-			     				<div >
-			     					<div id="div_e_img"></div>
-			     					<h2 id="e_name">이름</h2>
-			     				</div>
-			     				<div class="table-responsive">
-									<table class="table" id="modal_table">
-										<tr>
-											<th>직원번호</th>
-											<td id="emp_ix"></td>
-										</tr>
-										<tr>
-											<th>이름</th>
-											<td><input type="text" id="ae_name" class="form-control"></td>
-										</tr>
-										<tr>
-											<th>직책</th>
-											<td><select id="e_position" class="form-control"></select></td>
-										</tr>
-										<tr>
-											<th>그룹</th>
-											<td><select id="e_group" class="form-control"></select></td>
-										</tr>
-										<tr>
-											<th>권한</th>
-											<td><select id="authorization" class="form-control">
-												<option value="false">부여하지 않음</option>
-												<option value="true">관리자 권한 부여</option>
-											</select></td>
-										</tr>
-										<tr>
-											<th>번호</th>
-											<td><input type="text" id="e_tel" class="form-control"></td>
-										</tr>
-										<tr>
-											<th>이메일</th>
-											<td><input type="text" id="e_email" class="form-control"></td>
-										</tr>
-										<tr>
-											<th>생년월일</th>
-											<td><input type="text" id="e_birthday" class="form-control"></td>
-										</tr>
-										<tr>
-											<th>직원 승인일</th>
-											<td id="regit_day"></td>
-										</tr>
-										<tr>
-											<th colspan="2"><!-- table의 마지막선 추가를 위한 빈공간 --></th>
-										</tr>
-									</table>
-								</div>
-							</div>
-					</div>
-					<div class="modal-footer" align="center">
-						<input id="req_ix" type="hidden" >
-						<input id="btn-mod" class="btn btn-primary" type="submit" value="수정하기">
-					</div>
-					</form>
-					</div>
-			    </div>
-			  </div>
-			
-			
 			  
 			</div>
 			<!-- END content -->
@@ -214,10 +150,13 @@ img {
 		src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+		
+	<script src="assets/plugins/datetimepicker/js/daterangepicker.js"></script>
  
 	<!-- Counter-Up-->
 	<script src="assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-	<script src="assets/plugins/counterup/jquery.counterup.min.js"></script> 
+	<script src="assets/plugins/counterup/jquery.counterup.min.js"></script>
+	 
 	<script type="text/javascript" src="assets/js/httpRequest.js"></script>
 
 	<script>
@@ -297,6 +236,40 @@ img {
 			}
 		}
 		
+		function format ( d ) {
+		    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+		        '<tr>'+
+		            '<th>기본 수당:</td>'+
+		            '<th>추가 수당</td>'+
+		            '<th>야근 수당</td>'+
+		            '<th>주휴 수당</td>'+
+		            '<th>공휴일 수당</td>'+
+		        '</tr>'+
+		        '<tr>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		        '</tr>'+
+		    '</table>'+
+		    '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+		        '<tr>'+
+		            '<th>소득세</td>'+
+		            '<th>주민세</td>'+
+		            '<th>국민 연금</td>'+
+		            '<th>건강 보험</td>'+
+		        '</tr>'+
+		        '<tr>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		            '<td>'+d.extn+'</td>'+
+		        '</tr>'+
+		    '</table>';
+		}
+		 
+		
 		$(document).ready(function() {
 			//select에 사용될 직책, 그룹 세팅
 			getPGNames();
@@ -306,27 +279,63 @@ img {
 				modEmp();
 			});
 			
-			//직원 요청 테이블
-			var ReqTable = $('#ReqTable').DataTable({
+
+			
+			//기간 선택용 달력
+			$('#daterange').daterangepicker({ 
+						startDate: '03/05/2005', 
+						endDate: '03/06/2005',
+						opens: "center"
+			});
+			
+			//현재 달력 시간 맞추기.
+			var cur_date = new Date();
+			var start_date = cur_date.getMonth() + "/" +cur_date.getDate()+ "/"+ cur_date.getFullYear();
+			var end_date = (cur_date.getMonth()+1) + "/" +cur_date.getDate()+ "/"+ cur_date.getFullYear();
+			$('#daterange').data('daterangepicker').setStartDate(start_date);
+			$('#daterange').data('daterangepicker').setEndDate(end_date);
+			
+			//달력 조작
+			$('#daterange').on('apply.daterangepicker', function(ev, picker) {
+			  console.log(picker.startDate.format('YYYY-MM-DD'));
+			  console.log(picker.endDate.format('YYYY-MM-DD'));
+			});
+			
+			//직원 급여 테이블
+			var PayRollTable = $('#PayRollTable').DataTable({
 			    "ajax": {
 		        	'url' : '/CheckMon/getReqList.do',
 		       	 	'type' : 'POST'
 			    	},
 				"columns" : [ 
-					{"data" : "imgpath", "orderable" : false}, 
+					{
+		                "className":      'details-control',
+		                "orderable":      false,
+		                "data":           null,
+		                "defaultContent": ''
+		            }, 
 					{"data" : "e_name"}, 
 					{"data" : "e_birthday"},
-					{"data" : "e_tel"},
-					{"data" : "e_email"},
-					{
-						"className" : 'add_refuse',
-						"orderable" : false,
-						"data" : null,
-						"defaultContent" : '&nbsp;<img src="assets/images/empReqRunList/add-user.svg" class="addEmp" data-toggle="modal" data-target=".bd-add-modal" width=30px height=30px> &emsp; <img src="assets/images/empReqRunList/remove-user.svg" class="refuseEmp" data-toggle="modal" data-target=".bd-refuse-modal" width=30px height=30px>'
-					}
+					{"data" : "e_tel"}
 				],
 				"order" : [ [ 1, 'asc' ] ]
 			});
+			
+			$('#PayRollTable tbody').on('click', 'td.details-control', function () {
+			        var tr = $(this).closest('tr');
+			        var row = PayRollTable.row( tr );
+			 
+			        if ( row.child.isShown() ) {
+			            // This row is already open - close it
+			            row.child.hide();
+			            tr.removeClass('shown');
+			        }
+			        else {
+			            // Open this row
+			            row.child( format(row.data()) ).show();
+			            tr.addClass('shown');
+			        }
+			} );
 			
 			//modal 이미지 세팅 함수
 			function setImg(row, modal, id){
@@ -338,8 +347,8 @@ img {
 			}
 			
 			//직원 요청 승인 modal
-			$('#ReqTable tbody').on('click', 'td.add_refuse img.addEmp', function() {
-				var row = ReqTable.row($(this).closest('tr'));
+			$('#PayRollTable tbody').on('click', 'td.add_refuse img.addEmp', function() {
+				var row = PayRollTable.row($(this).closest('tr'));
 				var add_modal = $('.bd-add-modal');
 				
 				setImg(row, add_modal, '#add_e_img');
@@ -348,71 +357,351 @@ img {
 				add_modal.find('#add_req_ix').val(row.data().req_ix);
 			});
 			
-			//직원 요청 거절 modal
-			$('#ReqTable tbody').on('click', 'td.add_refuse img.refuseEmp', function() {
-				var row = ReqTable.row($(this).closest('tr'));
-				var ref_modal = $('.bd-refuse-modal');
-				
-				setImg(row, ref_modal, '#ref_e_img');
-				ref_modal.find('#ref_e_name').text(row.data().e_name);
-				ref_modal.find('#ref_r_ix').val(row.data().req_ix);
-			});
-
-			//직원 목록 테이블
-			var RunTable = $('#RunTable').DataTable({
-				"ajax": {
-		        	'url' : '/CheckMon/getRunList.do',
-		       	 	'type' : 'POST'
-			    	},
-				"columns" : [ 
-					{
-						"className" : 'check',
-						"orderable" : false,
-						"data" : null,
-						"defaultContent" : '<input type="checkbox">'
-					},
-					{"data" : "e_group"},
-					{"data" : "imgpath", "orderable" : false},
-					{"data" : "e_name"},
-					{"data" : "e_position"},
-					{"data" : "e_tel"},
-					{"data" : "e_email"},
-					{
-						"className" : 'details',
-						"orderable" : false,
-						"data" : null,
-						"defaultContent" : '<img src="assets/images/empReqRunList/edit.svg" width="40px" height="40px" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg" style="background : white">'
-					},
-				],
-				"order" : [ [ 1, 'asc' ] ]
-			});
-
-			
-			// 직원 수정 modal form
-			$('#RunTable tbody').on('click', 'td.details img', function() {
-				var tr = $(this).closest('tr');
-				var row = RunTable.row(tr);
-				var m_t = $('#modal_table');
-				
-				setImg(row, $('.bd-detail-modal-lg'), '#div_e_img');
-				$('#e_name').text(row.data().e_name);
-				$('#req_ix').val(row.data().req_ix);
-				m_t.find('#emp_ix').text(row.data().emp_ix);
-				m_t.find('#ae_name').val(row.data().e_name);
-				m_t.find('#e_position').val(row.data().e_position);
-				m_t.find('#e_group').val(row.data().e_group);
-				m_t.find('#authorization').val(row.data().authorization);
-				m_t.find('#e_tel').val(row.data().e_tel);
-				m_t.find('#e_email').val(row.data().e_email);
-				m_t.find('#e_birthday').val(row.data().e_birthday);
-				m_t.find('#regit_day').text(row.data().regit_day);
-			});
 		});
 		// END CODE FOR Child rows (show extra / detailed information) DATA TABLE
 	</script>
 
 	<!-- END Java Script for this page -->
+	<script>
+////////////////계산 관련 ///////////////////////////////////////////////////
+	  
+	  function comma_add(box) {
+	      var i; 
+	      var inits = "";
+	      var num_len = box.value.length;
+	    var hoy = box.value;
+	      if(hoy == "" || hoy=="NaN") {
+	      if(hoy=="NaN") {
+	      alert('숫자만 입력가능합니다.');
+	      box.value="";
+	      return false;
+	      }
+	      box.value="";
+	      return false;  
+	      }
+	      for(i=0; i<num_len; i++) {
+	         var sect=box.value.substring(i,i+1);
+	         if (sect != ",") {
+	            inits += sect;
+	         }  
+	      }
+	      box.value = parseInt(inits);
+	      
+	      ing=box.value.length % 3; 
+	      num_len=(box.value.length - ing) / 3;
+	      sect=box.value.substring(0,ing);
+	  
+	      for(i=0; i<num_len; i++) {
+	      if((ing == 0) && (i == 0)) {
+	        sect += box.value.substring(ing+(3*i),ing+3+(3*i));  
+	      } else {
+	          sect += ",";
+	        sect += box.value.substring(ing+(3*i),ing+3+(3*i));  
+	      }
+	      }
+	      box.value = sect; 
+	  
+	      return true; 
+	  }
+	  function comma_del(box) {
+	      var i=0;
+	      var d;
+	      var outstr="";
+	  
+	      for(d = 0; d < box.value.length ; d++) {
+	      var subt= box.value.substring(d,d+1);
+	    if(subt != ",") {
+	    outstr += subt;
+	    }
+	      }     
+	      box.value=outstr;
+	      return true;
+	  }
+	  
+	  function value_check(value){
+	    for(i=0 ; i< value.length ; i++){
+	      if((value.substring(i,i+1)) < "0" || (value.substring(i,i+1) > "9" )){
+	      return false;
+	      }
+	    }
+	    return true;
+	  }
+	  
+	  function drop(v) {
+	    var str= new String(v);
+	    var length = str.length;
+	    str_l=str.substr(0,length-1);
+	    str_r=0;
+	    str=str_l+str_r;
+	    return str;
+	  }
+	  
+	  function drop3(v) {
+	    var str= new String(v);
+	    var length = str.length;
+	    str_l=str.substr(0,length-3);
+	    str=str_l+"000";
+	    return str;
+	  }
+	  
+	  function section(value){
+	    if(value.length > 3){
+	      mock = Math.floor(value.length / 3) ;
+	      namuji = value.length % 3;
+	      won = value.substring(0,namuji);
+	      for(i=0 ; i < mock ; i++){
+	        if(namuji != 0){
+	          won = won + ",";
+	        }   
+	        won = won + value.substring(namuji,namuji +3);
+	        namuji = namuji + 3;
+	      }
+	    }else{
+	      won = value;
+	    }
+	    return won;
+	  }
+	  
+	  function sosu(v,n) {
+	    var str= new String(v);
+	    str= str.split('.');
+	    //소수점이 없으면, 인자를 반환하고 함수실행을 종료한다.
+	    if(str.length!=2) {
+	      return v; 
+	    }
+	    str[1]=str[1].substr(0,n);
+	    str[0]=section(str[0]);
+	    // str= str.join('.');
+	    // str= parseFloat(str,10);
+	    str=str[0]+"."+str[1];
+	    return str;
+	  }
+	  
+	  //연금보험료
+	  function count1(){
+	  
+	    var frm = document.tax_table;
+	    
+	    //, 제거
+	    for (i = 0 ; i < frm.elements.length ; i++) {
+	      if (frm.elements[i].type == "text") {
+	        comma_del(frm.elements[i]);
+	      }
+	    }
+	  
+	    var pay = 0;
+	    var total01=0;
+	    var total02=0;
+	    var income_exempt3 = 0;
+	    
+	    if(frm.pay.value == "") {
+	      alert("급여총액이 입력되지 않았습니다");
+	      frm.pay.focus();
+	      return false;
+	    }
+	  
+	    if( value_check(frm.pay.value) == false ) {
+	      alert("급여총액이 정상적인 숫자체계가 아님니다.\n공백 혹은 콤마(,)와 같은 특수 문자가 포함되었는지 확인하세요");
+	      frm.pay.focus();
+	      return false;
+	    }
+	  
+	    var pay = drop3(frm.pay.value*1);
+	    if (pay < 300000) pay = 300000;
+	    else if (pay >= 4680000) pay = 4680000;
+	  
+	    total01=pay*0.045;
+	    total=pay*0.045;
+	  
+	    total01 = new String(total01);
+	    total = new String(total);
+	  
+	    //소수점 이하는 버린다.
+	    if (total01.indexOf(".") !=-1) {
+	      total01 = total01.split(".")[0];
+	    }
+	    if (total.indexOf(".") !=-1) {
+	      total = total.split(".")[0];
+	    }
+	  
+	    total01 = drop(total01);
+	    total = drop(total);
+	  
+	    frm.pay.value = pay;
+	  
+	    frm.total.value=parseInt(total);
+	    frm.total.value=section(sosu(frm.total.value));
+	    frm.total01.value=parseInt(total01);
+	    frm.total01.value=section(sosu(frm.total01.value));
+	    frm.total02.value=parseInt(total)+parseInt(total01);
+	    frm.total02.value=section(sosu(frm.total02.value));
+	  
+	  
+	    //, 넣기
+	    for (i = 0 ; i < frm.elements.length ; i++) {
+	  
+	      if (frm.elements[i].type == "text") {
+	        comma_add(frm.elements[i]);
+	      }
+	    }
+	  }
+	  
+	  //고용보험료
+	  function count3(){
+	  
+	    var frm = document.tax_table3;
+	    
+	    //, 제거
+	    for (i = 0 ; i < frm.elements.length ; i++) {
+	      if (frm.elements[i].type == "text") {
+	        comma_del(frm.elements[i]);
+	      }
+	    }
+	  
+	    var pay = 0, e3=0, total=0;
+	    var total01=0, total02=0;
+	  
+	    if(frm.pay.value == ""){
+	      alert("급여총액이 입력되지 않았습니다");
+	      frm.pay.focus();
+	      return false;
+	    }
+	  
+	    if( value_check(frm.pay.value) == false ){
+	      alert("급여총액이 정상적인 숫자체계가 아님니다.\n공백 혹은 콤마(,)와 같은 특수 문자가 포함되었는지 확인하세요");
+	      frm.pay.focus();
+	      return false;
+	    }
+	  
+	    var pay = frm.pay.value*1;
+	    if(frm.e3[0].checked==true) { total01=pay*(0.0065+0.0025); }
+	    else if(frm.e3[1].checked==true) { total01=pay*(0.0065+0.0065); }
+	    else if(frm.e3[2].checked==true) { total01=pay*(0.0065+0.0085); }
+	    else {total01=pay*(0.0065+0.0045);}
+	  
+	    total=pay*0.0065;
+	  
+	  
+	    // 반올림 두번하기 위한 변수수정
+	    var total_s1= total.toFixed(1);
+	      frm.total.value=total_s1;
+	      var total_s2 = frm.total.value*1;
+	  
+	    var total01_s1= total01.toFixed(1);
+	      frm.total01.value=total01_s1;
+	      var total01_s2 = frm.total01.value*1;
+	  
+	      frm.total.value=total_s2.toFixed(0);
+	    frm.total01.value=total01_s2.toFixed(0);
+	    frm.total02.value=parseInt(total_s2.toFixed(0)*1 + total01_s2.toFixed(0)*1);
+	  
+	  //  alert("total=" + total);
+	  //  alert("total01=" + total01);
+	  //  alert("total+total01=" + (total+total01) );
+	  
+	  
+	    //, 넣기
+	    for (i = 0 ; i < frm.elements.length ; i++) {
+	      if (frm.elements[i].type == "text") {
+	        comma_add(frm.elements[i]);
+	      }
+	    }
+	  
+	  }
+	  
+	  //국민건강보험료
+	  function count2(){
+	  
+	    var frm = document.tax_table2;
+	    //, 제거
+	    for (i = 0 ; i < frm.elements.length ; i++) {
+	      if (frm.elements[i].type == "text") {
+	        comma_del(frm.elements[i]);
+	      }
+	    }
+	  
+	    var pay = 0, e3=0, total=0;
+	    var total01=0, total02=0;
+	  
+	    if(frm.pay.value == "") {
+	      alert("급여총액이 입력되지 않았습니다");
+	      frm.pay.focus();
+	      return false;
+	    }
+	  
+	    if( value_check(frm.pay.value) == false ){
+	      alert("급여총액이 정상적인 숫자체계가 아님니다.\n공백 혹은 콤마(,)와 같은 특수 문자가 포함되었는지 확인하세요");
+	      frm.pay.focus();
+	      return false;
+	    }
+	  
+	    var pay = frm.pay.value*1;
+	    if(pay < 280000) pay = 280000;
+	      if(pay > 78100000) pay = 78100000;
+	      
+	    total01=pay*(6.46/2*0.01); //2013
+	    total=pay*(6.46/2*0.01); //2013
+	    total01 = new String(total01);
+	    total = new String(total);
+	  
+	    //소수점 이하는 버린다.
+	    if (total01.indexOf(".") !=-1) {
+	      total01 = total01.split(".")[0];
+	    }
+	    if (total.indexOf(".") !=-1) {
+	      total = total.split(".")[0];
+	    }
+	  
+	  
+	    total01 = drop(total01);
+	    total = drop(total);
+	    
+	    frm.total[0].value=parseInt(total);
+	    frm.total01[0].value=parseInt(total01);
+	    frm.total02[0].value=parseInt(total)+parseInt(total01);
+	    
+	  
+	    //장기요양보험료
+	    var jang_insure = parseInt(total)+parseInt(total01);    //건강보험료 총액
+	    total01 = drop((jang_insure * 0.0851)/2); //장기요양보험료율 : 8.51
+	    total = drop((jang_insure * 0.0851)/2); //장기요양보험료율 : 8.51
 
+	    //소수점 이하는 버린다.
+	    if (total01.indexOf(".") !=-1) {
+	      total01 = total01.split(".")[0];
+	    }
+	    if (total.indexOf(".") !=-1) {
+	      total = total.split(".")[0];
+	    }
+	    total01 = drop(total01);
+	    total = drop(total);
+	    
+	    frm.total[1].value=parseInt(total);
+	    frm.total01[1].value=parseInt(total01);
+	    frm.total02[1].value=parseInt(total)+parseInt(total01);
+	    
+	    //건강+장기요양보험료
+	    frm.total[2].value=parseInt(frm.total[0].value)+parseInt(frm.total[1].value);
+	    frm.total01[2].value=parseInt(frm.total01[0].value)+parseInt(frm.total01[1].value);
+	    frm.total02[2].value=parseInt(frm.total02[0].value)+parseInt(frm.total02[1].value);
+	    
+	    //, 넣기
+	    frm.total[0].value=section(sosu(frm.total[0].value));
+	    frm.total01[0].value=section(sosu(frm.total01[0].value));
+	    frm.total02[0].value=section(sosu(frm.total02[0].value));
+	    frm.total[1].value=section(sosu(frm.total[1].value));
+	    frm.total01[1].value=section(sosu(frm.total01[1].value));
+	    frm.total02[1].value=section(sosu(frm.total02[1].value));
+
+	    frm.pay.value = pay;
+	    
+	    for (i = 0 ; i < frm.elements.length ; i++) {
+	      if (frm.elements[i].type == "text") {
+	        comma_add(frm.elements[i]);
+	      }
+	    }
+	  }
+	</script>
 
 </body>
 </html>
