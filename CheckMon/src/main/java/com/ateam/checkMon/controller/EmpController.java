@@ -3,6 +3,8 @@ package com.ateam.checkMon.controller;
 import java.io.*;
 import java.util.List;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +29,23 @@ public class EmpController {
 	
 	//근무자 홈페이지 이동
 	@RequestMapping("/empHome.do")
-	public String goEmpHome() {
-		return "emp/home";
+	public ModelAndView goEmpHome(HttpSession s) {
+		int emp_ix = (Integer)s.getAttribute("emp_ix");
+		//출근하기 <-> 퇴근하기 버튼에 사용하기 위해서 
+		//근무자 출근 중인지 아닌지 여부 확인
+		Integer commute_ix = empdao.checkWorking(emp_ix);
+		
+		boolean working;
+		//출근하지 않은 상태
+		if(commute_ix==null) {
+			working = false;
+		}else { //출근한 상태
+			working = true;
+		}
+		
+		ModelAndView mav = new ModelAndView("emp/home");
+		mav.addObject("working", working);
+		return mav;
 	}
 	
 	//근무자 회원가입 시 개인정보방침 페이지 이동

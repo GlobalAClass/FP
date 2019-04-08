@@ -95,6 +95,19 @@ public class LoginController {
 				session.setAttribute("emp_ix",emp_ix);
 				session.setAttribute("imgpath",imgpath);
 				
+				//출근하기 <-> 퇴근하기 버튼에 사용하기 위해서 
+				//근무자 출근 중인지 아닌지 여부 확인
+				Integer commute_ix = empdao.checkWorking(emp_ix);
+				
+				boolean working;
+				//출근하지 않은 상태
+				if(commute_ix==null) {
+					working = false;
+				}else { //출근한 상태
+					working = true;
+				}
+				mav.addObject("working", working);
+				
 				mav.setViewName("emp/home");
 			}
 		//관리자 로그인 선택	

@@ -189,4 +189,13 @@
 		    set leavetime = to_char(sysdate, 'HH24:MI')
 		    where emp_ix = #{emp_ix} and emp_commute_ix = #{emp_commute_ix}
 	</update>
+	<select id="getWorkLeaveTimeSQL" parameterType="HashMap" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteDTO">
+		select worktime, leavetime from emp_commute_tb
+			where emp_ix = #{emp_ix} and emp_commute_ix = #{emp_commute_ix}
+	</select>
+	<update id="setDaytimeSQL" parameterType="HashMap">
+		update emp_commute_tb 
+		    set daytime = #{daytime}
+		    where emp_ix = #{emp_ix} and emp_commute_ix = #{emp_commute_ix}
+	</update>
 </mapper>

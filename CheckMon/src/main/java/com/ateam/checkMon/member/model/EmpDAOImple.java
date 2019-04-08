@@ -24,7 +24,7 @@ public class EmpDAOImple implements EmpDAO {
 	
 	//근무자 출근하기
 	public int goToWork(int emp_ix) {
-		int res = sqlMap.insert("getOffSQL", emp_ix);
+		int res = sqlMap.insert("goToWorkSQL", emp_ix);
 		return res;
 	}
 	

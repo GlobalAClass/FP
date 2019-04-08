@@ -64,7 +64,10 @@
 						<!-- end row -->
 						
 						<div class="">
-							<button onclick="javascript:location.href='loadingGPS.do';">출근하기</button>
+							<button class="btn btn-primary" onclick="javascript:location.href='loadingGPS.do';">
+								<c:if test="${false eq working}">출근하기</c:if>
+								<c:if test="${true eq working}">퇴근하기</c:if>
+							</button>
 						</div>
 
 						<div class="alert alert-danger" role="alert">

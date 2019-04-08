@@ -107,17 +107,9 @@ public class QRController {
 			int res;
 			
 			Integer commute_ix = dao.checkWorking(emp_ix);
+			System.out.println("comcomcom : "+ commute_ix);
 			//출근중 -> 퇴근 기록
-			if(commute_ix != null) {
-				//퇴근 기록
-				res = dao.getOffWork(emp_ix, commute_ix);
-				//퇴근 정상적으로 기록됨
-				if(res>0) {
-					msg += " 정상 퇴근하셨습니다.";
-				}
-			}
-			//출근 전 -> 출근 기록
-			else { 
+			if(commute_ix == null) {
 				//출근 기록하기
 				res = dao.goToWork(emp_ix);
 				//출근 정상적으로 기록됨
@@ -125,12 +117,21 @@ public class QRController {
 					msg += " 정상 출근하셨습니다.";
 				}
 			}
+			//출근 전 -> 출근 기록
+			else {
+				//퇴근 기록
+				res = dao.getOffWork(emp_ix, commute_ix);
+				//퇴근 정상적으로 기록됨
+				if(res>0) {
+					msg += " 정상 퇴근하셨습니다.";
+				}
+			}
 		}else { //근무지QR과 불일치
 			msg += "QR코드가 일치하지 않습니다.";
 		}
 		
 		ModelAndView mav = new ModelAndView("member/checkCom/msgCom");
-		mav.addObject("QRcheck", QRcheck);
+		mav.addObject("msg", msg);
 		
 		return mav;
 	}
