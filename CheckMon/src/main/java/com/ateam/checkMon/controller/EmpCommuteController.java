@@ -28,7 +28,6 @@ public class EmpCommuteController {
 	public ModelAndView empCommute(HttpSession session) {
 		ModelAndView mav=new ModelAndView();
 		int emp_ix=(Integer)session.getAttribute("emp_ix");
-		
 		List<EmpCommuteAllDTO> list=cdao.getCommuteList(emp_ix);
 		
 		mav.addObject("list",list);
@@ -42,7 +41,6 @@ public class EmpCommuteController {
 			EmpCommuteApplyDTO dto) {
 		ModelAndView mav=new ModelAndView();
 		int emp_ix=(Integer)session.getAttribute("emp_ix");
-		
 		dto.setEmp_ix(emp_ix);
 		int res=cdao.addCommuteApply(dto);
 		String msg=res>0?"근태 변경 신청 완료 하였습니다.":"근태 변경 신청에 실패 하였습니다.";
@@ -63,8 +61,7 @@ public class EmpCommuteController {
 		int listsize = 5;
 		int pagesize = 5;
 		
-		
-		List<EmpCommuteAllDTO> list=cdao.getCommuteAllList(listsize, cp, emp_ix);
+		List<EmpCommuteAllDTO> list=cdao.getCommuteApplyList(listsize, cp, emp_ix);
 		String paging = com.ateam.checkMon.page.PageModule.getMakePage("empCommuteApplyList.do", totalcnt, listsize, pagesize, cp);
 		
 		mav.addObject("list",list);

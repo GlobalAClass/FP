@@ -88,7 +88,7 @@
 <body class="adminbody">
 
 	<div id="main">
-	<%@include file="/WEB-INF/views/emp/header.jsp" %>
+	<%@include file="/WEB-INF/views/man/header.jsp" %>
 	
 		<div class="content-page">
 		
@@ -96,10 +96,7 @@
 			<div class="content">
 				<div class="container">
 					<div class="card col-12">
-						<h1 class="card-header" align="center">월별 근태 관리</h1>
-						<div align="right" style="display:inline-block;margin:20px;">
-							<span style="background:#5858FA;color:#ffffff;">정상 출근</span>&nbsp;&nbsp;<span style="background:#FF4000;color:#ffffff;">지각 / 결근</span>
-						</div>
+						<h1 class="card-header" align="center">출퇴근 기록관리</h1>
 						<div>
 							<div id="calendar"></div>
 							<div class="clearfix"></div>
@@ -115,40 +112,28 @@
          <div class="modal-dialog modal-lg">
             <div class="modal-content">
                <div class="modal-header">
-                  <h2 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">근태 변경 신청서</h2>
+                  <h2 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">출퇴근기록 변경하기</h2>
                   <button type="button" class="close" data-dismiss="modal"
                      aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                   </button>
                </div>
                <div class="modal-body">
-                  <form class="form-inline" name="commuteapply" onsubmit="return checked()" action="javascript:updateCommute()">
-                  	<input type="hidden" name="progress" value="승인대기">
+                  <form class="form-inline" name="modcommute" onsubmit="return checked()" action="javascript:updateCommute()">
                   	<input type="hidden" name="emp_commute_ix">
-                  	<input type="hidden" name="c_worktime">
-                  	<input type="hidden" name="c_leavetime">
+                  	<input type="hidden" name="worktime">
+                  	<input type="hidden" name="leavetime">
                   	<table class="table">
                   		<tr>
-                  			<th>변경 요구 날짜</th>
+                  			<th>날짜</th>
                   			<td><div id="loc_workday"></div></td>
                   		</tr>
                   		<tr>
-                  			<th>현재 근태 시간</th>
-                  			<td>
-                  			<div class="form-group">
-							&nbsp;
-							<input type="text" class="form-control" name="loc_workhours" maxlength="2" size="5" readonly="readonly">
-							&nbsp;:&nbsp;
-							<input type="text" class="form-control" name="loc_workminutes" maxlength="2" size="5" readonly="readonly">
-							&nbsp;~&nbsp;
-							<input type="text" class="form-control" name="loc_leavehours" maxlength="2" size="5" readonly="readonly">
-							&nbsp;:&nbsp;
-							<input type="text" class="form-control" name="loc_leaveminutes" maxlength="2" size="5" readonly="readonly">
-                  			</div>
-                  			</td>
+                  			<th>근무자</th>
+                  			<td><div id="loc_ename"></div></td>
                   		</tr>
                   		<tr>
-                  			<th>변경 요청 시간</th>
+                  			<th>출근시간</th>
                   			<td>
                   			<div class="form-group">
                   			<select class="form-control" id="start_m" required="required">
@@ -159,7 +144,13 @@
 							<input type="text" class="form-control" name="cha_workhours" maxlength="2" size="5" required="required">
 							&nbsp;:&nbsp;
 							<input type="text" class="form-control" name="cha_workminutes" maxlength="2" size="5" required="required">
-							&nbsp;~&nbsp;
+                  			</div>
+                  			</td>
+                  		</tr>
+                  		<tr>
+                  			<th>퇴근시간</th>
+                  			<td>
+                  			<div class="form-group">
 							<select class="form-control" id="end_m" required="required">
 								<option value="AM">AM</option>
 								<option value="PM">PM</option>
@@ -168,31 +159,12 @@
 							<input type="text" class="form-control" name="cha_leavehours" maxlength="2" size="5" required="required">
 							&nbsp;:&nbsp;
 							<input type="text" class="form-control" name="cha_leaveminutes" maxlength="2" size="5" required="required">
-                  			</div>
-                  			</td>
-                  		</tr>
-                  		<tr>
-                  			<th>제목</th>
-                  			<td>
-                  			<div class="form-group">
-                  			<select class="form-control" name="title" required="required">
-								<option value="지각->정상출근 요청합니다.">지각->정상출근 요청합니다.</option>
-								<option value="결근->정상출근 요청합니다.">결근->정상출근 요청합니다.</option>
-							</select>
-                  			</div>
-                  			</td>
-                  		</tr>
-                  		<tr>
-                  			<th>사유</th>
-                  			<td>
-                  			<div class="form-group">
-                  			<textarea class="form-control" name="reason" cols="60" rows="5" required="required"></textarea>
-                  			</div>
+							</div>
                   			</td>
                   		</tr>
                   		<tr>
                   			<td colspan="3" align="center">
-                  			<input type="submit" class="btn btn-primary" value="제출하기">
+                  			<input type="submit" class="btn btn-primary" value="변경 사항 저장">
                   			</td>
                   		</tr>
                   	</table>
@@ -262,24 +234,12 @@ $('#calendar').fullCalendar(
 			var loc_workday = document.getElementById('loc_workday');
 			var workday = event.start;
 			
+			//근무 변경 근무자이름 세팅
+			var loc_ename = document.getElementById('loc_ename');
+			loc_ename.innerHTML = event.title;
+			
 			//근무 변경 날짜 세팅
 			loc_workday.innerHTML = workday.format('YYYY')+'년'+workday.format('MM')+'월'+workday.format('DD')+'일';
-			
-			var worktime = event.title;
-			//출근 시간 = 시
-			var workhours=worktime.substring(0,2);
-			//출근 시간 = 분
-			var workminutes=worktime.substring(3,5);
-			//퇴근 시간 = 시
-			var leavehours=worktime.substring(8,10);
-			//퇴근 시간 = 분
-			var leaveminutes=worktime.substring(11,13);
-			
-			//기존 출/퇴근 시간 값 세팅
-			commuteapply.loc_workhours.value = workhours;
-			commuteapply.loc_workminutes.value = workminutes;
-			commuteapply.loc_leavehours.value = leavehours;
-			commuteapply.loc_leaveminutes.value = leaveminutes;
 			
 			//근태 변경 인덱스 세팅
 			document.all.emp_commute_ix.value = event.id;
@@ -312,7 +272,7 @@ $(".fc-today-button").click( function() {
 
 //현재 일,월에 존재하는 근무자 출/퇴근 값 모두 가져오는 ajax
 function renderCalcEvent(){
-	sendRequest('empCommute.do',null,resultEvent,'GET');
+	sendRequest('commuteAllList.do',null,resultEvent,'GET');
 }
 
 function resultEvent(){
@@ -337,10 +297,10 @@ function resultEvent(){
 				
 				var event ={
 				id : list.emp_commute_ix,
-				title : list.worktime+' - '+list.leavetime,
+				title : list.e_name,
 				start : date,
 				backgroundColor : '#5858FA', //#FF4000 지각/결근
-				description : '클릭시 근태 변경 신청 가능',
+				description :list.worktime+' - '+list.leavetime,
 				allDay: true
 				
 				};$('#calendar').fullCalendar('renderEvent',event);
@@ -352,17 +312,11 @@ function resultEvent(){
 }
 
 function checked(){
-	if(commuteapply.cha_workhours.value==''
-		||commuteapply.cha_workminutes.value==''
-		||commuteapply.cha_leavehours.value==''
-		||commuteapply.cha_leaveminutes.value==''){
+	if(modcommute.cha_workhours.value==''
+		||modcommute.cha_workminutes.value==''
+		||modcommute.cha_leavehours.value==''
+		||modcommute.cha_leaveminutes.value==''){
 		alert('변경 근무 시간을 모두 입력해주세요.');
-		return false;
-	}else if(document.all.title.value==''){
-		alert('제목을 선택 해주세요');
-		return false;
-	}else if(document.all.reason.value==''){
-		alert('사유를 작성해주세요');
 		return false;
 	}else{
 		setWorkTime();
@@ -375,8 +329,8 @@ function setWorkTime(){
 	var m1 = document.getElementById('start_m');
 	var m2 = document.getElementById('end_m');
 	
-	var cha_workhours = commuteapply.cha_workhours.value;
-	var cha_leavehours = commuteapply.cha_leavehours.value;
+	var cha_workhours = modcommute.cha_workhours.value;
+	var cha_leavehours = modcommute.cha_leavehours.value;
 	
 	if (m1.options[m1.selectedIndex].value == 'PM') {
 		cha_workhours = parseInt(cha_workhours) + 12;
@@ -385,23 +339,17 @@ function setWorkTime(){
 		cha_leavehours = parseInt(cha_leavehours) + 12;
 	}
 	
-	if(m1.options[m1.selectedIndex].value == 'AM'){
-		commuteapply.c_worktime.value = "0"+cha_workhours+':'+commuteapply.cha_workminutes.value;	
-	}
-	
-	commuteapply.c_leavetime.value = cha_leavehours+':'+commuteapply.cha_leaveminutes.value;
+	modcommute.worktime.value = cha_workhours+':'+modcommute.cha_workminutes.value;
+	modcommute.leavetime.value = cha_leavehours+':'+modcommute.cha_leaveminutes.value;
 }
 
 
 //ajax 이용하여 근무 수정
 function updateCommute(){
-	var params = 'emp_commute_ix='+commuteapply.emp_commute_ix.value
-				+'&c_worktime='+commuteapply.c_worktime.value
-				+'&c_leavetime='+commuteapply.c_leavetime.value
-				+'&title='+commuteapply.title.value
-				+'&reason='+commuteapply.reason.value
-				+'&progress='+commuteapply.progress.value
-	sendRequest('addCommuteApply.do',params,resultUp,'POST');
+	var params = 'emp_commute_ix='+modcommute.emp_commute_ix.value
+				+'&worktime='+modcommute.worktime.value
+				+'&leavetime='+modcommute.leavetime.value;
+	sendRequest('modCommuteList.do',params,resultUp,'POST');
 }
 
 //근무 수정 후
@@ -410,8 +358,14 @@ function resultUp(){
 		if (XHR.status == 200) {
 			var data = eval('(' + XHR.responseText + ')');
 			var msg = data.msg;
-			alert(msg);
-			location.href='empCommuteForm.do';
+
+			if (msg != '') {
+				alert(msg);
+			}else{
+				alert(msg);
+			}
+	
+			location.href='commuteAllListForm.do';
 			
 		}
 	}

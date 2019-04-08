@@ -67,7 +67,7 @@ table th{
                               <td colspan="4">근무 변경 목록이 존재하지 않습니다.</td>
                            </tr>
                         </c:if>
-                        <c:forEach var="list" items="${list}" varStatus="status">
+                        <c:forEach var="list" items="${list}">
                            <tr align="center">
                               <td>${list.workday}</td>
                               <td>${list.title}</td>

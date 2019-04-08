@@ -31,13 +31,13 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 	}
 	
 	//근무자 근태 변경 목록 확인하기
-	public List<EmpCommuteAllDTO> getCommuteAllList(int listsize, int cp,int emp_ix) {
+	public List<EmpCommuteAllDTO> getCommuteApplyList(int listsize, int cp,int emp_ix) {
 		HashMap<String,Integer> map=new HashMap<String, Integer>();
 		map.put("listsize",listsize);
 		map.put("cp",cp);
 		map.put("emp_ix",emp_ix);
 		
-		List<EmpCommuteAllDTO> list=sqlMap.selectList("getCommuteAllListSQL",map);
+		List<EmpCommuteAllDTO> list=sqlMap.selectList("getCommuteApplyListSQL",map);
 		return list;
 	}
 	
@@ -46,13 +46,13 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 	
 	
 	
-	//근무자의 당일 근태 현황 페이징 위한 개수 확인하기
+	//관리자 = 근무자의 당일 근태 현황 페이징 위한 개수 확인하기
 	public int getDayCommuteListSize() {
 		int res=sqlMap.selectOne("getDayCommuteListSizeSQL");
 		return res;
 	}
 	
-	//관리자가 근무자의 당일 근태 현황 보기
+	//관리자 = 근무자의 당일 근태 현황 보기
 	public List<EmpCommuteAllDTO> getDayCommuteList(int listsize, int cp, int man_ix) {
 		HashMap<String,Integer> map=new HashMap<String, Integer>();
 		map.put("listsize",listsize);
@@ -63,12 +63,24 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 		return list;
 	}
 	
-	//모든 근무자의 근태 변경 목록 페에징 위한 개수 확인
-	public int CommuteApplyAllListSize() {
-		int res=sqlMap.selectOne("CommuteApplyAllListSizeSQL");
+	//관리자 = 출퇴근 기록 관리 페이지
+	public List<EmpCommuteAllDTO> getCommuteAllList(int man_ix) {
+		List<EmpCommuteAllDTO> list=sqlMap.selectList("getCommuteAllListSQL",man_ix);
+		return list;
+	}
+	
+	//관리자 = 출퇴근 기록 관리 출퇴근 정보 수정
+	public int modCommuteList(EmpCommuteDTO dto) {
+		int res=sqlMap.update("modCommuteListSQL",dto);
 		return res;
 	}
-	//관리자 모든 근무자의 근태 변경 목록 확인하기
+	
+	//관리자 = 모든 근무자의 근태 변경 목록 페에징 위한 개수 확인
+	public int CommuteApplyAllListSize(int man_ix) {
+		int res=sqlMap.selectOne("CommuteApplyAllListSizeSQL",man_ix);
+		return res;
+	}
+	//관리자 =  모든 근무자의 근태 변경 목록 확인하기
 	public List<EmpCommuteAllDTO> getCommuteApplyAllList(int listsize, int cp,int man_ix) {
 		HashMap<String,Integer> map=new HashMap<String, Integer>();
 		map.put("listsize",listsize);
@@ -79,15 +91,21 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 		return list;
 	}
 	
-	//관리자 근무자에게 반려 사유 보내기
+	//관리자 = 근무자에게 반려 사유 보내기
 	public int addCommuteApplyReturn(EmpCommuteApplyDTO dto) {
 		int res=sqlMap.update("addCommuteApplyReturnSQL",dto);
 		return res;
 	}
 	
-	//관리자 처리상태 승인 /반려 DB값 저장
+	//관리자 = 처리상태 승인 /반려 DB값 저장
 	public int addCommuteApplyProgress(EmpCommuteApplyDTO dto) {
 		int res=sqlMap.update("addCommuteApplyProgressSQL",dto);
+		return res;
+	}
+	
+	//관리자 = 처리상태 승인시 시간 변경
+	public int setCommuteWorkTime(EmpCommuteDTO dto) {
+		int res=sqlMap.update("setCommuteWorkTimeSQL",dto);
 		return res;
 	}
 	

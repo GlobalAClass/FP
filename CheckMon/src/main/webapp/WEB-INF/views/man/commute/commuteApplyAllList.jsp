@@ -90,13 +90,19 @@ table th{
 							  	</c:otherwise>
 							  </c:choose>
                    			  <td width="140">
+                   			  <input type="hidden" id="emp_change_ixs" value="${dto.emp_change_ix}">
 								<c:url var="successUrl" value="commuteApplyReturn.do">
+									<c:param name="emp_commute_ix">${dto.emp_commute_ix}</c:param>
                    			  		<c:param name="emp_change_ix">${dto.emp_change_ix}</c:param>
                    			  		<c:param name="c_return">${dto.c_return}</c:param>
+                   			  		<c:param name="worktime">${dto.c_worktime}</c:param>
+                   			  		<c:param name="leavetime">${dto.c_leavetime}</c:param>
                    			  	</c:url>
-                   			  	<a href="${successUrl}"><input type="button" name="success" class="btn btn-success" value="승인"></a>
-                   			  	<input type="button" name="b_fail" data-toggle="modal" 
+                   			  	<c:if test="${dto.progress=='승인대기'}">
+                   			  		<a href="${successUrl}"><input type="button" id="success" name="success" class="btn btn-success" value="승인"></a>
+                   			  	<input type="button" id="b_fail" name="b_fail" data-toggle="modal" 
                    			  	data-emp_change_ix_s="${dto.emp_change_ix}" data-target="#myModal" class="btn btn-danger" value="반려">
+                   			  	</c:if>
                    			  </td>
                    		   </tr>
                    		</c:forEach>

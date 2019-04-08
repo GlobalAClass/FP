@@ -63,7 +63,7 @@ table th{
                         </thead>
                         <tbody>
                         <c:if test="${empty list}">
-                        	<td colspan="5">검색된 기록이 없습니다.</td>
+                        	<td colspan="5" align="center">검색된 기록이 없습니다.</td>
                         </c:if>
                         <c:forEach var="dto" items="${list}">
                            <tr align="center">
