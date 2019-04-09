@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
 	<mappers>
 		<mapper resource="com/ateam/checkMon/sqlMap/memberSQL.xml"/>
 		<mapper resource="com/ateam/checkMon/sqlMap/man/hourTemplateSQL.xml"/>
