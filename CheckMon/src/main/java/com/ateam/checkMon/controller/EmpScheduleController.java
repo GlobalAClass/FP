@@ -70,5 +70,51 @@ public class EmpScheduleController {
 		
 		return mav;
 	}
+	
+	/*---------------------------------------------------------------------*/
+	//휴가 신청 목록 리스트 페이지에서 사용되는 메소드
+	//휴가 신청 목록 가져오는 메소드
+	@RequestMapping(value="/vacationListEmp.do",method=RequestMethod.GET)
+	public ModelAndView getScheduleAll(
+			@RequestParam(value="cp",defaultValue="1")int cp,
+				HttpSession session
+			) {
+		
+		int emp_ix = (Integer)session.getAttribute("emp_ix");
+		
+		int totalcnt = vdao.vacationListEmpSize(emp_ix);
+		int listsize = 5;
+		int pagesize = 5;
+		
+		List<HashMap<String,Object>> list = vdao.getVacationListEmp(listsize, cp, emp_ix);
+		
+		String paging = com.ateam.checkMon.page.PageModule.getMakePage("vacationListEmp.do", totalcnt, listsize, pagesize, cp);
+				
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list",list);
+		mav.addObject("paging",paging);
+		mav.setViewName("emp/schedule/vacationList");
+		
+		return mav;
+	}
+	
+	//휴가 날짜에 대리 근무 해준 근무자 이름, 전화번호 가져오는 메소드
+	@RequestMapping(value="/getSubstituteEmp.do",method=RequestMethod.GET)
+	public ModelAndView getSubstituteEmp(
+			@RequestParam(value="emp_ix")int emp_ix
+			) {
+		
+		HashMap<String, String> map = vdao.getSubstituteEmp(emp_ix);
+		
+		String name = map.get("E_NAME");
+		String tel = map.get("E_TEL");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("name",name);
+		mav.addObject("tel",tel);
+		mav.setViewName("cmjson");
+		
+		return mav;
+	}
 
 }

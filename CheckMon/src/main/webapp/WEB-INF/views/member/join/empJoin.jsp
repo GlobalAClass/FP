@@ -158,6 +158,7 @@ function checked(){
 		empJoin.etel.focus();
 		return false;
 	}else{
+		empJoin.e_color.value = "#"+Math.round(Math.random()*0xffffff).toString(16);
 		return true;
 	}
 }
@@ -324,6 +325,7 @@ function checked(){
 	</tr>
 	<tr>
 		<td colspan="3" align="center">
+			<input type="hidden" id="e_color" name="e_color">
 			<input type="submit" class="btn btn-success" id="submit" value="가입하기">
 			<a href="index.do"><input type="button" class="btn btn-secondary" value="취소"></a>
 		</td>

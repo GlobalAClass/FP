@@ -118,19 +118,19 @@ table th{
 								<input type="hidden" name="hour_start_time">
 								<input type="hidden" name="hour_end_time">
 								<div class="form-group">
-									<input type="text" class="form-control" name="start_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="start_min" maxlength="2" size="5">
-									&nbsp;
 									<select class="form-control" id="start_m">
 										<option value="AM">AM</option>
 										<option value="PM">PM</option>
 									</select>
-									&nbsp;~&nbsp;
-									<input type="text" class="form-control" name="end_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="end_min" maxlength="2" size="5">
 									&nbsp;
+									<input type="text" class="form-control" name="start_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="start_min" maxlength="2" size="5">
+									&nbsp;~&nbsp;
 									<select class="form-control" id="end_m">
 										<option value="AM">AM</option>
 										<option value="PM">PM</option>
 									</select>
+									&nbsp;
+									<input type="text" class="form-control" name="end_hour" maxlength="2" size="5">&nbsp;:&nbsp;<input type="text" class="form-control" name="end_min" maxlength="2" size="5">
 								</div>
 								</td>
 							</tr>
@@ -340,7 +340,7 @@ table th{
 						
 						var opt = document.createElement('option');
 						opt.text = list.e_position;
-						opt.value = list.position_ix;
+						opt.value = list.e_position;
 						
 						loc_position .options.add(opt);
 					}

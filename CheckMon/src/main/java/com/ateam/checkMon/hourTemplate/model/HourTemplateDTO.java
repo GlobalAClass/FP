@@ -4,6 +4,9 @@ public class HourTemplateDTO {
 
 	// 근무시간 템플릿 인덱스 기본키 사용
     private Integer hour_template_ix;
+    
+    // 근무 시간 템플릿 만든 관리자 인덱스
+    private Integer man_ix;
 
     // 탬플릿명 근무시간 템플릿 명
     private String template_name;
@@ -21,10 +24,11 @@ public class HourTemplateDTO {
 		super();
 	}
 
-	public HourTemplateDTO(Integer hour_template_ix, String template_name, String hour_start_time, String hour_end_time,
-			String template_position) {
+	public HourTemplateDTO(Integer hour_template_ix, Integer man_ix, String template_name, String hour_start_time,
+			String hour_end_time, String template_position) {
 		super();
 		this.hour_template_ix = hour_template_ix;
+		this.man_ix = man_ix;
 		this.template_name = template_name;
 		this.hour_start_time = hour_start_time;
 		this.hour_end_time = hour_end_time;
@@ -37,6 +41,14 @@ public class HourTemplateDTO {
 
 	public void setHour_template_ix(Integer hour_template_ix) {
 		this.hour_template_ix = hour_template_ix;
+	}
+
+	public Integer getMan_ix() {
+		return man_ix;
+	}
+
+	public void setMan_ix(Integer man_ix) {
+		this.man_ix = man_ix;
 	}
 
 	public String getTemplate_name() {
@@ -70,7 +82,9 @@ public class HourTemplateDTO {
 	public void setTemplate_position(String template_position) {
 		this.template_position = template_position;
 	}
-    
-    
+	
+	
+
+	
     
 }

@@ -82,7 +82,7 @@
                         <a href="#"><i class="fa fa-calendar"></i> <span> 스케줄 </span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled">
 								<li><a href="scheduleList.do">월별 스케줄 관리</a></li>
-								<li><a href="vacationList.do">휴가 신청 목록</a></li>
+								<li><a href="vacationListEmp.do">휴가 신청 목록</a></li>
 								<li><a href="substituteList.do">대리 근무 승인 목록</a></li>
 							</ul>
                     </li>

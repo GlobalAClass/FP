@@ -97,7 +97,7 @@
 							<ul class="list-unstyled">
 								<li><a href="hourTemplateList.do">근무 시간 템플릿 관리</a></li>
 								<li><a href="scheduleMonthList.do">스케줄 관리</a></li>
-								<li><a href="#">휴가 요청 관리</a></li>
+								<li><a href="vacationList.do">휴가 요청 관리</a></li>
 							</ul>
                     </li>
 										

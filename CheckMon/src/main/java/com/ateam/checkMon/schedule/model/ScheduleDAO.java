@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ScheduleDAO {
 	
-	public List<HashMap<String, Object>> getSchedule(String year,String month);
+	public List<HashMap<String, Object>> getSchedule(String year,String month,int man_ix);
 	public int modSchedule(int schedule_ix, String s_start_time, String s_end_time);
 	public int delSchedule(int schedule_ix);
 	public int addSchedule(ScheduleDTO dto);

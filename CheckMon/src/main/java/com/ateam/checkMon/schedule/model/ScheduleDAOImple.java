@@ -14,10 +14,11 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		this.sqlMap = sqlMap;
 	}
 
-	public List<HashMap<String, Object>> getSchedule(String year, String month) {
-		HashMap<String,String> map = new HashMap<String, String>();
+	public List<HashMap<String, Object>> getSchedule(String year, String month, int man_ix) {
+		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("year", year);
 		map.put("month", month);
+		map.put("man_ix",man_ix);
 		
 		List<HashMap<String, Object>> list = sqlMap.selectList("getScheduleAllSQL",map);
 		return list;

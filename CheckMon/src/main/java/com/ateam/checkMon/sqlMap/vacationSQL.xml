@@ -18,4 +18,43 @@
 		null
 	)
 	</insert>
+	<select id="vacationListSizeEmpSQL" parameterType="int" resultType="int">
+	select count(vacation_ix) as total
+	from vacation_tb v, schedule_tb s
+	where v.schedule_ix=s.schedule_ix
+	and s.emp_ix=#{emp_ix}
+	</select>
+	<select id="getVacationListEmpSQL" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	select * from
+	(select rownum as rnum, a.* from 
+	(select s.s_year,s.s_month,s.s_day,s.s_start_time,s.s_end_Time,v.*
+	from vacation_tb v, schedule_tb s where v.schedule_ix=s.schedule_ix and s.emp_ix=#{emp_ix}
+	order by v.v_apply_date desc)a)b
+	where rnum>=((#{cp}-1)*#{listsize}+1) and
+	rnum<=#{cp}*#{listsize}]]>
+	</select>
+	<select id="getSubstituteEmpSQL" resultType="hashmap">
+	select e_name,e_tel
+	from emp_tb
+	where emp_ix=#{emp_ix}
+	</select>
+	
+	<select id="vacationListSizeSQL" parameterType="int" resultType="int">
+	select count(vacation_ix) as total
+	from vacation_tb v, schedule_tb s
+	where v.schedule_ix=s.schedule_ix
+	and s.man_ix=#{man_ix}
+	</select>
+	<select id="getVacationListSQL" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	select * from
+	(select rownum as rnum, a.* from 
+	(select e.e_name, e.e_position, s.*, to_char(v.v_apply_date,'YYYY-MM-DD') as V_APPLY_DATE, v.v_reason_main, v.v_reason_detail
+	from emp_tb e, schedule_tb s, vacation_tb v 
+	where e.emp_ix=s.emp_ix and s.schedule_ix=v.schedule_ix and s.man_ix=#{man_ix}
+	order by v.v_apply_date desc)a)b 
+	where rnum>=((#{cp}-1)*#{listsize}+1) and
+	rnum<=#{cp}*#{listsize}]]>
+	</select>
 </mapper>

@@ -4,7 +4,10 @@ package com.ateam.checkMon.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +18,7 @@ import com.ateam.checkMon.hourTemplate.model.HourTemplateDAO;
 import com.ateam.checkMon.hourTemplate.model.HourTemplateDTO;
 import com.ateam.checkMon.schedule.model.ScheduleDAO;
 import com.ateam.checkMon.schedule.model.ScheduleDTO;
+import com.ateam.checkMon.vacation.model.VacationDAO;
 
 @Controller
 public class ManScheduleController {
@@ -25,19 +29,25 @@ public class ManScheduleController {
 	@Autowired
 	private ScheduleDAO sdao;
 	
+	@Autowired
+	private VacationDAO vdao;
+	
 	/**근무시간 템플릿 관리 관련*/
 	
 	//근무시간 템플릿 관리 페이지 이동
 	@RequestMapping(value="/hourTemplateList.do")
 	public ModelAndView goHourTemplateList(
-			@RequestParam(value="cp",defaultValue="1")int cp
+			@RequestParam(value="cp",defaultValue="1")int cp,
+			HttpSession session
 			) {
 		
 		int totalcnt = hdao.templateListSize();
 		int listsize = 5;
 		int pagesize = 5;
 		
-		List<HourTemplateDTO> list = hdao.getTemplateList(listsize, cp);
+		int man_ix = (Integer)session.getAttribute("man_ix");
+		
+		List<HourTemplateDTO> list = hdao.getTemplateList(listsize, cp, man_ix);
 		
 		String paging = com.ateam.checkMon.page.PageModule.getMakePage("hourTemplateList.do", totalcnt, listsize, pagesize, cp);
 		
@@ -52,9 +62,12 @@ public class ManScheduleController {
 	
 	//근무 시간 템플릿 리스트 모두 가져오기
 	@RequestMapping(value="/hourTemplateList.do",method=RequestMethod.POST)
-	public ModelAndView getHourTemplateList() {
+	public ModelAndView getHourTemplateList(
+			HttpSession session
+			) {
+		int man_ix = (Integer)session.getAttribute("man_ix");
 		
-		List<HourTemplateDTO> list = hdao.getTemplateList();
+		List<HourTemplateDTO> list = hdao.getTemplateList(man_ix);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list",list);
@@ -65,7 +78,12 @@ public class ManScheduleController {
 	
 	//근무 시간 템플릿 추가하기
 	@RequestMapping(value="hourTemplateAdd.do",method=RequestMethod.POST)
-	public ModelAndView addTemplate(HourTemplateDTO hdto) {
+	public ModelAndView addTemplate(HourTemplateDTO hdto, HttpSession session) {
+		
+		int man_ix = (Integer)session.getAttribute("man_ix");
+		
+		hdto.setMan_ix(man_ix);
+		
 		int res = hdao.addTemplate(hdto);
 		
 		String msg = res>0?"":"템플릿 추가에 실패하였습니다.";
@@ -106,10 +124,13 @@ public class ManScheduleController {
 	@RequestMapping(value="/getScheduleAll.do",method=RequestMethod.GET)
 	public ModelAndView getScheduleAll(
 				@RequestParam(value="year")String year,
-				@RequestParam(value="month")String month
+				@RequestParam(value="month")String month,
+				HttpSession session
 			) {
 		
-		List<HashMap<String, Object>> list = sdao.getSchedule(year,month);
+		int man_ix = (Integer)session.getAttribute("man_ix");
+		
+		List<HashMap<String, Object>> list = sdao.getSchedule(year,month,man_ix);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list",list);
@@ -160,7 +181,8 @@ public class ManScheduleController {
 	public ModelAndView addSchedule(
 				@RequestParam(value="selectTemp")String selectTemp,
 				@RequestParam(value="selectEmp")String selectEmp,
-				@RequestParam(value="selectDate")String selectDate
+				@RequestParam(value="selectDate")String selectDate,
+				HttpSession session
 			) {
 		
 		String temp[] = selectTemp.split(",");
@@ -169,6 +191,8 @@ public class ManScheduleController {
 		
 		String s_start_time=temp[0];
 		String s_end_time=temp[1];
+		
+		int man_ix = (Integer)session.getAttribute("man_ix");
 		
 		int res=0;
 		
@@ -179,7 +203,7 @@ public class ManScheduleController {
 				String s_month = date[j].substring(5, 7);
 				String s_day = date[j].substring(8, 10);
 				
-				ScheduleDTO dto = new ScheduleDTO(emp_ix, s_year, s_month, s_day, s_start_time, s_end_time);
+				ScheduleDTO dto = new ScheduleDTO(emp_ix, man_ix, s_year, s_month, s_day, s_start_time, s_end_time);
 				res = sdao.addSchedule(dto);
 			}
 		}
@@ -197,5 +221,31 @@ public class ManScheduleController {
 	/**휴가 요청 관련*/
 	
 	//휴가 요청 페이지 이동
+	@RequestMapping(value="/vacationList.do")
+	public ModelAndView getVacationList(
+			@RequestParam(value="cp",defaultValue="1")int cp,
+			HttpSession session
+			) {
+		
+		
+		int listsize = 5;
+		int pagesize = 5;
+		
+		int man_ix = (Integer)session.getAttribute("man_ix");
+		
+		int totalcnt = vdao.vacationListSize(man_ix);
+		
+		List<HashMap<String, Object>> list = vdao.getVacationList(listsize, cp, man_ix);
+		
+		String paging = com.ateam.checkMon.page.PageModule.getMakePage("vacationList.do", totalcnt, listsize, pagesize, cp);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("list",list);
+		mav.addObject("paging",paging);
+		mav.setViewName("man/schedule/vacationList");
+		
+		return mav;
+	}
 	
 }

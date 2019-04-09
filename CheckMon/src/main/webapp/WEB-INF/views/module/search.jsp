@@ -31,7 +31,9 @@
 				if (evt.keyCode == 13) return false; 
 			}); 
 		});
+
 		
+var params = 'substitute='+;
 		$(document).ready(function() {	
 			var SearchTable = $('#SearchTable').DataTable({
 				"info": false,
@@ -40,7 +42,8 @@
 				"dom": '<"top"f>rt<"bottom"p><"clear">',
 			    "ajax": {
 		        	'url' : '/CheckMon/getRunList.do',
-		       	 	'type' : 'POST'
+		       	 	'type' : 'POST',
+		       	 	'data' : params
 			    	},
 				"columns" : [
 					{

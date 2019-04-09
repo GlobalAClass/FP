@@ -7,13 +7,14 @@
 	<![CDATA[
 	select * from
 	(select rownum as rnum, a.* from 
-	(select * from hour_template_tb order by hour_template_ix desc)a)b 
+	(select * from hour_template_tb where man_ix=#{man_ix} order by hour_template_ix desc)a)b 
 	where rnum>=((#{cp}-1)*#{listsize}+1) and
 	rnum<=#{cp}*#{listsize}]]>
 	</select>
 	<select id="getTempListSQL" resultType="com.ateam.checkMon.hourTemplate.model.HourTemplateDTO">
 	select *
 	from hour_template_tb
+	where man_ix=#{man_ix}
 	order by hour_template_ix desc
 	</select>
 	<select id="templateListSizeSQL" resultType="Integer">
@@ -25,6 +26,7 @@
 		hour_template_tb
 	values(
 		hour_template_tb_seq.nextval,
+		#{man_ix},
 		#{template_name},
 		#{hour_start_time},
 		#{hour_end_time},

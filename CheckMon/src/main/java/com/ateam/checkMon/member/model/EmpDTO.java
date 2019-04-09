@@ -34,13 +34,16 @@ public class EmpDTO {
 	
 	//근무자 랜덤 비밀번호
 	private String e_rpwd;
+	
+	//근무자 랜덤 색상
+	private String e_color;
 
 	public EmpDTO() {
 		super();
 	}
 
 	public EmpDTO(int emp_ix, int man_ix, String e_email, String e_pwd, String e_name, String e_tel, String e_birthday,
-			String e_position, String e_group, String authorization, String e_rpwd) {
+			String e_position, String e_group, String authorization, String e_rpwd, String e_color) {
 		super();
 		this.emp_ix = emp_ix;
 		this.man_ix = man_ix;
@@ -53,6 +56,7 @@ public class EmpDTO {
 		this.e_group = e_group;
 		this.authorization = authorization;
 		this.e_rpwd = e_rpwd;
+		this.e_color = e_color;
 	}
 
 	public int getEmp_ix() {
@@ -142,5 +146,15 @@ public class EmpDTO {
 	public void setE_rpwd(String e_rpwd) {
 		this.e_rpwd = e_rpwd;
 	}
+
+	public String getE_color() {
+		return e_color;
+	}
+
+	public void setE_color(String e_color) {
+		this.e_color = e_color;
+	}
+	
+	
 	
 }

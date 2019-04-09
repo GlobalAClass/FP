@@ -338,13 +338,12 @@ function resultEvent(){
 				var list=eventList[i];
 				
 				var date = list.S_YEAR+'-'+list.S_MONTH+'-'+list.S_DAY;
-				var colorcode = "#"+Math.round(Math.random()*0xffffff).toString(16);
 				
 				var event ={
 				id : list.SCHEDULE_IX,
 				title : list.E_NAME,
 				start : date,
-				color : colorcode,
+				color : list.E_COLOR,
 				description : '스케줄 시간 : '+list.S_START_TIME+' - '+list.S_END_TIME,
 				allDay: true
 				

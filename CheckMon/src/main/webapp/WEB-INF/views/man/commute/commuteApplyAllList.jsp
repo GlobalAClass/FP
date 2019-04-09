@@ -143,7 +143,7 @@ table th{
                   			</td>
                   		</tr>
                   		<tr>
-                  			<td align="center" style="font-size:10px;">반려 사유를 근무자 에게 전송합니다.</td>
+                  			<td align="center" style="font-size:20px;">반려 사유를 근무자 에게 전송합니다.</td>
                   		</tr>
                   		<tr>
                   			<td align="center">

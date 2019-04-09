@@ -4,9 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="checkMonHourTemplate">
 	<select id="getScheduleAllSQL" parameterType="hashMap" resultType="hashmap">
-	select s.*, e.e_name
+	select s.*, e.e_name, e.e_color
 	from schedule_tb s, emp_tb e
 	where s.emp_ix=e.emp_ix
+	and s.man_ix=#{man_ix}
 	and s.s_year=#{year}
     and s.s_month=#{month}
 	</select>
@@ -25,6 +26,7 @@
 	values(
 		schedule_tb_seq.nextval,
 		#{emp_ix},
+		#{man_ix},
 		#{s_year},
 		#{s_month},
 		#{s_day},

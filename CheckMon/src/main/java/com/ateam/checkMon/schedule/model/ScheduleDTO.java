@@ -7,6 +7,9 @@ public class ScheduleDTO {
 
     // 근무자 인덱스 
     private Integer emp_ix;
+    
+    //관리자 인덱스
+    private Integer man_ix;
 
     // 년도 
     private String s_year;
@@ -27,11 +30,12 @@ public class ScheduleDTO {
 		super();
 	}
 
-	public ScheduleDTO(Integer schedule_ix, Integer emp_ix, String s_year, String s_month, String s_day,
+	public ScheduleDTO(Integer schedule_ix, Integer emp_ix, Integer man_ix, String s_year, String s_month, String s_day,
 			String s_start_time, String s_end_time) {
 		super();
 		this.schedule_ix = schedule_ix;
 		this.emp_ix = emp_ix;
+		this.man_ix = man_ix;
 		this.s_year = s_year;
 		this.s_month = s_month;
 		this.s_day = s_day;
@@ -39,10 +43,13 @@ public class ScheduleDTO {
 		this.s_end_time = s_end_time;
 	}
 	
-	public ScheduleDTO(Integer emp_ix, String s_year, String s_month, String s_day,
-			String s_start_time, String s_end_time) {
+	
+
+	public ScheduleDTO(Integer emp_ix, Integer man_ix, String s_year, String s_month, String s_day, String s_start_time,
+			String s_end_time) {
 		super();
 		this.emp_ix = emp_ix;
+		this.man_ix = man_ix;
 		this.s_year = s_year;
 		this.s_month = s_month;
 		this.s_day = s_day;
@@ -64,6 +71,14 @@ public class ScheduleDTO {
 
 	public void setEmp_ix(Integer emp_ix) {
 		this.emp_ix = emp_ix;
+	}
+
+	public Integer getMan_ix() {
+		return man_ix;
+	}
+
+	public void setMan_ix(Integer man_ix) {
+		this.man_ix = man_ix;
 	}
 
 	public String getS_year() {
@@ -105,9 +120,7 @@ public class ScheduleDTO {
 	public void setS_end_time(String s_end_time) {
 		this.s_end_time = s_end_time;
 	}
-
-	
     
-
+	
 
 }
