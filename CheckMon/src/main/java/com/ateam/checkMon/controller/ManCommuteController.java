@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO;
-import com.ateam.checkMon.empCommute.model.EmpCommuteApplyDTO;
-import com.ateam.checkMon.empCommute.model.EmpCommuteDAO;
-import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
+import com.ateam.checkMon.empCommute.model.*;
+import com.ateam.checkMon.schedule.model.ScheduleDTO;
 
 @Controller
 public class ManCommuteController {
@@ -24,12 +22,11 @@ public class ManCommuteController {
 	public ModelAndView dayCommuteList(@RequestParam(value="cp",defaultValue="1")int cp,
 			HttpSession session) {
 		ModelAndView mav=new ModelAndView();
-		
-		int totalcnt=mdao.getDayCommuteListSize();
+		int man_ix=(Integer)session.getAttribute("man_ix");
+		int totalcnt=mdao.getDayCommuteListSize(man_ix);
 		int listsize=5;
 		int pagesize=5;
-		int man_ix=(Integer)session.getAttribute("man_ix");
-		
+		//List<ScheduleDTO> slist=mdao.getManScheduleTime(man_ix);
 		List<EmpCommuteAllDTO> list=mdao.getDayCommuteList(listsize, cp, man_ix);
 		String paging= com.ateam.checkMon.page.PageModule.getMakePage("dayCommuteList.do", totalcnt, listsize, pagesize, cp);
 		

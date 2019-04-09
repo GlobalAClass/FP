@@ -55,5 +55,16 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		List<ScheduleDTO> list = sqlMap.selectList("getScheduleEmpSQL",map);
 		return list;
 	}
+	
+	public List<ScheduleDTO> getEmpScheduleTime(int emp_ix) {
+		List<ScheduleDTO> list=sqlMap.selectList("getEmpScheduleTimeSQL",emp_ix);
+		return list;
+	}
+	
+	public List<ScheduleDTO> getManScheduleTime(int man_ix) {
+		List<ScheduleDTO> list=sqlMap.selectList("getManScheduleTimeSQL",man_ix);
+		return list;
+	}
+
 
 }

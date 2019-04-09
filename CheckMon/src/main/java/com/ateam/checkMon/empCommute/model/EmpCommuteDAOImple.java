@@ -2,6 +2,7 @@ package com.ateam.checkMon.empCommute.model;
 
 import java.util.*;
 import org.mybatis.spring.SqlSessionTemplate;
+import com.ateam.checkMon.schedule.model.ScheduleDTO;
 
 public class EmpCommuteDAOImple implements EmpCommuteDAO {
 
@@ -44,11 +45,9 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 	
 	
 	
-	
-	
 	//관리자 = 근무자의 당일 근태 현황 페이징 위한 개수 확인하기
-	public int getDayCommuteListSize() {
-		int res=sqlMap.selectOne("getDayCommuteListSizeSQL");
+	public int getDayCommuteListSize(int man_ix) {
+		int res=sqlMap.selectOne("getDayCommuteListSizeSQL",man_ix);
 		return res;
 	}
 	

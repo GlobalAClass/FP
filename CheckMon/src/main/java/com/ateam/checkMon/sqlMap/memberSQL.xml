@@ -172,7 +172,7 @@
 	<update id="modManProfileSQL" parameterType="com.ateam.checkMon.member.model.ManDTO">
 		update man_tb
 		set m_pwd=#{m_pwd},m_tel=#{m_tel}
-		where man_ix=#{man_ix}=
+		where man_ix=#{man_ix}
 	</update>
 	<select id="checkWorkingSQL" parameterType="int" resultType="Integer">
 		select emp_commute_ix

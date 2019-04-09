@@ -11,12 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO;
 import com.ateam.checkMon.empCommute.model.EmpCommuteApplyDTO;
 import com.ateam.checkMon.empCommute.model.EmpCommuteDAO;
+import com.ateam.checkMon.schedule.model.ScheduleDAO;
+import com.ateam.checkMon.schedule.model.ScheduleDTO;
 
 @Controller
 public class EmpCommuteController {
 	
 	@Autowired
 	private EmpCommuteDAO cdao;
+	@Autowired
+	private ScheduleDAO sdao;
 	
 	@RequestMapping("/empCommuteForm.do")
 	public String empCommuteForm() {
@@ -29,7 +33,8 @@ public class EmpCommuteController {
 		ModelAndView mav=new ModelAndView();
 		int emp_ix=(Integer)session.getAttribute("emp_ix");
 		List<EmpCommuteAllDTO> list=cdao.getCommuteList(emp_ix);
-		
+		List<ScheduleDTO> slist=sdao.getEmpScheduleTime(emp_ix);
+		mav.addObject("slist",slist);
 		mav.addObject("list",list);
 		mav.setViewName("cmjson");
 		return mav;

@@ -11,5 +11,7 @@ public interface ScheduleDAO {
 	public int delSchedule(int schedule_ix);
 	public int addSchedule(ScheduleDTO dto);
 	public List<ScheduleDTO> getScheduleEmp(int emp_ix,String year,String month,String date);
-	
+	public List<ScheduleDTO> getEmpScheduleTime(int emp_ix);
+	public List<ScheduleDTO> getManScheduleTime(int man_ix);
+
 }

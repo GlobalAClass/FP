@@ -1,6 +1,7 @@
 package com.ateam.checkMon.empCommute.model;
 
 import java.util.*;
+import com.ateam.checkMon.schedule.model.ScheduleDTO;
 
 public interface EmpCommuteDAO {
 	
@@ -13,8 +14,9 @@ public interface EmpCommuteDAO {
 	public List<EmpCommuteAllDTO> getCommuteApplyList(int listsize, int cp,int emp_ix);
 	
 	
+
 	//관리자 = 당일 근무자 출퇴근 현황보기
-	public int getDayCommuteListSize();
+	public int getDayCommuteListSize(int man_ix);
 	public List<EmpCommuteAllDTO> getDayCommuteList(int listsize,int cp,int man_ix);
 	//관리자 = 출퇴근기록관리 페이지 및 출퇴근 시간 정보 수정
 	public List<EmpCommuteAllDTO> getCommuteAllList(int man_ix);

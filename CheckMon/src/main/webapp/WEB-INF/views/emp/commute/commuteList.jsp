@@ -297,7 +297,6 @@ $('#calendar').fullCalendar(
 //첫 화면 세팅 시 스케줄 가져옴
 renderCalcEvent();
 
-
 //뒤로 가거나 앞으로 갈 때 달력 년,월에 해당하는 스케줄값 다시 가져오기
 $(".fc-prev-button").click( function() {
 	renderCalcEvent();
@@ -321,35 +320,56 @@ function resultEvent(){
 			var data = eval('(' +XHR.responseText+ ')');
 			
 			var eventList = data.list;
+			var eventsList = data.slist;		
 			
 			for(var i=0;i<eventList.length;i++){
 				var list=eventList[i];
+				var slist=eventsList[i];
 				
 				var date = list.workday;
-				// 출/퇴근 시간 계산하여 색깔 지정해주기
+				var s_workday = slist.s_year+'-'+slist.s_month+'-'+slist.s_day;
 				
-// 				if() 조건줘서 밑으로 보내야함
-// 				var worktime_s=list.worktime;
-// 				var leavetime_s=list.leavetime;
+				var worktimes = list.worktime.replace(/:/gi, "");
+				var worktime = parseInt(worktimes);
 				
-// 				var worktime=worktime_s.replace(/:/gi, "");
-// 				var leavetime=leavetime_s.replace(/:/gi, "");
+				var starttimes = slist.s_start_time.replace(/:/gi, "");
+				var starttime = parseInt(starttimes);
 				
-				var event ={
-				id : list.emp_commute_ix,
-				title : list.worktime+' - '+list.leavetime,
-				start : date,
-				backgroundColor : '#5858FA', //#FF4000 지각/결근
-				description : '클릭시 근태 변경 신청 가능',
-				allDay: true
+				//퇴근 시간 비교 할지 안할지 
+// 				var leavetimes= list.leavetime.replace(/:/gi, "");
+// 				var leavetime = parseInt(leavetimes);
 				
-				};$('#calendar').fullCalendar('renderEvent',event);
-				
-			} 
-		}
-	}
+// 				var endtimes = slist.s_end_time.replace(/:/gi, "");
+// 				var endtime = parseInt(endtimes);
 
+				if(date==s_workday){
+					if(worktime<=starttime){
+						var event ={
+							id : list.emp_commute_ix,
+							title : list.worktime+' - '+list.leavetime,
+							start : date,
+							backgroundColor : '#5858FA',
+							description :'',
+							allDay: true
+								
+						};$('#calendar').fullCalendar('renderEvent',event);
+					}else{
+						var event ={
+							id : list.emp_commute_ix,
+							title : list.worktime+' - '+list.leavetime,
+							start : date,
+							backgroundColor : '#FF4000',
+							description : '클릭시 근태 변경 신청 가능',
+							allDay: true
+								
+						};$('#calendar').fullCalendar('renderEvent',event);
+					}
+				}
+			}
+		} 
+	}
 }
+
 
 function checked(){
 	if(commuteapply.cha_workhours.value==''
@@ -392,7 +412,6 @@ function setWorkTime(){
 	commuteapply.c_leavetime.value = cha_leavehours+':'+commuteapply.cha_leaveminutes.value;
 }
 
-
 //ajax 이용하여 근무 수정
 function updateCommute(){
 	var params = 'emp_commute_ix='+commuteapply.emp_commute_ix.value
@@ -416,7 +435,6 @@ function resultUp(){
 		}
 	}
 }
-
 
 </script>
 
