@@ -2,6 +2,8 @@ package com.ateam.checkMon.member.model;
 
 import java.util.*;
 
+import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
+
 public interface EmpDAO {
 
 	public int getNextEmpIx();
@@ -18,6 +20,7 @@ public interface EmpDAO {
 	public int modEmpProfile(EmpDTO dto);
 	boolean checkQRAndStorIx(CheckQRDTO temp);
 	int goToWork(int emp_ix);
-	Integer checkWorking(int emp_ix);
+	EmpCommuteDTO checkWorking(int emp_ix);
 	int getOffWork(int emp_ix, int emp_commute_ix);
+	int setWorktime(int emp_commute_ix);
 }

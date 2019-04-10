@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
 import com.ateam.checkMon.member.model.CheckQRDTO;
 import com.ateam.checkMon.member.model.EmpDAO;
 import com.ateam.checkMon.member.model.ManDAO;
@@ -106,10 +107,9 @@ public class QRController {
 			msg += "QR코드가 일치합니다.";
 			int res;
 			
-			Integer commute_ix = dao.checkWorking(emp_ix);
-			System.out.println("comcomcom : "+ commute_ix);
+			EmpCommuteDTO ecdto = dao.checkWorking(emp_ix);
 			//출근중 -> 퇴근 기록
-			if(commute_ix == null) {
+			if(ecdto == null) {
 				//출근 기록하기
 				res = dao.goToWork(emp_ix);
 				//출근 정상적으로 기록됨
@@ -119,11 +119,16 @@ public class QRController {
 			}
 			//출근 전 -> 출근 기록
 			else {
-				//퇴근 기록
-				res = dao.getOffWork(emp_ix, commute_ix);
-				//퇴근 정상적으로 기록됨
-				if(res>0) {
-					msg += " 정상 퇴근하셨습니다.";
+				//관리자가 실시간 근무확인으로 확인했을 시에 테이블이 생성되어있으므로 출근 기록하기.
+				if(ecdto.getWorktime() == null) {
+					res = dao.setWorktime(ecdto.getEmp_commute_ix());
+				}else {
+					//퇴근 기록
+					res = dao.getOffWork(emp_ix, ecdto.getEmp_commute_ix());
+					//퇴근 정상적으로 기록됨
+					if(res>0) {
+						msg += " 정상 퇴근하셨습니다.";
+					}
 				}
 			}
 		}else { //근무지QR과 불일치

@@ -174,8 +174,8 @@
 		set m_pwd=#{m_pwd},m_tel=#{m_tel}
 		where man_ix=#{man_ix}
 	</update>
-	<select id="checkWorkingSQL" parameterType="int" resultType="Integer">
-		select emp_commute_ix
+	<select id="checkWorkingSQL" parameterType="int" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteDTO">
+		select emp_commute_ix, worktime
    		from emp_commute_tb 
     	where emp_ix = #{emp_ix}
         		and leavetime is null
@@ -190,9 +190,22 @@
 		    set leavetime = to_char(sysdate, 'HH24:MI')
 		    where emp_ix = #{emp_ix} and emp_commute_ix = #{emp_commute_ix}
 	</update>
-	<select id="getWorkLeaveTimeSQL" parameterType="HashMap" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteDTO">
-		select worktime, leavetime from emp_commute_tb
-			where emp_ix = #{emp_ix} and emp_commute_ix = #{emp_commute_ix}
+	<update id="setWorktimeSQL" parameterType="int">
+		update emp_commute_tb
+			set worktime = to_char(sysdate, 'HH24:MI')
+			where emp_commute_ix = #{emp_commute_ix}
+	</update>
+	
+	<select id="getWorkLeaveTimeSQL" 
+		parameterType="com.ateam.checkMon.PayRoll.model.WorkTimeDTO" 
+		resultType="com.ateam.checkMon.empCommute.model.WorkTimeDTO">
+		<![CDATA[
+		select emp_ix, emp_commute_ix, worktime, leavetime, workday
+		from emp_commute_tb 
+		    where emp_ix = 41
+		    and #{startday} < workday 
+		    and workday < #{endday}
+		]]>
 	</select>
 	<update id="setDaytimeSQL" parameterType="HashMap">
 		update emp_commute_tb 

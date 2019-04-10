@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.ateam.checkMon.PayRoll.model.WorkTimeDTO;
 import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
 
 public class EmpDAOImple implements EmpDAO {
@@ -16,9 +17,15 @@ public class EmpDAOImple implements EmpDAO {
 		super();
 		this.sqlMap = sqlMap;
 	}
-	//근무자 출근 중인지 확인 - 출근중이라면 출근한 날짜 반환
-	public Integer checkWorking(int emp_ix) {
-		Integer res = sqlMap.selectOne("checkWorkingSQL", emp_ix);
+	//근무자 출근 중인지 확인 - 출근중이라면 출근한 테이블 인덱스, 출근시간 반환
+	public EmpCommuteDTO checkWorking(int emp_ix) {
+		EmpCommuteDTO res = sqlMap.selectOne("checkWorkingSQL", emp_ix);
+		return res;
+	}
+	
+	//근무자 출근하지 않았지만 관리자가 확인하여 테이블이 생성됬을 때, 출근시간 업데이트
+	public int setWorktime(int emp_commute_ix) {
+		int res = sqlMap.update("setWorktimeSQL", emp_commute_ix);
 		return res;
 	}
 	
@@ -28,7 +35,7 @@ public class EmpDAOImple implements EmpDAO {
 		return res;
 	}
 	
-	//근무자 퇴근하기 및 총 근무시간 기록
+	//근무자 퇴근하
 	public int getOffWork(int emp_ix, int emp_commute_ix) {
 		HashMap<String, Integer> temp = new HashMap<String, Integer>();
 		temp.put("emp_ix", emp_ix);
@@ -36,39 +43,7 @@ public class EmpDAOImple implements EmpDAO {
 
 		int res = sqlMap.update("getOffWorkSQL", temp);
 		
-		//총근무시간 기록을 위해 출근 시간, 퇴근 시간 가져오기.
-		EmpCommuteDTO cal = sqlMap.selectOne("getWorkLeaveTimeSQL", temp);
-		
-		//시, 분으로 나누기
-		String w_time = cal.getWorktime();
-		String w[] = w_time.split(":");
-		String l_time = cal.getLeavetime();
-		String l[] = l_time.split(":");
-		
-		//나눈 시분 숫자로 치환하기
-		Integer w_i[] = {Integer.parseInt(w[0]), Integer.parseInt(w[1])}; 
-		Integer l_i[] = {Integer.parseInt(l[0]), Integer.parseInt(l[1])}; 
-		
-		//총 근무시간 구하기(단위 : 분)
-		Integer daytime = 0;
-		//퇴근 시간의 분이 출근 시간의 분보다 클 경우
-		if(l_i[1]>=w_i[1]) {
-			daytime = l_i[1]-w_i[1];
-		}else { //작을 경우
-			l_i[0] -= 1;
-			daytime = l_i[1]-(60-w_i[1]);
-		}
-		daytime += 60*(w_i[0] - l_i[0]);
-		
-		//총 근 무시간 기록
-		temp.put("daytime", daytime);
-		int res1 = sqlMap.update("setDaytimeSQL", temp);
-
-		if(res>0 && res>0) {
-			return 1;
-		}else {
-			return -1;
-		}
+		return res;
 	}
 	
 	//근무자 등록되려는 인덱스 가져오기
@@ -149,4 +124,59 @@ public class EmpDAOImple implements EmpDAO {
 		return res;
 	}
 
+	//근무자 일한 시간 구하기
+	public int getWorkTime(int emp_ix, String startday, String endday) {
+		WorkTimeDTO temp = new WorkTimeDTO(emp_ix, startday, endday);
+		//총근무시간 기록을 위해 출근 시간, 퇴근 시간 가져오기.
+		List<WorkTimeDTO> cal = sqlMap.selectOne("getWorkLeaveTimeSQL", temp);
+		
+		int cal_len = cal.size();
+		for(int i=0; i<cal_len; i++) {
+			//시, 분으로 나누기
+			String w_time = cal.get(i).getWorktime();
+			String w[] = w_time.split(":");
+			String l_time = cal.get(i).getLeavetime();
+			String l[] = l_time.split(":");
+			
+			//나눈 시분 숫자로 치환하기
+			Integer w_i[] = {Integer.parseInt(w[0]), Integer.parseInt(w[1])}; 
+			Integer l_i[] = {Integer.parseInt(l[0]), Integer.parseInt(l[1])}; 
+			
+			//일반 근무시간 구하기(단위 : 분)
+			Integer nomal = 0;
+			//초과 근무시간 구하기(단위 : 분)
+			Integer overtime = 0; 
+			Integer night = 0;
+	
+			/*
+			//퇴근 시간의 분이 출근 시간의 분보다 클 경우
+			if(l_i[1]>=w_i[1]) {
+				daytime = l_i[1]-w_i[1];
+			}else { //작을 경우
+				l_i[0] -= 1;
+				daytime = l_i[1]-(60-w_i[1]);
+			}
+			*/
+			
+			//야간 근무시간인지 판단하기
+			//출근 시간이 야간 근무 시간일 경우
+			//22시에서 24시 사이
+			if(w_i[0]>=22 && w_i[0]<=24) {
+				
+			}else if(0<w_i[0] && w_i[0]<6) {
+				
+			}
+			//출근 시간은 야간 시간이 아니고
+			else { 
+				if((l_i[0]>=22 && l_i[0]<=24)) {
+					int nomal_time = 22-w_i[0];
+					int a= l_i[0] - 22;
+				}else if((0<=l_i[0] && l_i[0]<=6)) {
+					
+				}
+			}
+		}
+		
+		return 1;
+	}
 }
