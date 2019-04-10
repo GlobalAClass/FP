@@ -41,8 +41,19 @@ public class ManController {
 		List<EmpCommuteAllDTO> list=mdao.getCommuteApplyAllList(listsize, cp, man_ix);
 		String paging = com.ateam.checkMon.page.PageModule.getMakePage("commuteApplyAllList.do", totalcnt, listsize, pagesize, cp);
 		
+		//관리자 프로필 이미지 가져오기
+		File manager = new File(context.getRealPath("\\")+"\\assets\\images\\man\\profile\\"+man_ix);
+		File[] files=manager.listFiles();
+		String imgpath;
+		if(files==null||files.length==0) {
+			imgpath="assets/images/man/profile_default.jpg";
+		}else {
+			imgpath="assets/images/man/profile/"+man_ix+"\\"+files[0].getName();
+		}
+		
 		mav.addObject("list",list);
 		mav.addObject("paging",paging);
+		mav.addObject("imgpath",imgpath);
 		mav.setViewName("man/home");
 		return mav;
 	}

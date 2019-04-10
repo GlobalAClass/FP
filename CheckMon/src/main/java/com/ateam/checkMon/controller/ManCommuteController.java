@@ -73,6 +73,12 @@ public class ManCommuteController {
 					if (leavetime_s.equals("-")) {
 						leavetime_s = "0";
 					}
+					
+					if(worktime == 0) {
+						break;
+					}
+					
+					
 					int leavetime = Integer.parseInt(leavetime_s);
 
 					if (worktime <= starttime) {

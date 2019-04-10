@@ -53,6 +53,16 @@ public class EmpController {
 			}
 		}
 		
+		//근무자 프로필 이미지 가져오기
+		File employee = new File(context.getRealPath("\\")+"\\assets\\images\\emp\\profile\\"+emp_ix);
+		File[] files=employee.listFiles();
+		String imgpath;
+		if(files==null||files.length==0) {
+			imgpath="assets/images/emp/profile_default.jpg";
+		}else {
+			imgpath="assets/images/emp/profile/"+emp_ix+"\\"+files[0].getName();
+		}
+		
 		//메인에 띄울 휴가 상태
 		int totalcnt = vdao.vacationListEmpSize(emp_ix);
 		int listsize = 5;
@@ -64,6 +74,7 @@ public class EmpController {
 		
 		
 		ModelAndView mav = new ModelAndView("emp/home");
+		mav.addObject("imgpath",imgpath);
 		mav.addObject("working", working);
 		mav.addObject("list",list);
 		mav.addObject("paging",paging);

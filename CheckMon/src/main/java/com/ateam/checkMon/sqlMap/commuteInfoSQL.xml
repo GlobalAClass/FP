@@ -71,7 +71,7 @@
  	</select>
  	<select id="getCommuteAllListSQL" parameterType="Integer" resultType="com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO">
  		select e.emp_ix, e.e_name,
-   		ecom.worktime,ecom.leavetime,ecom.workday,ecom.emp_commute_ix,ecom.state
+   		NVL(ecom.worktime,'0') as worktime,NVL(ecom.leavetime,'0') as leavetime,ecom.workday,ecom.emp_commute_ix,ecom.state
    		from emp_tb e, emp_commute_tb ecom
    		where e.emp_ix = ecom.emp_ix
         and e.man_ix=#{man_ix}

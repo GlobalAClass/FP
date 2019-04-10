@@ -286,24 +286,30 @@ function resultEvent(){
 				var list=eventList[i];
 				
 				var date = list.workday;
-				// 출/퇴근 시간 계산하여 색깔 지정해주기
+				var worktime= list.worktime;
+				var leavetime= list.leavetime;
+				if(worktime=='0'){
+					var event ={
+						id : list.emp_commute_ix,
+						title : list.e_name,
+						start : date,
+						backgroundColor : '#FF4000',
+						description :list.worktime+' - '+list.leavetime,
+						allDay: true
+							
+						};$('#calendar').fullCalendar('renderEvent',event);
+				}else{
+					var event ={
+						id : list.emp_commute_ix,
+						title : list.e_name,
+						start : date,
+						backgroundColor : '#5858FA',
+						description :list.worktime+' - '+list.leavetime,
+						allDay: true
+							
+						};$('#calendar').fullCalendar('renderEvent',event);
+				}
 				
-// 				if() 조건줘서 밑으로 보내야함
-// 				var worktime_s=list.worktime;
-// 				var leavetime_s=list.leavetime;
-				
-// 				var worktime=worktime_s.replace(/:/gi, "");
-// 				var leavetime=leavetime_s.replace(/:/gi, "");
-				
-				var event ={
-				id : list.emp_commute_ix,
-				title : list.e_name,
-				start : date,
-				backgroundColor : '#5858FA', //#FF4000 지각/결근
-				description :list.worktime+' - '+list.leavetime,
-				allDay: true
-				
-				};$('#calendar').fullCalendar('renderEvent',event);
 				
 			} 
 		}
