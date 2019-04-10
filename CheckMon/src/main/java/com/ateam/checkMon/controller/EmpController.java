@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
 import com.ateam.checkMon.manEmpRun.model.ManEmpRunDAO;
 import com.ateam.checkMon.manEmpRun.model.ManEmpRunDTO;
 import com.ateam.checkMon.member.model.*;
@@ -33,11 +35,11 @@ public class EmpController {
 		int emp_ix = (Integer)s.getAttribute("emp_ix");
 		//출근하기 <-> 퇴근하기 버튼에 사용하기 위해서 
 		//근무자 출근 중인지 아닌지 여부 확인
-		Integer commute_ix = empdao.checkWorking(emp_ix);
+		EmpCommuteDTO commute = empdao.checkWorking(emp_ix);
 		
 		boolean working;
 		//출근하지 않은 상태
-		if(commute_ix==null) {
+		if(commute==null) {
 			working = false;
 		}else { //출근한 상태
 			working = true;
