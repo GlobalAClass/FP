@@ -32,7 +32,6 @@ table th{
 }
 </style>
 
-
 </head>
 
 <body class="adminbody">
@@ -63,7 +62,7 @@ table th{
 						</div>
 						<!-- end row -->
 						
-						<div class="visible-xs-block" align="center">
+						<div class="visible-xs-block" align="center" id="btn-commute">
 							<button class="btn btn-primary btn-lg" onclick="javascript:location.href='loadingGPS.do';">
 								<c:if test="${false eq working}">출근하기</c:if>
 								<c:if test="${true eq working}">퇴근하기</c:if>
@@ -143,11 +142,37 @@ table th{
 <script src="assets/js/pikeadmin.js"></script>		
 
 <!-- END Java Script for this page -->
+<script type="text/javascript">
+	function isMobile() {
+
+		var UserAgent = navigator.userAgent;
+
+		if (UserAgent
+				.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null
+				|| UserAgent.match(/LG|SAMSUNG|Samsung/) != null){
+			return true;
+
+		} else {
+
+			return false;
+		}
+
+	}
+</script>
 <script>
 $('input[value=승인]').css({'color':'green','font-weight':'bold','font-size':'15px'});
 $('input[value=반려]').css({'color':'red','font-weight':'bold','font-size':'15px'});
 $('input[value^=관]').css({'color':'gray','font-weight':'bold','font-size':'15px'});
 $('input[value^=대]').css({'color':'blue','font-weight':'bold','font-size':'15px'});
+
+$(document).ready(function() {
+
+	if(isMobile()==false){
+		$("#btn-commute").css("display","none");
+	}
+
+});
+
 </script>
 </body>
 </html>
