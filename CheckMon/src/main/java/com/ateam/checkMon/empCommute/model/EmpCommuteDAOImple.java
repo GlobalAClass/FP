@@ -42,7 +42,11 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 		return list;
 	}
 	
-	
+	//출근 안한 근무자 상태값 가져오기위해 insert workday, state
+	public int insertWorkdayState(EmpCommuteDTO dto) {
+		int res=sqlMap.insert("insertWorkdayStateSQL",dto);
+		return res;
+	}
 	
 	
 	//관리자 = 근무자의 당일 근태 현황 페이징 위한 개수 확인하기

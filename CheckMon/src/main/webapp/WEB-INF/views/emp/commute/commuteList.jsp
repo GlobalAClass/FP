@@ -322,7 +322,7 @@ function resultEvent(){
 			var eventList = data.list;
 			var eventsList = data.slist;		
 			
-			for(var i=0;i<eventList.length;i++){
+			for(var i=0;i<eventsList.length;i++){
 				var list=eventList[i];
 				var slist=eventsList[i];
 				var date = list.workday;
@@ -330,34 +330,46 @@ function resultEvent(){
 					list.leavetime='';
 				}
 				var s_workday = slist.s_year+'-'+slist.s_month+'-'+slist.s_day;
-				var worktimes = list.worktime.replace(/:/gi, "");
-				var worktime = parseInt(worktimes);
-				
-				var starttimes = slist.s_start_time.replace(/:/gi, "");
-				var starttime = parseInt(starttimes);
-				
-				if(date==s_workday){
-					if(worktime<=starttime){
-						var event ={
+				if(list.worktime != null){
+					var worktimes = list.worktime.replace(/:/gi, "");
+					var worktime = parseInt(worktimes);
+					
+					var starttimes = slist.s_start_time.replace(/:/gi, "");
+					var starttime = parseInt(starttimes);
+					
+					if(date==s_workday){
+						if(worktime<=starttime){
+							var event ={
+								id : list.emp_commute_ix,
+								title : list.worktime+' - '+list.leavetime,
+								start : date,
+								backgroundColor : '#5858FA',
+								description :'',
+								allDay: true
+									
+							};$('#calendar').fullCalendar('renderEvent',event);
+						}else{
+							var event ={
+								id : list.emp_commute_ix,
+								title : list.worktime+' - '+list.leavetime,
+								start : date,
+								backgroundColor : '#FF4000',
+								description : '클릭시 근태 변경 신청 가능',
+								allDay: true
+									
+							};$('#calendar').fullCalendar('renderEvent',event);
+						}
+					}
+				}else{
+					var event ={
 							id : list.emp_commute_ix,
-							title : list.worktime+' - '+list.leavetime,
-							start : date,
-							backgroundColor : '#5858FA',
-							description :'',
-							allDay: true
-								
-						};$('#calendar').fullCalendar('renderEvent',event);
-					}else{
-						var event ={
-							id : list.emp_commute_ix,
-							title : list.worktime+' - '+list.leavetime,
+							title : '결근',
 							start : date,
 							backgroundColor : '#FF4000',
 							description : '클릭시 근태 변경 신청 가능',
 							allDay: true
 								
 						};$('#calendar').fullCalendar('renderEvent',event);
-					}
 				}
 			}
 		} 

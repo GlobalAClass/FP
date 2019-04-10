@@ -74,13 +74,16 @@ table th{
                               		<td><p style="color:#5882FA;font-weight:bold;">근무중</p></td>
                               	</c:when>
                               	<c:when test="${dto.state=='근무중(지각)'}">
-                              		<td><p style="color:#5882FA;font-weight:bold;">근무중(지각)</p></td>
+                              		<td><p style="color:#5882FA;font-weight:bold;">근무중<span style="color: red">(지각)</span></p></td>
                               	</c:when>
                               	<c:when test="${dto.state=='근무예정'}">
                               		<td><p style="font-weight:bold;">근무예정</p></td>
                               	</c:when>
                               	<c:when test="${dto.state=='퇴근'}">
                               		<td><p style="color:green;font-weight:bold;">퇴근</p></td>
+                              	</c:when>
+                              	<c:when test="${dto.state=='퇴근(지각)'}">
+                              		<td><p style="color:green;font-weight:bold;">퇴근<span style="color: red">(지각)</span></p></td>
                               	</c:when>
                               	<c:when test="${dto.state=='결근'}">
                               		<td><p style="color:red;font-weight:bold;">결근</p></td>

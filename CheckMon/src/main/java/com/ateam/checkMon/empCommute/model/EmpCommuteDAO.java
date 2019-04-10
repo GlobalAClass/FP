@@ -30,4 +30,5 @@ public interface EmpCommuteDAO {
 	public int addCommuteApplyProgress(EmpCommuteApplyDTO dto);
 	//관리자 = 근무자 근태 변경 신청 승인시 시간 변경
 	public int setCommuteWorkTime(EmpCommuteDTO dto);
+	int insertWorkdayState(EmpCommuteDTO dto);
 }
