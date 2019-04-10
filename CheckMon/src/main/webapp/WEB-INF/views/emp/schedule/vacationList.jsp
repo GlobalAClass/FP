@@ -47,6 +47,21 @@ b{
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
+				
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="breadcrumb-holder">
+								<h1 class="main-title float-left">- 스케줄 -</h1>
+								<ol class="breadcrumb float-right">
+									<li class="breadcrumb-item">Home</li>
+									<li class="breadcrumb-item active">스케줄</li>
+									<li class="breadcrumb-item active">휴가 신청 목록</li>
+								</ol>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				
 					<div class="card mb-3" align="center">
 						<h1 class="card-header" align="center">휴가 신청 목록</h1>
 							<div class="card-body">
@@ -68,24 +83,24 @@ b{
 									</c:if>
 									<c:forEach var="list" items="${list }">
 										<tr align="center">
-											<td>${list.S_YEAR }년 ${list.S_MONTH }월 ${list.S_DAY }일</td>
-											<td>${list.S_START_TIME } - ${list.S_END_TIME }</td>
+											<td>${list.V_DATE}</td>
+											<td>${list.V_TIME}</td>
 											<td><input type="text" style="border:none" readonly value="${list.V_PROGRESS}"></td>
 											<td>
 											<c:set var="v_progress" value="${list.V_PROGRESS }"/>	
 											<c:choose>
 												<c:when test="${v_progress eq '승인' }">
-												<input type="button" name="agree" data-toggle="modal" data-vacation_date="${list.S_YEAR }년 ${list.S_MONTH }월 ${list.S_DAY }일"
+												<input type="button" name="agree" data-toggle="modal" data-vacation_date="${list.V_DATE}"
 												data-v_progress="${v_progress }" data-v_reason_m="${list.V_REASON_MAIN }" data-emp_ix="${list.V_SUBSTITUTE_EMP_IX }"
 												data-target="#agreeModal" class="btn btn-primary" value="휴가 상세정보 확인">
 												</c:when>
 												<c:when test="${v_progress eq '반려' }">
-												<input type="button" name="deny" data-toggle="modal" data-vacation_date="${list.S_YEAR }년 ${list.S_MONTH }월 ${list.S_DAY }일" 
+												<input type="button" name="deny" data-toggle="modal" data-vacation_date="${list.V_DATE}" 
 												data-v_progress="${v_progress }" data-v_deny_reason="${list.V_DENY_REASON }"
 												data-target="#denyModal" class="btn btn-primary" value="휴가 상세정보 확인">
 												</c:when>
 												<c:otherwise>
-												<input type="button" name="agree" data-toggle="modal" data-vacation_date="${list.S_YEAR }년 ${list.S_MONTH }월 ${list.S_DAY }일" 
+												<input type="button" name="agree" data-toggle="modal" data-vacation_date="${list.V_DATE}" 
 												data-v_progress="${v_progress }" data-v_reason_m="${list.V_REASON_MAIN }" data-emp_ix=""
 												data-target="#agreeModal" class="btn btn-primary" value="휴가 상세정보 확인">
 												</c:otherwise>

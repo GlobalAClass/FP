@@ -1,6 +1,7 @@
 package com.ateam.checkMon.controller;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
 import com.ateam.checkMon.manEmpRun.model.ManEmpRunDAO;
 import com.ateam.checkMon.manEmpRun.model.ManEmpRunDTO;
 import com.ateam.checkMon.member.model.*;
+import com.ateam.checkMon.vacation.model.VacationDAO;
 
 @Controller
 public class EmpController {
@@ -28,10 +30,14 @@ public class EmpController {
 	private ManEmpRunDAO manemprundao;
 	@Autowired
 	private ServletContext context;
+	@Autowired
+	private VacationDAO vdao;
 	
 	//근무자 홈페이지 이동
 	@RequestMapping("/empHome.do")
-	public ModelAndView goEmpHome(HttpSession s) {
+	public ModelAndView goEmpHome(
+			@RequestParam(value="cp",defaultValue="1")int cp,
+			HttpSession s) {
 		int emp_ix = (Integer)s.getAttribute("emp_ix");
 		//출근하기 <-> 퇴근하기 버튼에 사용하기 위해서 
 		//근무자 출근 중인지 아닌지 여부 확인
@@ -47,8 +53,20 @@ public class EmpController {
 			}
 		}
 		
+		//메인에 띄울 휴가 상태
+		int totalcnt = vdao.vacationListEmpSize(emp_ix);
+		int listsize = 5;
+		int pagesize = 5;
+		
+		List<HashMap<String,Object>> list = vdao.getVacationListEmp(listsize, cp, emp_ix);
+		
+		String paging = com.ateam.checkMon.page.PageModule.getMakePage("vacationListEmp.do", totalcnt, listsize, pagesize, cp);
+		
+		
 		ModelAndView mav = new ModelAndView("emp/home");
 		mav.addObject("working", working);
+		mav.addObject("list",list);
+		mav.addObject("paging",paging);
 		return mav;
 	}
 	

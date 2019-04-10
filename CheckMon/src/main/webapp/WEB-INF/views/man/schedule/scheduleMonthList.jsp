@@ -93,6 +93,20 @@
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
+				
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="breadcrumb-holder">
+								<h1 class="main-title float-left">- 스케줄 관리 -</h1>
+								<ol class="breadcrumb float-right">
+									<li class="breadcrumb-item">Home</li>
+									<li class="breadcrumb-item active">스케줄 관리</li>
+								</ol>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				
 					<div class="card col-12">
 						<h1 class="card-header" align="center">스케줄 관리</h1>
 						<div align="right" style="margin:20px;">
@@ -139,8 +153,6 @@
 								<div class="col-12" id="loc_emp">
 								<p>직원의 이름, 그룹, 직책명으로 검색 후 <b>체크박스를 선택해주세요</b><b style="color:red;"> (최대 5명)</b></p>
 								<%@include file="/WEB-INF/views/module/search.jsp" %>
-								</div>
-								<div id="loc_res_emp">
 								</div>
 							</td>
 						</tr>
@@ -341,10 +353,10 @@ function resultEvent(){
 				
 				var event ={
 				id : list.SCHEDULE_IX,
-				title : list.E_NAME,
+				title : list.E_NAME+' '+list.S_START_TIME+' - '+list.S_END_TIME,
 				start : date,
 				color : list.E_COLOR,
-				description : '스케줄 시간 : '+list.S_START_TIME+' - '+list.S_END_TIME,
+				description : '클릭 시 스케줄 수정/삭제 가능',
 				allDay: true
 				
 				};$('#calendar').fullCalendar('renderEvent',event);

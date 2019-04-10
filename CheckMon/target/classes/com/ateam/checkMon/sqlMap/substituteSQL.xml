@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkMonSubstitute">
+
+	<select id="getSubstituteEmpListSQL" parameterType="Integer" resultType="hashmap">
+	select t.substitute_request_ix, s.vacation_ix, s.s_date, s.s_time
+	from Substitute_TB s, Substitute_Request_TB t
+	where s.substitute_ix=t.substitute_ix
+	and t.emp_ix=#{emp_ix}
+	and t.s_progress='승인 대기중'
+	</select>
+	<update id="updateSubReqSQL" parameterType="Integer">
+	update
+		substitute_request_tb
+	set
+		s_progress='승인'
+	where
+		substitute_request_ix=#{substitute_req_ix}
+	</update>
+	<select id="getManSubIxSQL" parameterType="int" resultType="int">
+	select man_ix from emp_tb where emp_ix=#{emp_ix}
+	</select>
+	<insert id="insertSubScheduleSQL" parameterType="com.ateam.checkMon.schedule.model.ScheduleDTO">
+	insert into
+		schedule_tb
+	values(
+		schedule_tb_seq.nextval,
+		#{emp_ix},
+		#{man_ix},
+		#{s_year},
+		#{s_month},
+		#{s_day},
+		#{s_start_time},
+		#{s_end_time}
+	)
+	</insert>
+	<update id="updateVacationInfoSQL" parameterType="hashmap">
+	update vacation_tb
+	set v_substitute_emp_ix=#{emp_ix}, v_progress='승인'
+	where vacation_ix=(select s.vacation_ix from substitute_tb s, substitute_request_tb r where s.substitute_ix=r.substitute_ix and r.substitute_request_ix=#{substitute_req_ix})
+	</update>
+	<delete id="deleteSubEmpsSQL" parameterType="hashmap">
+	<![CDATA[
+	delete
+	from substitute_request_tb
+	where substitute_ix=(select substitute_ix from substitute_request_tb where substitute_request_ix=#{substitute_req_ix}) 
+	and emp_ix<>#{emp_ix}
+	]]>
+	</delete>
+	<delete id="deleteEmpScheduleSQL" parameterType="Integer">
+	delete
+	from schedule_tb
+	where schedule_ix=(
+	select schedule_ix
+	from vacation_tb
+	where vacation_ix=(select s.vacation_ix from substitute_tb s, substitute_request_tb r where s.substitute_ix=r.substitute_ix and r.substitute_request_ix=#{substitute_req_ix})
+	)
+	</delete>
+</mapper>

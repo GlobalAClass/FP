@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="checkMonVacation">
+	<select id="getVacationDateSQL" parameterType="int" resultType="hashmap">
+	select s_year,s_month,s_day,s_start_time,s_end_time
+	from schedule_tb
+	where schedule_ix=#{schedule_ix}
+	</select>
 	<insert id="applyVacationSQL" parameterType="map">
 	insert into
 		vacation_tb
@@ -15,22 +20,24 @@
 		#{v_reason_main},
 		#{v_reason_detail},
 		#{v_progress},
-		null
+		null,
+		#{v_date},
+		#{v_time}
 	)
 	</insert>
 	<select id="vacationListSizeEmpSQL" parameterType="int" resultType="int">
-	select count(vacation_ix) as total
-	from vacation_tb v, schedule_tb s
-	where v.schedule_ix=s.schedule_ix
-	and s.emp_ix=#{emp_ix}
+	select count(vacation_ix)
+	from vacation_tb
+	where vacation_ix in(select vacation_ix from schedule_tb where emp_ix=#{emp_ix})
 	</select>
 	<select id="getVacationListEmpSQL" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 	select * from
 	(select rownum as rnum, a.* from 
-	(select s.s_year,s.s_month,s.s_day,s.s_start_time,s.s_end_Time,v.*
-	from vacation_tb v, schedule_tb s where v.schedule_ix=s.schedule_ix and s.emp_ix=#{emp_ix}
-	order by v.v_apply_date desc)a)b
+	(select *
+	from vacation_tb
+	where v_apply_emp_ix=#{emp_ix}
+	order by v_apply_date)a)b
 	where rnum>=((#{cp}-1)*#{listsize}+1) and
 	rnum<=#{cp}*#{listsize}]]>
 	</select>
@@ -50,11 +57,57 @@
 	<![CDATA[
 	select * from
 	(select rownum as rnum, a.* from 
-	(select e.e_name, e.e_position, s.*, to_char(v.v_apply_date,'YYYY-MM-DD') as V_APPLY_DATE, v.v_reason_main, v.v_reason_detail
+	(select e.e_name, e.e_position, s.*, vacation_ix,v_progress,to_char(v.v_apply_date,'YYYY-MM-DD') as V_APPLY_DATE, v.v_reason_main, v.v_reason_detail
 	from emp_tb e, schedule_tb s, vacation_tb v 
 	where e.emp_ix=s.emp_ix and s.schedule_ix=v.schedule_ix and s.man_ix=#{man_ix}
 	order by v.v_apply_date desc)a)b 
 	where rnum>=((#{cp}-1)*#{listsize}+1) and
 	rnum<=#{cp}*#{listsize}]]>
 	</select>
+	
+	<select id="getSubstituteListSQL" parameterType="hashmap" resultType="com.ateam.checkMon.member.model.EmpDTO">
+	select emp_ix,e_group,e_name,e_position
+	from emp_tb
+	where emp_ix not in
+	(select distinct emp_ix
+	from schedule_tb
+	where s_year in(#{year}) and s_month in(#{month}) and s_day in(#{day}))
+	and man_ix=#{man_ix}
+	</select>
+	
+	<update id="updateVacationProgSQL">
+	update vacation_tb
+	set v_progress='대리 근무자 모집중'
+	where vacation_ix=#{vacation_ix}
+	</update>
+	<select id="getNextSubSQL" resultType="int">
+	select substitute_tb_seq.nextval from dual
+	</select>
+	<insert id="insertSubSQL" parameterType="hashmap">
+	insert into
+		substitute_tb
+	values(
+		#{next_sub},
+		#{vacation_ix},
+		#{s_date},
+		#{s_time}
+	)
+	</insert>
+	<insert id="insertSubReqSQL" parameterType="hashmap">
+	insert into
+		substitute_request_tb
+	values(
+		substitute_request_tb_seq.nextval,
+		#{next_sub},
+		#{emp_ix},
+		'승인 대기중'
+	)
+	</insert>
+	
+	<update id="denyVacationSQL" parameterType="hashmap">
+	update vacation_tb
+	set v_progress='반려', v_deny_reason=#{deny_reason}
+	where vacation_ix=#{vacation_ix}
+	</update>
+	
 </mapper>

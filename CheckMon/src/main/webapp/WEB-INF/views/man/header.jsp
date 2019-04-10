@@ -69,9 +69,8 @@
 			<div id="sidebar-menu">
         
 			<ul>
-
 					<li class="submenu">
-						<a class="active" href="manHome.do"><i class="fa fa-fw fa-bars"></i><span> ChechMon 홈으로 </span> </a>
+						<a class="active" href="manHome.do"><i class="fa fa-fw fa-bars"></i><span> CheckMon 홈으로 </span> </a>
                     </li>
                     
                     <li class="submenu">
@@ -99,22 +98,6 @@
 								<li><a href="scheduleMonthList.do">스케줄 관리</a></li>
 								<li><a href="vacationList.do">휴가 요청 관리</a></li>
 							</ul>
-                    </li>
-										
-                   
-					<li class="submenu">
-                        <a href="#"><i class="fa fa-money"></i> <span>급여 관리</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="manPayRollList.do">급여 집계표</a></li>
-								<li><a href="#">시급 단위 설정</a></li>
-                            </ul>
-                    </li>
-					
-                    <li class="submenu">
-						<a href="#"><i class="fa fa-info-circle"></i> <span>공지사항</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="#">전체 공지사항</a></li>
-                            </ul>
                     </li>
             </ul>
 

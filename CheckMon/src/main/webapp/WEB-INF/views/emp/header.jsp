@@ -65,9 +65,8 @@
 			<div id="sidebar-menu">
         
 			<ul>
-
 					<li class="submenu">
-						<a class="active" href="empHome.do"><i class="fa fa-fw fa-bars"></i><span> ChechMon 홈으로 </span> </a>
+						<a class="active" href="empHome.do"><i class="fa fa-fw fa-bars"></i><span> CheckMon 홈으로 </span> </a>
                     </li>
                     
                      <li class="submenu">
@@ -83,25 +82,7 @@
 							<ul class="list-unstyled">
 								<li><a href="scheduleList.do">월별 스케줄 관리</a></li>
 								<li><a href="vacationListEmp.do">휴가 신청 목록</a></li>
-								<li><a href="substituteList.do">대리 근무 승인 목록</a></li>
 							</ul>
-                    </li>
-										
-                   
-					<li class="submenu">
-                        <a href="#"><i class="fa fa-money"></i> <span>급여 관리</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="forms-general.html">급여 계산</a></li>
-								<li><a href="forms-select2.html">급여 명세서</a></li>
-                            </ul>
-                    </li>
-					
-                    <li class="submenu">
-						<a href="#"><i class="fa fa-info-circle"></i> <span>공지사항</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="star-rating.html">전체 공지사항</a></li>
-								<li><a href="range-sliders.html">개인 공지사항</a></li>
-                            </ul>
                     </li>
             </ul>
 

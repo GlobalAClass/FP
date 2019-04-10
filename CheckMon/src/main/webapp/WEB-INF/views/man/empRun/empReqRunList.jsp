@@ -451,6 +451,7 @@ img {
 			
 			//직원 요청 테이블
 			var ReqTable = $('#ReqTable').DataTable({
+				"info": false,
 			    "ajax": {
 		        	'url' : '/CheckMon/getReqList.do',
 		       	 	'type' : 'POST'
@@ -503,6 +504,7 @@ img {
 
 			//직원 목록 테이블
 			var RunTable = $('#RunTable').DataTable({
+				"info": false,
 				"ajax": {
 		        	'url' : '/CheckMon/getRunList.do',
 		       	 	'type' : 'POST'

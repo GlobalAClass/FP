@@ -85,17 +85,30 @@
 </style>
 </head>
 <body class="adminbody">
-
 	<div id="main">
 	<%@include file="/WEB-INF/views/emp/header.jsp" %>
-	
 		<div class="content-page">
-		
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
+				
+				<div class="row">
+						<div class="col-xl-12">
+							<div class="breadcrumb-holder">
+								<h1 class="main-title float-left">- 스케줄 -</h1>
+								<ol class="breadcrumb float-right">
+									<li class="breadcrumb-item">Home</li>
+									<li class="breadcrumb-item active">스케줄</li>
+									<li class="breadcrumb-item active">월별 스케줄 관리</li>
+								</ol>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				
+				
 					<div class="card col-12">
-						<h1 class="card-header" align="center">스케줄 관리</h1>
+						<h1 class="card-header" align="center">월별 스케줄 관리</h1>
 						<div align="right" style="display:lnline-block;margin:20px;">
 							<span style="background:#5858FA;color:#ffffff;"><b>근무 예정 스케줄</b></span>&nbsp;&nbsp;<span style="background:#DF7401;color:#ffffff;"><b>대리 근무 요청일</b></span>
 						</div>
@@ -110,7 +123,7 @@
 	</div>
 	
 	<div id="vacationModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
- 		 <div class="modal-dialog modal-sm">
+ 		 <div class="modal-dialog">
    			 <div class="modal-content">
 		   		<div class="modal-header">
 			        <h5 class="modal-title" id="vacationModalLabel">휴가 신청서 작성하기</h5>
@@ -144,7 +157,7 @@
 						</tr>
 						<tr>
 							<td>
-								<textarea class="form-control" placeholder="상세 사유 작성" rows="3" cols="30" name="v_reason_detail"></textarea>
+								<textarea class="form-control" placeholder="상세 사유 작성" rows="3" cols="55" name="v_reason_detail"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -167,24 +180,37 @@
 	</div>
 	
 	<div id="subModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-lg">
+		  <div class="modal-dialog">
 		    <div class="modal-content">
 		   		<div class="modal-header">
-			        <h5 class="modal-title" id="subModalLabel"></h5>
+			        <h5 class="modal-title" id="subModalLabel">대리 근무 요청 확인</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 				     	 </div>
-				<form class="form-inline" name="modify" onsubmit="return checked()" action="javascript:updateSchedule()">
 				<div class="modal-body">
 					<table class="table">
 						<tr>
+							<th>대리 근무 일정</th>
 						</tr>
 						<tr>
+							<td>
+							<div id="loc_sub_date" align="center"></div>
+							<div align="center">승인 하시겠습니까?</div>
+							</td>
+						</tr>
+						<tr align="center">
+							<td>
+							<input type="hidden" id="substitute_req_ix" name="substitute_req_ix">
+							<input type="hidden" id="sub_date" name="sub_date">
+							<input type="hidden" id="sub_time" name="sub_time">
+							<input class="btn btn-success" type="button" value="대리 근무 승인하기" onclick="subAgree()">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input class="btn btn-danger" type="button" value="거절" onclick="subDeny()">
+							</td>
 						</tr>
 					</table>
 				</div>
-				</form>
 			</div>
 		</div>
 	</div>	
@@ -252,8 +278,15 @@ $('#calendar').fullCalendar(
 									+'<h5>'+event.title+'</h5>';
 				document.all.schedule_ix.value=event.id;
 				
-			}else{
-				$('subModal').modal('show');
+			}else if(event.color=='#DF7401'){
+				$('#subModal').modal('show');
+				var loc_sub_date = document.getElementById('loc_sub_date');
+				var moment = event.start;
+				loc_sub_date.innerHTML='<h4 style="font-weight:bold;">'+moment.format('YYYY')+'년 '+moment.format('MM')+'월 '+moment.format('DD')+'일'
+										+'<h5>'+event.title+'</h5>';
+				document.all.substitute_req_ix.value=event.id;
+				document.all.sub_date.value=moment.format('YYYY-MM-DD');
+				document.all.sub_time.value=event.title;
 			}
 			
 		},
@@ -276,21 +309,21 @@ $(".fc-prev-button").click( function() {
 	var moment = $('#calendar').fullCalendar('getDate');
 	var year = moment.format('YYYY');
 	var month = moment.format('MM');
-	var date = monemt.format('DD');
+	var date = momemt.format('DD');
 	renderCalcEvent(year,month,date);
 });
 $(".fc-next-button").click( function() {
 	var moment = $('#calendar').fullCalendar('getDate');
 	var year = moment.format('YYYY');
 	var month = moment.format('MM');
-	var date = monemt.format('DD');
+	var date = momemt.format('DD');
 	renderCalcEvent(year,month,date);
 });
 $(".fc-today-button").click( function() {
 	var moment = $('#calendar').fullCalendar('getDate');
 	var year = moment.format('YYYY');
 	var month = moment.format('MM');
-	var date = monemt.format('DD');
+	var date = momemt.format('DD');
 	renderCalcEvent(year,month,date);
 });
 
@@ -309,6 +342,7 @@ function resultEvent(){
 			var data = eval('(' +XHR.responseText+ ')');
 			
 			var eventList = data.list;
+			var subList = data.list_s;
 			
 			for(var i=0;i<eventList.length;i++){
 				var list=eventList[i];
@@ -323,12 +357,29 @@ function resultEvent(){
 				description : '클릭 시 휴가신청 가능',
 				allDay: true
 				
+				};
+				$('#calendar').fullCalendar('renderEvent',event);
+			}
+			
+			for(var i=0;i<subList.length;i++){
+				var list = subList[i];
+				
+				var event ={
+				id : list.SUBSTITUTE_REQUEST_IX,
+				title : list.S_TIME,
+				start : list.S_DATE,
+				color : '#DF7401',
+				description : '클릭 시 대리근무 신청 확인',
+				allDay: true
+				
 				};$('#calendar').fullCalendar('renderEvent',event);
-			} 
+			}
 			
 		}
 	}
 }
+
+
 
 //-----------------------휴가 신청 Modal 에서 사용하는 함수------------------------//
 //신청 Submit 전에 유효성 검사
@@ -353,6 +404,55 @@ function applyVacation(){
 }
 
 function resultApply(){
+	if (XHR.readyState == 4) {
+		if (XHR.status == 200) {
+				
+			var data = eval('('+XHR.responseText+')');
+		    var msg=data.msg;
+		    
+		    if(msg!=''){
+		    	alert(msg);
+		    }
+		    
+		    location.href='scheduleList.do';
+			
+		}
+	}
+}
+
+//-----------------------대리 근무 요청 Modal 에서 사용하는 함수------------------------//
+function subAgree(){
+	params = 'substitute_req_ix='+document.all.substitute_req_ix.value
+			+'&sub_date='+document.all.sub_date.value
+			+'&sub_time='+document.all.sub_time.value
+	
+	sendRequest('agreeSubstitute.do',params,resultSubAgree,'POST');
+}
+
+function resultSubAgree(){
+	if (XHR.readyState == 4) {
+		if (XHR.status == 200) {
+				
+			var data = eval('('+XHR.responseText+')');
+		    var msg=data.msg;
+		    
+		    if(msg!=''){
+		    	alert(msg);
+		    }
+		    
+		    location.href='scheduleList.do';
+			
+		}
+	}
+}
+
+function subDeny(){
+	param = 'substitute_req_ix='+document.all.substitute_req_ix.value;
+	
+	sendRequest('denySubstitute.do',param,resultSubDeny,'POST');
+}
+
+function resultSubDeny(){
 	if (XHR.readyState == 4) {
 		if (XHR.status == 200) {
 				

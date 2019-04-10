@@ -118,35 +118,6 @@ table th{
 					</div>
 					<!-- end card-->
 					
-					<div class="col-xl-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-						<div class="card mb-3">
-							<div class="card-header">
-								<h2 align="left">휴가 요청 목록</h2>
-								<div align="right"><input type="button" class="btn btn-secondary" value="휴가 요청 관리 바로가기"></div>
-							</div>
-							<div class="card-body">
-								<div class="table-responsive">
-									<table id="ReqTable"
-										class="table table-bordered table-hover display">
-										<thead>
-											<tr align="center">
-												<th>휴가 신청서 제출 날짜</th>
-												<th>신청자</th>
-												<th>휴가날짜</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr align="center">
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
 					<!-- end card-->
 					
             </div>

@@ -37,6 +37,8 @@ public class EmpDTO {
 	
 	//근무자 랜덤 색상
 	private String e_color;
+	
+	private String imgpath;
 
 	public EmpDTO() {
 		super();
@@ -154,6 +156,15 @@ public class EmpDTO {
 	public void setE_color(String e_color) {
 		this.e_color = e_color;
 	}
+
+	public String getImgpath() {
+		return imgpath;
+	}
+
+	public void setImgpath(String imgpath) {
+		this.imgpath = imgpath;
+	}
+	
 	
 	
 	

@@ -15,7 +15,10 @@
 			</thead>
 		</table>
 	</div>
-	<input type="button" id="searchEmp" class="btn btn-danger" value="직원 추가하기" style="margin-top: 20px;float: right;">
+	<div id="searchEmp"  align="center" >
+	<h5>선택한 근무자에게 <b>대리근무 신청</b>을 보냅니다.</h5>
+	<input type="button" class="btn btn-success btn-lg" style="margin-bottom:20px;" value="대리근무 신청하기" onclick="agreeVacation()">
+	</div>
 </div>
 						
 	<!-- END main -->
@@ -32,16 +35,18 @@
 			}); 
 		});
 
-		
-		$(document).ready(function() {	
+	
+	
+	function searchTableGet(params) {
 			var SearchTable = $('#SearchTable').DataTable({
 				"info": false,
 				"ordering": false,
 				"lengthMenu": [[5], [5]],
 				"dom": '<"top"f>rt<"bottom"p><"clear">',
 			    "ajax": {
-		        	'url' : '/CheckMon/getRunList.do',
-		       	 	'type' : 'POST',
+		        	'url' : '/CheckMon/getRunListSubstitude.do',
+		       	 	'type' : 'GET',
+		       	 	'data' : {"subDate": params}
 			    	},
 				"columns" : [
 					{
@@ -49,6 +54,7 @@
 						"orderable" : false,
 						"data" : null,
 						"defaultContent" : '<input type="checkbox" name="checkRow" value="">',
+						
 					},
 					{"data" : "imgpath", "orderable" : false},
 					{"data" : "e_group"},
@@ -64,6 +70,18 @@
 			
 			//체크 박스 개별 선택&해제시 삭제버튼 숨기고 나타내는 코드
 			$('#SearchTable').on('click','input[name=checkRow]',function(){
+				
+				var emp_ix = "";
+	        	var len = $("input[name=checkRow]:checked").size();
+	            $("input[name=checkRow]:checked").each(function(i){
+					if(i>0 && i< len){
+						emp_ix += ',';
+	            	}
+					var row = SearchTable.row($(this).closest('tr'));
+	            	emp_ix += row.data().emp_ix;
+	            });
+	           selectEmp = emp_ix; //체크박스 선택한 인원으로 함수 실행.
+				
 				if($('input[name="checkRow"]').is(":checked")==true){
 					$('#searchEmp').show();
 				}else{
@@ -76,15 +94,8 @@
 		         if($('#ck_all').prop('checked')){
 		            $("input[type=checkbox]").prop('checked',true);
 		            $('#searchEmp').show();
-		        }else{
-		            $('input[type=checkbox]').prop('checked',false);
-		            $('#searchEmp').hide();
-		        }
-		    });
-
-			//삭제 버튼 클릭 시 삭제할것이냐는 알림과 삭제 진행
-		    $('#searchEmp').click(function(){
-		        	var emp_ix = "";
+		            
+		            var emp_ix = "";
 		        	var len = $("input[name=checkRow]:checked").size();
 		            $("input[name=checkRow]:checked").each(function(i){
 						if(i>0 && i< len){
@@ -93,10 +104,16 @@
 						var row = SearchTable.row($(this).closest('tr'));
 		            	emp_ix += row.data().emp_ix;
 		            });
+		           selectEmp = emp_ix; //체크박스 선택한 인원으로 함수 실행.
 		            
-		            selectEmp = emp_ix; //체크박스 선택한 인원으로 함수 실행.
-		            
+		        }else{
+		            $('input[type=checkbox]').prop('checked',false);
+		            $('#searchEmp').hide();
+		        }
 		    });
-		});
+		
+	}
+	
+	
 		// END CODE FOR Child rows (show extra / detailed information) DATA TABLE
 	</script>

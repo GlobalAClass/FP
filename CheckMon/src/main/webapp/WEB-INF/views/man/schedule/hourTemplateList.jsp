@@ -50,6 +50,21 @@ table th{
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="breadcrumb-holder">
+								<h1 class="main-title float-left">- 스케줄 관리 -</h1>
+								<ol class="breadcrumb float-right">
+									<li class="breadcrumb-item">Home</li>
+									<li class="breadcrumb-item active">스케줄 관리</li>
+									<li class="breadcrumb-item active">근무시간 템플릿 관리</li>
+								</ol>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				
+				
 					<div class="card mb-3" align="center">
 						<h1 class="card-header" align="center">근무 시간 템플릿 관리</h1>
 						<div class="card-body">
