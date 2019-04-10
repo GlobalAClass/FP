@@ -37,12 +37,14 @@ public class EmpController {
 		//근무자 출근 중인지 아닌지 여부 확인
 		EmpCommuteDTO commute = empdao.checkWorking(emp_ix);
 		
-		boolean working;
+		boolean working = false;
 		//출근하지 않은 상태
 		if(commute==null) {
 			working = false;
 		}else { //출근한 상태
-			working = true;
+			if(commute.getWorktime() != null) {
+				working = true;	
+			}
 		}
 		
 		ModelAndView mav = new ModelAndView("emp/home");
