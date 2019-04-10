@@ -50,11 +50,12 @@ public class ManEmpRunController {
 			File employee = new File(rootpath + "\\assets\\images\\emp\\profile\\" + list.get(i).getEmp_ix());
 			File[] files = employee.listFiles();
 			String imgpath;
-			if (files == null) {
+			if (files == null || files.length == 0) {
 				imgpath = "<img src=assets/images/emp/profile_default.jpg width=35px height=40px>";
 			} else {
-				imgpath = "<img src=assets/images/emp/profile/" + list.get(i).getEmp_ix() + "\\" + files[0].getName()
-						+ " width=35px height=40px>";
+				imgpath = "<img src=assets/images/emp/profile/" + list.get(i).getEmp_ix() + "/" 
+							+ files[0].getName()
+							+ " width=35px height=40px>";
 			}
 			list.get(i).setImgpath(imgpath);
 		}
@@ -78,7 +79,7 @@ public class ManEmpRunController {
 			File employee = new File(rootpath + "\\assets\\images\\emp\\profile\\" + list.get(i).getEmp_ix());
 			File[] files = employee.listFiles();
 			String imgpath;
-			if (files == null) {
+			if (files == null || files.length == 0) {
 				imgpath = "<img src=assets/images/emp/profile_default.jpg width=35px height=40px>";
 			} else {
 				imgpath = "<img src=assets/images/emp/profile/" + list.get(i).getEmp_ix() + "\\" + files[0].getName()

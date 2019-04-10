@@ -195,18 +195,7 @@
 			set worktime = to_char(sysdate, 'HH24:MI')
 			where emp_commute_ix = #{emp_commute_ix}
 	</update>
-	
-	<select id="getWorkLeaveTimeSQL" 
-		parameterType="com.ateam.checkMon.PayRoll.model.WorkTimeDTO" 
-		resultType="com.ateam.checkMon.empCommute.model.WorkTimeDTO">
-		<![CDATA[
-		select emp_ix, emp_commute_ix, worktime, leavetime, workday
-		from emp_commute_tb 
-		    where emp_ix = 41
-		    and #{startday} < workday 
-		    and workday < #{endday}
-		]]>
-	</select>
+
 	<update id="setDaytimeSQL" parameterType="HashMap">
 		update emp_commute_tb 
 		    set daytime = #{daytime}

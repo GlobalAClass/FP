@@ -100,6 +100,7 @@ tr.shown td.details-control {
 												<th>이름</th>
 												<th>직책</th>
 												<th>그룹</th>
+												<th>총 근무 시간</th>
 												<th>지급총액</th>
 												<th>공제총액</th>
 												<th>총실지급여액</th>
@@ -237,11 +238,10 @@ tr.shown td.details-control {
 		}
 		
 		function format ( d ) {
-		    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+		    return '<table class="table table-responsive table-bordered" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
 		        '<tr>'+
-		            '<th>기본 수당:</td>'+
-		            '<th>추가 수당</td>'+
-		            '<th>야근 수당</td>'+
+		            '<th>기본 수당</td>'+
+		            '<th>야간 근로 수당</td>'+
 		            '<th>주휴 수당</td>'+
 		            '<th>공휴일 수당</td>'+
 		        '</tr>'+
@@ -250,17 +250,19 @@ tr.shown td.details-control {
 		            '<td>'+d.extn+'</td>'+
 		            '<td>'+d.extn+'</td>'+
 		            '<td>'+d.extn+'</td>'+
-		            '<td>'+d.extn+'</td>'+
 		        '</tr>'+
 		    '</table>'+
-		    '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+		    '<br>'+
+		    '<table class="table table-responsive table-bordered" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
 		        '<tr>'+
 		            '<th>소득세</td>'+
 		            '<th>주민세</td>'+
 		            '<th>국민 연금</td>'+
 		            '<th>건강 보험</td>'+
+		            '<th>고용 보험</td>'+
 		        '</tr>'+
 		        '<tr>'+
+		            '<td>'+d.extn+'</td>'+
 		            '<td>'+d.extn+'</td>'+
 		            '<td>'+d.extn+'</td>'+
 		            '<td>'+d.extn+'</td>'+
