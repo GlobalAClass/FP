@@ -1,7 +1,11 @@
 package com.ateam.checkMon.controller;
 
 import java.io.*;
+import java.util.List;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ateam.checkMon.empCommute.model.EmpCommuteAllDTO;
+import com.ateam.checkMon.empCommute.model.EmpCommuteDAO;
 import com.ateam.checkMon.member.model.*;
 
 @Controller
@@ -18,12 +25,28 @@ public class ManController {
 	@Autowired
 	private ManDAO mandao;
 	@Autowired
+	private EmpCommuteDAO mdao;
+	@Autowired
 	private ServletContext context;
 	
 	//관리자 홈페이지 이동
 	@RequestMapping("/manHome.do")
-	public String goManHome() {
-		return "man/home";
+	public ModelAndView goManHome(HttpSession session,
+			@RequestParam(value="cp",defaultValue="1")int cp) {
+		
+		ModelAndView mav=new ModelAndView();
+		int man_ix=(Integer)session.getAttribute("man_ix");
+		int totalcnt=mdao.CommuteApplyAllListSize(man_ix);
+		int listsize = 5;
+		int pagesize = 5;
+		
+		List<EmpCommuteAllDTO> list=mdao.getCommuteApplyAllList(listsize, cp, man_ix);
+		String paging = com.ateam.checkMon.page.PageModule.getMakePage("commuteApplyAllList.do", totalcnt, listsize, pagesize, cp);
+		
+		mav.addObject("list",list);
+		mav.addObject("paging",paging);
+		mav.setViewName("man/home");
+		return mav;
 	}
 	
 	//관리자 회원가입 시 개인정보방침 페이지 이동

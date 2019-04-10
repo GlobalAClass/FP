@@ -325,23 +325,17 @@ function resultEvent(){
 			for(var i=0;i<eventList.length;i++){
 				var list=eventList[i];
 				var slist=eventsList[i];
-				
 				var date = list.workday;
+				if(list.leavetime==null){
+					list.leavetime='';
+				}
 				var s_workday = slist.s_year+'-'+slist.s_month+'-'+slist.s_day;
-				
 				var worktimes = list.worktime.replace(/:/gi, "");
 				var worktime = parseInt(worktimes);
 				
 				var starttimes = slist.s_start_time.replace(/:/gi, "");
 				var starttime = parseInt(starttimes);
 				
-				//퇴근 시간 비교 할지 안할지 
-// 				var leavetimes= list.leavetime.replace(/:/gi, "");
-// 				var leavetime = parseInt(leavetimes);
-				
-// 				var endtimes = slist.s_end_time.replace(/:/gi, "");
-// 				var endtime = parseInt(endtimes);
-
 				if(date==s_workday){
 					if(worktime<=starttime){
 						var event ={

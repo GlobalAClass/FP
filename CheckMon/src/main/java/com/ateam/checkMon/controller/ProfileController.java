@@ -156,7 +156,7 @@ public class ProfileController {
 		int result=empdao.modEmpProfile(dto);
 		String msg=result>0?"프로필 수정이 완료 되었습니다.":"프로필 수정에 실패 하였습니다.";
 		mav.addObject("msg",msg);
-		mav.setViewName("emp/profile/ProfileMsg");
+		mav.setViewName("emp/profile/empProfileMsg");
 		return mav;
 	}
 	
@@ -220,7 +220,7 @@ public class ProfileController {
 		int result=mandao.modManProfile(dto);
 		String msg=result>0?"프로필 수정이 완료 되었습니다.":"프로필 수정에 실패 하였습니다.";
 		mav.addObject("msg",msg);
-		mav.setViewName("emp/profile/ProfileMsg");
+		mav.setViewName("man/profile/manProfileMsg");
 		return mav;
 	}
 	

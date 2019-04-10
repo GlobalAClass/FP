@@ -14,7 +14,9 @@
  	</select>
  	<select id="getManScheduleTimeSQL" parameterType="Integer" resultType="com.ateam.checkMon.schedule.model.ScheduleDTO">
  		select * from Schedule_TB
-		where man_ix=#{man_ix}
+		where (s_year||'-'||s_month||'-'||s_day)=to_char(sysdate,'yyyy-mm-dd')
+		and man_ix=#{man_ix}
+		order by emp_ix desc
  	</select>
 	<select id="getScheduleAllSQL" parameterType="hashMap" resultType="hashmap">
 	select s.*, e.e_name, e.e_color

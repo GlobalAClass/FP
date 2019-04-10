@@ -62,6 +62,12 @@ public class EmpCommuteDAOImple implements EmpCommuteDAO {
 		return list;
 	}
 	
+	//관리자 = 근무자의 당일 근태 현황 값 세팅
+	public int setDayState(EmpCommuteDTO dto) {
+		int res=sqlMap.update("setDayStateSQL",dto);
+		return res;
+	}
+	
 	//관리자 = 출퇴근 기록 관리 페이지
 	public List<EmpCommuteAllDTO> getCommuteAllList(int man_ix) {
 		List<EmpCommuteAllDTO> list=sqlMap.selectList("getCommuteAllListSQL",man_ix);

@@ -1,5 +1,6 @@
 package com.ateam.checkMon.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.ateam.checkMon.empCommute.model.*;
+import com.ateam.checkMon.schedule.model.ScheduleDAO;
 import com.ateam.checkMon.schedule.model.ScheduleDTO;
 
 @Controller
@@ -16,18 +18,93 @@ public class ManCommuteController {
 
 	@Autowired
 	private EmpCommuteDAO mdao;
+	@Autowired
+	private ScheduleDAO sdao;
 	
 	//관리자가 근무자들의 오늘 근무상태 및 출퇴근 확인
 	@RequestMapping("/dayCommuteList.do")
 	public ModelAndView dayCommuteList(@RequestParam(value="cp",defaultValue="1")int cp,
-			HttpSession session) {
+			HttpSession session,
+			EmpCommuteDTO dto) {
 		ModelAndView mav=new ModelAndView();
 		int man_ix=(Integer)session.getAttribute("man_ix");
 		int totalcnt=mdao.getDayCommuteListSize(man_ix);
 		int listsize=5;
 		int pagesize=5;
-		//List<ScheduleDTO> slist=mdao.getManScheduleTime(man_ix);
 		List<EmpCommuteAllDTO> list=mdao.getDayCommuteList(listsize, cp, man_ix);
+		List<ScheduleDTO> slist=sdao.getManScheduleTime(man_ix);
+		
+		for(int i=0;i<list.size();i++) {
+			//근무자 근태 인덱스
+			int emp_commute_ix=list.get(i).getEmp_commute_ix();
+			//당일 스케줄 근무 날짜
+			String s_workday = slist.get(i).getS_year()+"-"+slist.get(i).getS_month()+"-"+slist.get(i).getS_day();
+			//근무 날짜
+			String workday = list.get(i).getWorkday();
+			//근무자 출근시간
+			String worktime_s = list.get(i).getWorktime().replace(":","");
+			int worktime = Integer.parseInt(worktime_s);
+			//근무자 퇴근시간
+			String leavetime_s = list.get(i).getLeavetime().replace(":","");
+			if(leavetime_s.equals("-")) {
+				leavetime_s="0";
+			}
+			int leavetime = Integer.parseInt(leavetime_s);
+			//스케줄 출근시간
+			String starttime_s = slist.get(i).getS_start_time().replace(":","");
+			int starttime = Integer.parseInt(starttime_s);
+			//스케줄 퇴근시간
+			String endtime_s = slist.get(i).getS_end_time().replace(":","");
+			int endtime = Integer.parseInt(endtime_s);
+			
+			Date today=new Date();
+			SimpleDateFormat time=new SimpleDateFormat("kk:mm");
+			String todaytime_s=time.format(today).replace(":","");
+			int todaytime = Integer.parseInt(todaytime_s);
+			
+			if(worktime<=starttime) {
+				if(endtime<=leavetime) {
+					String temp="퇴근";
+					dto.setState(temp);
+					dto.setEmp_commute_ix(emp_commute_ix);
+					mdao.setDayState(dto);
+				}else {
+					String temp="근무중";
+					dto.setState(temp);
+					dto.setEmp_commute_ix(emp_commute_ix);
+					mdao.setDayState(dto);
+				}
+			}else {
+				if(endtime<=leavetime) {
+					String temp="퇴근";
+					dto.setState(temp);
+					dto.setEmp_commute_ix(emp_commute_ix);
+					mdao.setDayState(dto);
+				}else {
+					String temp="근무중(지각)";
+					dto.setState(temp);
+					dto.setEmp_commute_ix(emp_commute_ix);
+					mdao.setDayState(dto);
+				}
+			}
+			
+			if(s_workday!=null) {
+				if(workday==null) {
+					if(endtime<todaytime) {
+						String temp="결근";
+						dto.setState(temp);
+						dto.setEmp_commute_ix(emp_commute_ix);
+						mdao.setDayState(dto);
+					}else {
+						String temp="근무예정";
+						dto.setState(temp);
+						dto.setEmp_commute_ix(emp_commute_ix);
+						mdao.setDayState(dto);
+					}
+				}
+			}
+		}
+		
 		String paging= com.ateam.checkMon.page.PageModule.getMakePage("dayCommuteList.do", totalcnt, listsize, pagesize, cp);
 		
 		mav.addObject("paging",paging);
