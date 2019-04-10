@@ -40,6 +40,7 @@ canvas {
 		<h4 class="alert-heading" style="text-align: center">매장 QR code</h4>
 	</div>
 	<div class="card" style="text-align: center; margin: 0px auto">
+		<br>
 		<div id="qrcode" style="text-align: center;"></div>
 		<br>
 		<div class="card-body">
@@ -50,6 +51,8 @@ canvas {
 		<a id="download" download="QR.png">
 			<button class="btn btn-success" id="savebtn" onclick="download()">QR Code Save</button>
 		</a>
+		<br>
+		<button class="btn btn-primary" onclick="javascript:location.href='manHome.do'">Home 이동</button>
 	</div>
 
 
