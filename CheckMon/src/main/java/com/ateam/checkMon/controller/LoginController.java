@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ateam.checkMon.empCommute.model.EmpCommuteDTO;
 import com.ateam.checkMon.member.model.*;
+import com.ateam.checkMon.vacation.model.VacationDAO;
+
 import java.util.*;
 import java.io.*;
 
@@ -26,6 +28,8 @@ public class LoginController {
 	private ManDAO mandao;
 	@Autowired
 	private ServletContext context;
+	@Autowired
+	private VacationDAO vdao;
 	
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public ModelAndView login(
@@ -39,7 +43,8 @@ public class LoginController {
 			@RequestParam(value="member",required=false)String member,
 			@RequestParam(value="e_rpwd",required=false)String e_rpwd,
 			@RequestParam(value="m_rpwd",required=false)String m_rpwd,
-			@RequestParam(value="m_email",required=false)String m_email) {
+			@RequestParam(value="m_email",required=false)String m_email,
+			@RequestParam(value="cp",defaultValue="1")int cp) {
 
 		ModelAndView mav=new ModelAndView();
 		//근무자 로그인 선택
@@ -110,7 +115,23 @@ public class LoginController {
 						working = true;	
 					}
 				}
+				
+				//메인에 띄울 휴가 상태
+				int totalcnt = vdao.vacationListEmpSize(emp_ix);
+				int listsize = 5;
+				int pagesize = 5;
+				
+				System.out.println("gdgd"+totalcnt);
+				
+				List<HashMap<String,Object>> list = vdao.getVacationListEmp(listsize, cp, emp_ix);
+				
+				String paging = com.ateam.checkMon.page.PageModule.getMakePage("empHome.do", totalcnt, listsize, pagesize, cp);
+				
+				
+				
 				mav.addObject("working", working);
+				mav.addObject("list_s",list);
+				mav.addObject("paging",paging);
 				
 				mav.setViewName("emp/home");
 			}

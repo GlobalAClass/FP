@@ -82,17 +82,17 @@ table th{
 									</tr>
 								</thead>
 								<tbody>
-									<c:set var="list" value="${list }" />
-									<c:if test="${empty list }">
+									<c:set var="list_s" value="${list_s }" />
+									<c:if test="${empty list_s }">
 										<tr align="center">
 											<td colspan="4">휴가 신청 목록이 존재하지 않습니다.</td>
 										</tr>
 									</c:if>
-									<c:forEach var="list" items="${list }">
+									<c:forEach var="list_s" items="${list_s }">
 										<tr align="center">
-											<td>${list.V_DATE}</td>
-											<td>${list.V_TIME}</td>
-											<td><input type="text" style="border:none" readonly value="${list.V_PROGRESS}"></td>
+											<td>${list_s.V_DATE}</td>
+											<td>${list_s.V_TIME}</td>
+											<td><input type="text" style="border:none" readonly value="${list_s.V_PROGRESS}"></td>
 										</tr>
 									</c:forEach>
 								</tbody>

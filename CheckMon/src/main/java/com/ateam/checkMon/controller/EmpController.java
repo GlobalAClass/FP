@@ -64,21 +64,23 @@ public class EmpController {
 		}
 		
 		//메인에 띄울 휴가 상태
-		int totalcnt = vdao.vacationListEmpSize(emp_ix);
-		int listsize = 5;
-		int pagesize = 5;
-		
-		List<HashMap<String,Object>> list = vdao.getVacationListEmp(listsize, cp, emp_ix);
-		
-		String paging = com.ateam.checkMon.page.PageModule.getMakePage("vacationListEmp.do", totalcnt, listsize, pagesize, cp);
-		
-		
-		ModelAndView mav = new ModelAndView("emp/home");
-		mav.addObject("imgpath",imgpath);
-		mav.addObject("working", working);
-		mav.addObject("list",list);
-		mav.addObject("paging",paging);
-		return mav;
+			int totalcnt = vdao.vacationListEmpSize(emp_ix);
+			int listsize = 5;
+			int pagesize = 5;
+			
+			System.out.println("gdgd"+totalcnt);
+			
+			List<HashMap<String,Object>> list = vdao.getVacationListEmp(listsize, cp, emp_ix);
+			
+			String paging = com.ateam.checkMon.page.PageModule.getMakePage("empHome.do", totalcnt, listsize, pagesize, cp);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("working", working);
+			mav.addObject("list_s",list);
+			mav.addObject("paging",paging);
+			mav.addObject("imgpath",imgpath);
+			mav.setViewName("emp/home");
+			return mav;
 	}
 	
 	//근무자 회원가입 시 개인정보방침 페이지 이동
